@@ -6,6 +6,21 @@ export const environment = {
   production: false
 };
 
+export const CREDENCIALES_SERVIDOR = {
+  SERVER: 'http://localhost',
+  PUERTO: 3010
+};
+
+export const SEGURIDAD_CONTROLLER = {
+  CONTROLLERS: {
+    COMUN: '/seguridad',
+    CRUD: {
+      INICIO_SISTEMA: '/verifica',
+      LOGIN: '/login'
+    }
+  }
+}
+
 /*
  * For easier debugging in development mode, you can import the following file
  * to ignore zone related error stack frames such as `zone.run`, `zoneDelegate.invokeTask`.

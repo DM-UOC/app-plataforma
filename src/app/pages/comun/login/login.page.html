@@ -1,0 +1,46 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>login</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <form (ngSubmit)="inicioSesion()" [formGroup]="formGroupCredenciales" *ngIf="formGroupCredenciales">
+
+    <div class="input-group">
+
+      <ion-item>
+        <ion-input type="email" placeHolder="Escriba el correo..." formControlName="usuario"></ion-input>
+      </ion-item>
+      
+      <div *ngIf="(usuario.dirty || usuario.touched) && usuario.errors" class="errors">
+        <span *ngIf="usuario.errors?.required">Ingrese el correo electrónico</span>
+        <span *ngIf="usuario.errors?.email">Correo electrónico es incorrecto</span>
+      </div>
+      
+      <ion-item>
+        <ion-input type="password" placeHolder="Escriba su clave..." formControlName="clave"></ion-input>
+      </ion-item>
+  
+      <div *ngIf="(clave.dirty || clave.touched) && clave.errors" class="errors">
+        <span *ngIf="clave.errors?.required">Ingrese la clave</span>
+        <span *ngIf="clave.errors?.minlength">La clave necesita almenos 6 caracteres</span>
+      </div>
+      
+    </div>
+
+    <ion-button type="submit" expand="block" [disabled]="!formGroupCredenciales.valid">Iniciar</ion-button>
+    <ion-button type="button" expand="block" color="light" fill="clear">¿Usuario nuevo? ¡Registrarse como usuario!</ion-button>
+
+    <ion-button type="button" expand="block">
+      <ion-icon name="logo-google" slot="start"></ion-icon>
+      Registrarse con Google
+    </ion-button>
+    <ion-button type="button" expand="block">
+      <ion-icon name="logo-facebook" slot="start"></ion-icon>
+      Registrarse con Facebook      
+    </ion-button>
+  </form>
+  
+</ion-content>
