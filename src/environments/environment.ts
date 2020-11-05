@@ -18,8 +18,27 @@ export const SEGURIDAD_CONTROLLER = {
       INICIO_SISTEMA: '/verifica',
       LOGIN: '/login'
     }
+  },
+  MENSAJES: {
+    LOGIN: {
+      HEADER: 'Login usuario',
+      INCORRECTO: {
+        CSSCLASS: 'alert-danger',
+        SUBHEADER: 'Datos incorrectos',
+        MESSAGE: '¡Las credenciales son incorrectas. Verifique nuevamente!'
+      },
+      BUTTONS: ['OK']
+    }
   }
 }
+
+export let OBJECTO_MENSAJES_ALERTA = {
+    cssClass: '',
+    header: '',
+    subHeader: '',
+    message: '',
+    buttons: null
+};
 
 /*
  * For easier debugging in development mode, you can import the following file

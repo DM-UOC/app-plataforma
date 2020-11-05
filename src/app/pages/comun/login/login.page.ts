@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AlertController, LoadingController } from '@ionic/angular';
+import { LoadingController } from '@ionic/angular';
 import { SeguridadService } from 'src/app/services/seguridad.service';
+import { UtilitariosService } from 'src/app/services/utilitarios.service';
+import { OBJECTO_MENSAJES_ALERTA, SEGURIDAD_CONTROLLER } from 'src/environments/environment';
 
 @Component({
   selector: 'app-login',
@@ -16,21 +18,24 @@ export class LoginPage implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private seguridadService: SeguridadService,
-    private alertController: AlertController,
+    private utilitariosService: UtilitariosService,
     private loadingController: LoadingController,
     private router: Router    
-  ) { }
+  ) { 
+
+    // seteo de formulario...
+    this.formGroupCredenciales = this.formBuilder.group({
+      usuario: ['', [Validators.required, Validators.email]],
+      clave: ['', [Validators.required, Validators.minLength(6)]]
+    });
+
+  }
 
   async ngOnInit() {
     try {
       // al iniciar el sistema... verificamos que el superusuario exista
       // si no existe, lo crea automáticamente
-      await this.seguridadService.inicioSistema();
-      // seteo de formulario...
-      this.formGroupCredenciales = this.formBuilder.group({
-        usuario: ['', [Validators.required, Validators.email]],
-        clave: ['', [Validators.required, Validators.minLength(6)]]
-      });      
+      await this.seguridadService.inicioSistema();    
     } catch (error) {
       throw error;
     }    
@@ -44,7 +49,8 @@ export class LoginPage implements OnInit {
     return this.formGroupCredenciales.get('clave');
   }
 
-  async login() {
+  
+  async inicioSesion() {
     // loading control...
     const loading = await this.loadingController.create();
     await loading.present();
@@ -52,12 +58,18 @@ export class LoginPage implements OnInit {
     try {
       const result: any = await this.seguridadService.login(this.formGroupCredenciales.value);
       // verifica si el usuario existe...
-      if(result.existeUsuario === true) {
+      if(result ==! null) {
         // reenviamos a la pagina principal...
       }
       else {
-        // no est{a logeado...
-
+        // no està logeado...
+        OBJECTO_MENSAJES_ALERTA.header = SEGURIDAD_CONTROLLER.MENSAJES.LOGIN.HEADER;
+        OBJECTO_MENSAJES_ALERTA.cssClass = SEGURIDAD_CONTROLLER.MENSAJES.LOGIN.INCORRECTO.CSSCLASS;
+        OBJECTO_MENSAJES_ALERTA.subHeader = SEGURIDAD_CONTROLLER.MENSAJES.LOGIN.INCORRECTO.SUBHEADER;
+        OBJECTO_MENSAJES_ALERTA.message = SEGURIDAD_CONTROLLER.MENSAJES.LOGIN.INCORRECTO.MESSAGE;
+        OBJECTO_MENSAJES_ALERTA.buttons = SEGURIDAD_CONTROLLER.MENSAJES.LOGIN.BUTTONS;
+        // presentamos la alerta...
+        await this.utilitariosService.retornaMensajeAlerta(OBJECTO_MENSAJES_ALERTA);
       }
       // cerramos el loadingcontrol...
       await loading.dismiss();
