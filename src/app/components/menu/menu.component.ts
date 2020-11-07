@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { MenuController } from '@ionic/angular';
+import { SeguridadService } from 'src/app/services/seguridad.service';
 
 @Component({
   selector: 'app-menu',
@@ -7,8 +9,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MenuComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    private menuController: MenuController,
+    private seguridadService: SeguridadService
+  ) { }
 
   ngOnInit() {}
+
+  public logout() {
+    this.menuController.enable(false);
+    this.seguridadService.logout();
+  }
 
 }

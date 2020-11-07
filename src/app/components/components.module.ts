@@ -2,20 +2,24 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MenuComponent } from './menu/menu.component';
 import { CabeceraComponent } from './cabecera/cabecera.component';
+import { FormsModule } from '@angular/forms';
+import { IonicModule } from '@ionic/angular';
 
 
 
 @NgModule({
   declarations: [
-    MenuComponent,
-    CabeceraComponent
+    CabeceraComponent,
+    MenuComponent
   ],
   exports: [
-    MenuComponent,
-    CabeceraComponent
+    CabeceraComponent,
+    MenuComponent
   ],
   imports: [
-    CommonModule
+    CommonModule,
+    IonicModule,
+    FormsModule
   ]
 })
 export class ComponentsModule { }

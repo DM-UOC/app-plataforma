@@ -6,6 +6,12 @@ export const environment = {
   production: false
 };
 
+export const STORAGE = {
+  TOKEN: {
+    KEY: 'PlaT4forM4_L1c3nC1A*kEY*'
+  }
+}
+
 export const CREDENCIALES_SERVIDOR = {
   SERVER: 'http://localhost',
   PUERTO: 3010

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { LoadingController } from '@ionic/angular';
+import { LoadingController, MenuController } from '@ionic/angular';
 import { SeguridadService } from 'src/app/services/seguridad.service';
 import { UtilitariosService } from 'src/app/services/utilitarios.service';
 import { OBJECTO_MENSAJES_ALERTA, SEGURIDAD_CONTROLLER } from 'src/environments/environment';
@@ -20,9 +20,11 @@ export class LoginPage implements OnInit {
     private seguridadService: SeguridadService,
     private utilitariosService: UtilitariosService,
     private loadingController: LoadingController,
-    private router: Router    
+    private router: Router,
+    public menuController: MenuController
   ) { 
-
+    // deshabilitando el menu...
+    this.menuController.enable(false);
     // seteo de formulario...
     this.formGroupCredenciales = this.formBuilder.group({
       usuario: ['', [Validators.required, Validators.email]],
@@ -49,7 +51,17 @@ export class LoginPage implements OnInit {
     return this.formGroupCredenciales.get('clave');
   }
 
-  
+  private async errorLogin(message: string) {
+      // no està logeado...
+      OBJECTO_MENSAJES_ALERTA.header = SEGURIDAD_CONTROLLER.MENSAJES.LOGIN.HEADER;
+      OBJECTO_MENSAJES_ALERTA.cssClass = SEGURIDAD_CONTROLLER.MENSAJES.LOGIN.INCORRECTO.CSSCLASS;
+      OBJECTO_MENSAJES_ALERTA.subHeader = SEGURIDAD_CONTROLLER.MENSAJES.LOGIN.INCORRECTO.SUBHEADER;
+      OBJECTO_MENSAJES_ALERTA.message = SEGURIDAD_CONTROLLER.MENSAJES.LOGIN.INCORRECTO.MESSAGE;
+      OBJECTO_MENSAJES_ALERTA.buttons = SEGURIDAD_CONTROLLER.MENSAJES.LOGIN.BUTTONS;
+      // presentamos la alerta...
+      await this.utilitariosService.retornaMensajeAlerta(OBJECTO_MENSAJES_ALERTA);
+  }
+
   async inicioSesion() {
     // loading control...
     const loading = await this.loadingController.create();
@@ -58,25 +70,16 @@ export class LoginPage implements OnInit {
     try {
       const result: any = await this.seguridadService.login(this.formGroupCredenciales.value);
       // verifica si el usuario existe...
-      if(result ==! null) {
+      if(result) {
         // reenviamos a la pagina principal...
-      }
-      else {
-        // no està logeado...
-        OBJECTO_MENSAJES_ALERTA.header = SEGURIDAD_CONTROLLER.MENSAJES.LOGIN.HEADER;
-        OBJECTO_MENSAJES_ALERTA.cssClass = SEGURIDAD_CONTROLLER.MENSAJES.LOGIN.INCORRECTO.CSSCLASS;
-        OBJECTO_MENSAJES_ALERTA.subHeader = SEGURIDAD_CONTROLLER.MENSAJES.LOGIN.INCORRECTO.SUBHEADER;
-        OBJECTO_MENSAJES_ALERTA.message = SEGURIDAD_CONTROLLER.MENSAJES.LOGIN.INCORRECTO.MESSAGE;
-        OBJECTO_MENSAJES_ALERTA.buttons = SEGURIDAD_CONTROLLER.MENSAJES.LOGIN.BUTTONS;
-        // presentamos la alerta...
-        await this.utilitariosService.retornaMensajeAlerta(OBJECTO_MENSAJES_ALERTA);
+        this.router.navigate(['/principal']);
       }
       // cerramos el loadingcontrol...
       await loading.dismiss();
     } catch (error) {
       // cerramos el loadingcontrol...
-      await loading.dismiss();      
-      throw error;
+      await loading.dismiss();
+      await this.errorLogin(error.message);      
     }
   }
   
