@@ -5,15 +5,16 @@ import { BehaviorSubject } from 'rxjs';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { Storage } from '@ionic/storage';
 import { CREDENCIALES_SERVIDOR, SEGURIDAD_CONTROLLER, STORAGE } from '../../environments/environment';
-import { ILogin } from '../interfaces/login.interface';
+import { ILogin, IUsuarioToken } from '../interfaces/login.interface';
 import { Router } from '@angular/router';
+import { ICatalogo } from '../interfaces/catalogo.interface';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SeguridadService {
 
-  public usuario = null;
+  public usuario: IUsuarioToken = null;
   public behaviorSubject = new BehaviorSubject(false);
 
   private URL_SERVER = {
@@ -23,7 +24,8 @@ export class SeguridadService {
     COMUN: `${SEGURIDAD_CONTROLLER.CONTROLLERS.COMUN}`,
     CRUD: {
       INICIO_SISTEMA: `${SEGURIDAD_CONTROLLER.CONTROLLERS.CRUD.INICIO_SISTEMA}`,
-      LOGIN: `${SEGURIDAD_CONTROLLER.CONTROLLERS.CRUD.LOGIN}`
+      LOGIN: `${SEGURIDAD_CONTROLLER.CONTROLLERS.CRUD.LOGIN}`,
+      MENU: `${SEGURIDAD_CONTROLLER.CONTROLLERS.CRUD.MENU}`
     }
   };
   
@@ -37,6 +39,14 @@ export class SeguridadService {
     this.platform.ready().then(() => {
       this.checkToken();
     });    
+  }
+
+  public getUsuario() {
+    return this.usuario;
+  }
+
+  public setUsuario(usuario: IUsuarioToken) {
+    this.usuario = usuario;
   }
 
   public checkToken() {
@@ -78,9 +88,12 @@ export class SeguridadService {
       // verificando resultados...
       if(result) {
         const { token } = result;
+        // almacenando el token...
         this.storage.set(STORAGE.TOKEN.KEY, token);
-        this.usuario = this.jwtHelperService.decodeToken(token);
-        this.behaviorSubject.next(true);      
+        // guardando el usuario...
+        this.setUsuario(this.jwtHelperService.decodeToken(token));
+        // bandera q indica q el usuario está logeado...
+        this.behaviorSubject.next(true);
       }
       // return...
       return result.message;
@@ -93,7 +106,7 @@ export class SeguridadService {
     return this.behaviorSubject.value;
   }
 
-  logout() {
+  public logout() {
     // limpiando el token...
     this.storage.remove(STORAGE.TOKEN.KEY).then(() => {
       this.behaviorSubject.next(false);
@@ -101,4 +114,19 @@ export class SeguridadService {
     });
   }
 
+  public async retornaMenuUsuario() {
+    try {
+      console.log(this.usuario.perfil_menu);
+      const result = await this.httpClient.get<ICatalogo>(`${this.URL_SERVER.HOST}${this.SEGURIDAD_CONTROLLERS.COMUN}${this.SEGURIDAD_CONTROLLERS.CRUD.MENU}`, {
+        params: {
+          codigo: this.usuario.perfil_menu
+        }
+      }).toPromise();
+      // return...
+      return result;
+    } catch (error) {
+      throw error;
+    }
+  }
+  
 }

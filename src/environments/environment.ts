@@ -22,7 +22,8 @@ export const SEGURIDAD_CONTROLLER = {
     COMUN: '/seguridad',
     CRUD: {
       INICIO_SISTEMA: '/verifica',
-      LOGIN: '/login'
+      LOGIN: '/login',
+      MENU: '/menu'
     }
   },
   MENSAJES: {

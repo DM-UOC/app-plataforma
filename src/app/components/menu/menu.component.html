@@ -11,11 +11,14 @@
   </ion-header>
   <ion-content>
     <ion-list>
-      <ion-item>Menu Item</ion-item>
-      <ion-item>Menu Item</ion-item>
-      <ion-item>Menu Item</ion-item>
-      <ion-item>Menu Item</ion-item>
-      <ion-item>Menu Item</ion-item>
+      <ion-menu-toggle *ngFor="let page of pages">
+        <ion-item [routerLink]="page.pagina">
+          <ion-icon name="{{page.icon}}" slot="start"></ion-icon>
+          <ion-label>
+            {{page.descripcion}}
+          </ion-label>
+        </ion-item>
+      </ion-menu-toggle>
     </ion-list>
   </ion-content>
 </ion-menu>
