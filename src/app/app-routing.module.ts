@@ -20,6 +20,10 @@ const routes: Routes = [
     path: 'principal',
     loadChildren: () => import('./pages/comun/principal/principal.module').then( m => m.PrincipalPageModule),
     canActivate: [AuthenticacionGuard]
+  },
+  {
+    path: 'gestion-usuarios',
+    loadChildren: () => import('./pages/perfiles/admin/gestion-usuarios/gestion-usuarios.module').then( m => m.GestionUsuariosPageModule)
   }
 ];
 
