@@ -12,4 +12,6 @@ export class UsuariosPage implements OnInit {
   ngOnInit() {
   }
 
+  public async crear() {}
+  
 }

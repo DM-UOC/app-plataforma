@@ -22,4 +22,9 @@ export class AdministradoresPage implements OnInit {
     });
     await modal.present();
   }
+
+  public async actulizar() {}
+
+  public async eliminar() {}
+
 }
