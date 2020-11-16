@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { MenuController } from '@ionic/angular';
 import { ICatalogo } from 'src/app/interfaces/catalogo.interface';
-import { MenuService } from 'src/app/services/menu.service';
-import { SeguridadService } from 'src/app/services/seguridad.service';
+import { MenuService } from 'src/app/services/seguridades/menu.service';
+import { SeguridadService } from 'src/app/services/seguridades/seguridad.service';
 
 @Component({
   selector: 'app-principal',
@@ -27,7 +27,7 @@ export class PrincipalPage implements OnInit {
     // recuperando los items del menu...
     this.catalgo = await this.seguridadService.retornaMenuUsuario();
     // agregando el menu del perfil...
-    this.menuService.setPages(this.catalgo.arreglo1[0]);
+    this.menuService.setPages(this.catalgo.arreglo1);
     // emito el cambio...
     this.menuService.actualizaMenu = true;
     this.menuService.cambioMenu.emit(this.menuService.actualizaMenu);    

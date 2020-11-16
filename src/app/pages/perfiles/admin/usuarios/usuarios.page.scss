@@ -1,0 +1,30 @@
+.scroll-content {
+    background-color: #737486;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+ion-avatar > ion-img {
+    margin: auto;
+    width: 80px;
+    height: auto;
+}
+
+ion-input {
+    padding-left: 10px;
+    color: #6c6c6c;
+}
+
+ion-label {
+    color: #6c6c6c;
+}
+
+[floating] {
+    margin-left: 10px;
+}
+
+ion-button {
+    width: 90%;
+}

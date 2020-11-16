@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { IUsuario } from 'src/app/interfaces/usuario.interface';
+import { PerfilesService } from 'src/app/services/perfiles/perfiles.service';
 
 @Component({
   selector: 'app-usuarios',
@@ -7,11 +10,46 @@ import { Component, OnInit } from '@angular/core';
 })
 export class UsuariosPage implements OnInit {
 
-  constructor() { }
+  public formUsuario: FormGroup;
+  
+  public usuarios: IUsuario = [] as IUsuario;
+  public nuevoUsuario: IUsuario;
 
-  ngOnInit() {
+  constructor(
+    private formBuilder: FormBuilder,
+    private perfilesService: PerfilesService
+  ) {     
   }
 
-  public async crear() {}
+  async ngOnInit() {
+    // seteo de formulario...
+    this.formUsuario = this.formBuilder.group({
+      usuario: ['', [Validators.required]],
+      apellido: ['', [Validators.required]],
+      correo: ['', [Validators.required, Validators.email]]
+    });    
+    // retornando usuarios...
+    await this.retornaUsuarios();
+  }
+
+  get usuario() {
+    return this.formUsuario.get('usuario');
+  }
+
+  get apellido() {
+    return this.formUsuario.get('apellido');
+  }
+
+  get correo() {
+    return this.formUsuario.get('correo');
+  }
+
+  public async retornaUsuarios() {
+  }
+
+  public async crear($event) {
+    console.log('tratando de guarda...');
+    $event.preventDefault();
+  }
   
 }

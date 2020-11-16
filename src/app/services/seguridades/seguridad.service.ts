@@ -4,10 +4,10 @@ import { Platform } from '@ionic/angular';
 import { BehaviorSubject } from 'rxjs';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { Storage } from '@ionic/storage';
-import { CREDENCIALES_SERVIDOR, SEGURIDAD_CONTROLLER, STORAGE } from '../../environments/environment';
-import { ILogin, IUsuarioToken } from '../interfaces/login.interface';
+import { CREDENCIALES_SERVIDOR, SEGURIDAD_CONTROLLER, STORAGE } from '../../../environments/environment';
+import { ILogin, IUsuarioToken } from '../../interfaces/login.interface';
 import { Router } from '@angular/router';
-import { ICatalogo } from '../interfaces/catalogo.interface';
+import { ICatalogo } from '../../interfaces/catalogo.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -116,7 +116,7 @@ export class SeguridadService {
 
   public async retornaMenuUsuario() {
     try {
-      console.log(this.usuario.perfil_menu);
+      // get menu usuario...
       const result = await this.httpClient.get<ICatalogo>(`${this.URL_SERVER.HOST}${this.SEGURIDAD_CONTROLLERS.COMUN}${this.SEGURIDAD_CONTROLLERS.CRUD.MENU}`, {
         params: {
           codigo: this.usuario.perfil_menu

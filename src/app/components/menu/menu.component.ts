@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { MenuController } from '@ionic/angular';
 import { ICatalogo } from 'src/app/interfaces/catalogo.interface';
 import { IMenu } from 'src/app/interfaces/menu.interface';
-import { MenuService } from 'src/app/services/menu.service';
-import { SeguridadService } from 'src/app/services/seguridad.service';
+import { MenuService } from 'src/app/services/seguridades/menu.service';
+import { SeguridadService } from 'src/app/services/seguridades/seguridad.service';
 
 @Component({
   selector: 'app-menu',

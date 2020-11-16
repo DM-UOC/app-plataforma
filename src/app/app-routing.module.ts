@@ -23,7 +23,8 @@ const routes: Routes = [
   },
   {
     path: 'gestion-usuarios',
-    loadChildren: () => import('./pages/perfiles/admin/gestion-usuarios/gestion-usuarios.module').then( m => m.GestionUsuariosPageModule)
+    loadChildren: () => import('./pages/perfiles/admin/gestion-usuarios/gestion-usuarios.module').then( m => m.GestionUsuariosPageModule),
+    canActivate: [AuthenticacionGuard]
   }
 ];
 

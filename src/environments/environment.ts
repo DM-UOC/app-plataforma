@@ -19,7 +19,7 @@ export const CREDENCIALES_SERVIDOR = {
 
 export const SEGURIDAD_CONTROLLER = {
   CONTROLLERS: {
-    COMUN: '/seguridad',
+    COMUN: '/seguridades',
     CRUD: {
       INICIO_SISTEMA: '/verifica',
       LOGIN: '/login',
@@ -39,7 +39,28 @@ export const SEGURIDAD_CONTROLLER = {
   }
 }
 
-export let OBJECTO_MENSAJES_ALERTA = {
+export const PERFILES_CONTROLLER = {
+  COMUN: {
+    ADMINISTRDORES: '/administradores',
+    PROFESORES: '/profesores',
+    CLIENTES: '/clientes'
+  },
+  CRUD: {
+    CREAR: '/crear',
+    ACTUALIZAR: '/actualizar/:id',
+    ELIMINAR: '/eliminar/:id'
+  }
+};
+
+export const STRING_CONSTANTES = {
+  PERFILES: {
+    ADMINISTRADOR: 'TPS_ADMIN',
+    PROFESOR: 'TPS_PROFESOR',
+    CLIENTE: 'TPS_CLIENTE'
+  }
+}
+
+export const OBJECTO_MENSAJES_ALERTA = {
     cssClass: '',
     header: '',
     subHeader: '',

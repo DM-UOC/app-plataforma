@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { LoadingController, MenuController } from '@ionic/angular';
-import { SeguridadService } from 'src/app/services/seguridad.service';
+import { SeguridadService } from 'src/app/services/seguridades/seguridad.service';
 import { UtilitariosService } from 'src/app/services/utilitarios.service';
 import { OBJECTO_MENSAJES_ALERTA, SEGURIDAD_CONTROLLER } from 'src/environments/environment';
 
