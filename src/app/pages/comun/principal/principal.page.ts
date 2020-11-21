@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { MenuController } from '@ionic/angular';
 import { ICatalogo } from 'src/app/interfaces/catalogo.interface';
 import { MenuService } from 'src/app/services/seguridades/menu.service';
@@ -16,9 +17,15 @@ export class PrincipalPage implements OnInit {
   constructor(
     private menuService: MenuService,
     private seguridadService: SeguridadService,
-    private menuController: MenuController
+    private menuController: MenuController,
+    private router: Router
   ) { 
-    this.setMenuUsuario();
+  }
+
+  private enviaEmisionCambioMenu() {
+    // emito el cambio...
+    this.menuService.actualizaMenu = true;
+    this.menuService.cambioMenu.emit(this.menuService.actualizaMenu);    
   }
 
   private async setMenuUsuario() {
@@ -27,15 +34,15 @@ export class PrincipalPage implements OnInit {
     // recuperando los items del menu...
     this.catalgo = await this.seguridadService.retornaMenuUsuario();
     // agregando el menu del perfil...
-    this.menuService.setPages(this.catalgo.arreglo1);
-    // emito el cambio...
-    this.menuService.actualizaMenu = true;
-    this.menuService.cambioMenu.emit(this.menuService.actualizaMenu);    
+    await this.menuService.setPages(this.catalgo.arreglo1);
+    //emite el cambio..
+    this.enviaEmisionCambioMenu();
   }
 
   async ngOnInit() {
     try {
-      // 
+      // menu usuario...
+      this.setMenuUsuario();
     } catch (error) {
       throw error;
     }

@@ -28,7 +28,9 @@ export class AdministradoresPage implements OnInit {
   public async registraUsuario() {
     const modal = await this.modalController.create({
       component: UsuariosPage,
-      
+      componentProps: {
+        tipoUsuario: 1
+      }
     });
     await modal.present();
   }

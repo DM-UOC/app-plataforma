@@ -3,7 +3,7 @@
   <ion-card>
 
     <ion-card-header>
-      <ion-card-title>Usuarios Administradores</ion-card-title>
+      <ion-card-title>Perfil Administradores</ion-card-title>
     </ion-card-header>
 
     <ion-card-content>
@@ -14,9 +14,9 @@
         </ion-list-header>
 
         <ion-item *ngFor="let usuario of usuarios">
-          
+          <!-- ./assets/profile_image.png -->
           <ion-avatar slot="start">
-            <img src="./assets/profile_image.png">
+            <img src="{{ usuario.imagen_url }}">
           </ion-avatar>
 
           <ion-label>

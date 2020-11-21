@@ -1,7 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Camera, CameraResultType, CameraSource } from '@capacitor/core';
+import { ActionSheetController, Platform } from '@ionic/angular';
+import { IFormatoArchivo } from 'src/app/interfaces/formato.archivo.interface';
 import { IUsuario } from 'src/app/interfaces/usuario.interface';
 import { PerfilesService } from 'src/app/services/perfiles/perfiles.service';
+import { FileUploader } from 'ng2-file-upload';
 
 @Component({
   selector: 'app-usuarios',
@@ -10,30 +14,34 @@ import { PerfilesService } from 'src/app/services/perfiles/perfiles.service';
 })
 export class UsuariosPage implements OnInit {
 
+  @ViewChild('fileInput', { static: false }) fileInput: ElementRef;
+
+  public fileUploader: FileUploader;
   public formUsuario: FormGroup;
-  
   public usuarios: IUsuario = [] as IUsuario;
   public nuevoUsuario: IUsuario;
-
+  
   constructor(
     private formBuilder: FormBuilder,
-    private perfilesService: PerfilesService
+    private perfilesService: PerfilesService,
+    private platform: Platform,
+    private actionSheetController: ActionSheetController
   ) {     
   }
 
   async ngOnInit() {
     // seteo de formulario...
     this.formUsuario = this.formBuilder.group({
-      usuario: ['', [Validators.required]],
-      apellido: ['', [Validators.required]],
+      nombre: ['', [Validators.required, Validators.maxLength(30)]],
+      apellido: ['', [Validators.required, Validators.maxLength(30)]],
       correo: ['', [Validators.required, Validators.email]]
     });    
     // retornando usuarios...
     await this.retornaUsuarios();
   }
 
-  get usuario() {
-    return this.formUsuario.get('usuario');
+  get nombre() {
+    return this.formUsuario.get('nombre');
   }
 
   get apellido() {
@@ -48,8 +56,91 @@ export class UsuariosPage implements OnInit {
   }
 
   public async crear($event) {
-    console.log('tratando de guarda...');
+    try {
+      const result = await this.perfilesService.creaAdministrador(this.formUsuario.value, this.fileInput.nativeElement.files[0]);
+      return result;
+    } catch (error) {
+      throw error;
+    }
     $event.preventDefault();
   }
   
+  private async retornaOpciones() {
+    const buttons = [
+      {
+        text: 'Toma una foto..',
+        icon: 'camera',
+        handler: () => {
+          this.cargaImagenNativa(CameraSource.Camera);
+        }
+      },
+      {
+        text: 'Seleccione un archivo...',
+        icon: 'image',
+        handler: () => {
+          this.cargaImagenNativa(CameraSource.Photos);
+        }
+      }
+    ];
+ 
+    // Only allow file selection inside a browser
+    if (!this.platform.is('hybrid')) {
+      buttons.push({
+        text: 'Seleccione el archivo...',
+        icon: 'attach',
+        handler: () => {
+          this.fileInput.nativeElement.click();
+        }
+      });
+    }
+    // controlador de accion... 
+    const actionSheet = await this.actionSheetController.create({
+      header: 'Carga de archivo',
+      buttons
+    });
+    // presentando el controlador...
+    await actionSheet.present();
+  }
+
+  public async cargaImagenNativa(cameraSource: CameraSource) {
+    const image = await Camera.getPhoto({
+      quality: 60,
+      allowEditing: true,
+      resultType: CameraResultType.Base64,
+      source: cameraSource
+    });
+ 
+    const blobData = this.b64toBlob(image.base64String, `image/${image.format}`);
+    const imageName = 'Give me a name';
+  }
+
+  cargaImagenNavegador(eventTarget: EventTarget) {
+    const eventObj: MSInputMethodContext = event as unknown as MSInputMethodContext;
+    const target: HTMLInputElement = eventObj.target as HTMLInputElement;
+    const file: File = target.files[0];
+  }
+
+  private b64toBlob(b64Data, contentType = '', sliceSize = 512) {
+    const byteCharacters = atob(b64Data);
+    const byteArrays = [];
+ 
+    for (let offset = 0; offset < byteCharacters.length; offset += sliceSize) {
+      const slice = byteCharacters.slice(offset, offset + sliceSize);
+ 
+      const byteNumbers = new Array(slice.length);
+      for (let i = 0; i < slice.length; i++) {
+        byteNumbers[i] = slice.charCodeAt(i);
+      }
+ 
+      const byteArray = new Uint8Array(byteNumbers);
+      byteArrays.push(byteArray);
+    }
+ 
+    const blob = new Blob(byteArrays, { type: contentType });
+    return blob;
+  }
+
+  public async seleccionaArchivo() {
+    await this.retornaOpciones();
+  }
 }

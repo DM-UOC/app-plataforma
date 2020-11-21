@@ -27,11 +27,11 @@
     <ion-button type="submit" expand="block" [disabled]="!formGroupCredenciales.valid">Iniciar</ion-button>
     <ion-button type="button" expand="block" color="light" fill="clear">¿Usuario nuevo? ¡Registrarse como usuario!</ion-button>
 
-    <ion-button type="button" expand="block">
+    <ion-button type="button" expand="block" (click)="loginRedSocial('g')" color="danger">
       <ion-icon name="logo-google" slot="start"></ion-icon>
       Registrarse con Google
     </ion-button>
-    <ion-button type="button" expand="block">
+    <ion-button type="button" expand="block" (click)="loginRedSocial('f')" color="tertiary">
       <ion-icon name="logo-facebook" slot="start"></ion-icon>
       Registrarse con Facebook      
     </ion-button>

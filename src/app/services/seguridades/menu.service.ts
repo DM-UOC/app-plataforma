@@ -1,4 +1,6 @@
 import { EventEmitter, Injectable, Output } from '@angular/core';
+import { Storage } from '@ionic/storage';
+import { STORAGE } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -12,14 +14,20 @@ export class MenuService {
   actualizaMenu = false;
   @Output() cambioMenu: EventEmitter<boolean> = new EventEmitter();
 
-  constructor() { }
+  constructor(
+    private storage: Storage
+  ) { }
 
-  setPages(pages: any) {
-    this.pages = pages;
+  async setPages(pages: any) {
+    this.pages = JSON.stringify(pages);
+    // almacenando el token...
+    await this.storage.set(STORAGE.MENU.KEY, this.pages);
   }
   
-  getPages() {
-    return this.pages;
+  async getPages() {
+    this.pages = await this.storage.get(STORAGE.MENU.KEY);
+    // return...
+    return JSON.parse(this.pages);
   }
   
 }

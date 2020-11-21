@@ -20,3 +20,14 @@ export interface IUsuarioToken {
     perfil_menu: string;
 
 }
+
+export interface IUsuario {
+
+    nombre?: string;
+    apellido?: string;
+    nombre_completo?: string;
+    usuario?: string;
+    correo?: string;
+    imagen_url?: string;
+    
+}

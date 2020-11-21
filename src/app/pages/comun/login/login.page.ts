@@ -2,9 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { LoadingController, MenuController } from '@ionic/angular';
-import { SeguridadService } from 'src/app/services/seguridades/seguridad.service';
+
 import { UtilitariosService } from 'src/app/services/utilitarios.service';
 import { OBJECTO_MENSAJES_ALERTA, SEGURIDAD_CONTROLLER } from 'src/environments/environment';
+import { SeguridadService } from 'src/app/services/seguridades/seguridad.service';
+
 
 @Component({
   selector: 'app-login',
@@ -56,7 +58,7 @@ export class LoginPage implements OnInit {
       OBJECTO_MENSAJES_ALERTA.header = SEGURIDAD_CONTROLLER.MENSAJES.LOGIN.HEADER;
       OBJECTO_MENSAJES_ALERTA.cssClass = SEGURIDAD_CONTROLLER.MENSAJES.LOGIN.INCORRECTO.CSSCLASS;
       OBJECTO_MENSAJES_ALERTA.subHeader = SEGURIDAD_CONTROLLER.MENSAJES.LOGIN.INCORRECTO.SUBHEADER;
-      OBJECTO_MENSAJES_ALERTA.message = SEGURIDAD_CONTROLLER.MENSAJES.LOGIN.INCORRECTO.MESSAGE;
+      OBJECTO_MENSAJES_ALERTA.message = message
       OBJECTO_MENSAJES_ALERTA.buttons = SEGURIDAD_CONTROLLER.MENSAJES.LOGIN.BUTTONS;
       // presentamos la alerta...
       await this.utilitariosService.retornaMensajeAlerta(OBJECTO_MENSAJES_ALERTA);
@@ -82,5 +84,16 @@ export class LoginPage implements OnInit {
       await this.errorLogin(error.message);      
     }
   }
-  
+
+  public async loginRedSocial(redsocial: string) {
+    try {
+      // login por red social...
+      let result = await this.seguridadService.login(null, true, redsocial);
+      console.log(result);
+    } 
+    catch (error) {
+      await this.errorLogin(error.error);
+    }
+  }
+
 }

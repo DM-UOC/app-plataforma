@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { MenuController } from '@ionic/angular';
-import { ICatalogo } from 'src/app/interfaces/catalogo.interface';
 import { IMenu } from 'src/app/interfaces/menu.interface';
 import { MenuService } from 'src/app/services/seguridades/menu.service';
 import { SeguridadService } from 'src/app/services/seguridades/seguridad.service';
@@ -13,28 +13,53 @@ import { SeguridadService } from 'src/app/services/seguridades/seguridad.service
 export class MenuComponent implements OnInit {
 
   public pages: IMenu;
-  
+
   constructor(
     private menuService: MenuService,
     private menuController: MenuController,
-    private seguridadService: SeguridadService
+    private seguridadService: SeguridadService,
+    private router: Router
   ) { 
     
   }
 
-  async ngOnInit() {
-    this.menuService.cambioMenu.subscribe((result: boolean) => {
+  ngOnInit() {
+    // emite cambio...
+    this.verificaEmiteCambioMenu();
+    // verifica si actualizo la pagina...
+    this.verificaRefrescoPagina();    
+  }
+
+  private verificaEmiteCambioMenu() {
+    // verificando emite...
+    this.menuService.cambioMenu.subscribe(async (result: boolean) => {
       // se emitio el cambio...
       if(result) {
         // actualizando el menu...
-        this.pages = this.menuService.getPages();
+        this.pages = await this.menuService.getPages();
+        console.log(this.pages);
       }
-    })
+    });
   }
 
-  public logout() {
+  private verificaRefrescoPagina() {
+    // verifica si actualiza la pagina...
+    this.router
+    .events
+    .subscribe(
+      async (event: any) => {
+        if(event.id === 1 
+        && event.url === event.urlAfterRedirects) {
+          // actualizando el menu...
+          this.pages = await this.menuService.getPages();
+        }
+      }
+    )
+  }
+
+  public async logout() {
     this.menuController.enable(false);
-    this.seguridadService.logout();
+    await this.seguridadService.logout();
   }
 
 }

@@ -9,6 +9,9 @@ export const environment = {
 export const STORAGE = {
   TOKEN: {
     KEY: 'PlaT4forM4_L1c3nC1A*kEY*'
+  },
+  MENU: {
+    KEY: 'PlaT4forM4_L1c3nC1A*M3nU*'
   }
 }
 
@@ -23,6 +26,7 @@ export const SEGURIDAD_CONTROLLER = {
     CRUD: {
       INICIO_SISTEMA: '/verifica',
       LOGIN: '/login',
+      RED_SOCIAL: '/redsocial',
       MENU: '/menu'
     }
   },
@@ -41,7 +45,7 @@ export const SEGURIDAD_CONTROLLER = {
 
 export const PERFILES_CONTROLLER = {
   COMUN: {
-    ADMINISTRDORES: '/administradores',
+    ADMINISTRADORES: '/administradores',
     PROFESORES: '/profesores',
     CLIENTES: '/clientes'
   },
