@@ -17,8 +17,10 @@ import { IUsuario } from 'src/app/interfaces/usuario.interface';
 })
 export class SeguridadService {
 
+  private user: SocialUser;
+  private loggedIn: boolean;
   public usuarioToken: IUsuarioToken = null;
-  public usuarioRegistro: IUsuario = null;
+  public usuarioRegistro: IUsuario;
   public behaviorSubject = new BehaviorSubject(false);
 
   private URL_SERVER = {
@@ -79,7 +81,7 @@ export class SeguridadService {
     }).toPromise();
   }
 
-  private async verificaLoginIntermo(credenciales: ILogin) {
+  private async verificaLoginInterno(credenciales: ILogin) {
     try {
       // return data api login..
       const result: any = await this.httpClient.get(`${this.URL_SERVER.HOST}${this.SEGURIDAD_CONTROLLERS.COMUN}${this.SEGURIDAD_CONTROLLERS.CRUD.LOGIN}`, {
@@ -113,33 +115,34 @@ export class SeguridadService {
         socialProvider = GoogleLoginProvider.PROVIDER_ID;
         break;
       case 'f':
-        socialProvider = GoogleLoginProvider.PROVIDER_ID;
+        socialProvider = FacebookLoginProvider.PROVIDER_ID;
         break;
     }
     // retornando...
     return socialProvider;
   }
 
-  private registraUsuario(credencialRS: SocialUser) {
-    this.usuarioRegistro.nombre = credencialRS.firstName;
-    this.usuarioRegistro.apellido = credencialRS.lastName;
-    this.usuarioRegistro.nombre_completo = credencialRS.name;
-    this.usuarioRegistro.usuario = credencialRS.email;
-    this.usuarioRegistro.correo = credencialRS.email;
-    this.usuarioRegistro.imagen_url = credencialRS.photoUrl;
-  }
-
   private async verificaUsuarioRedSocial(credenciales: SocialUser) {
     try {
-      // seteamos los datos del usuario...
-      this.registraUsuario(credenciales);
       // return data api login..
-      const result: any = await this.httpClient.get(`${this.URL_SERVER.HOST}${this.SEGURIDAD_CONTROLLERS.COMUN}${this.SEGURIDAD_CONTROLLERS.CRUD.LOGIN}`, {
+      const result: any = await this
+      .httpClient
+      .get(`${this.URL_SERVER.HOST}${this.SEGURIDAD_CONTROLLERS.COMUN}${this.SEGURIDAD_CONTROLLERS.CRUD.RED_SOCIAL}`, {
         params: {
-          usuario: this.usuarioRegistro.usuario,
-          correo: this.usuarioRegistro.correo
+          credenciales: JSON.stringify(credenciales)
         }
-      }).toPromise();
+      })
+      .toPromise();
+      // verificando resultados...
+      if(result) {
+        const { token } = result;
+        // almacenando el token...
+        this.storage.set(STORAGE.TOKEN.KEY, token);
+        // guardando el usuario...
+        this.setUsuario(this.jwtHelperService.decodeToken(token));
+        // bandera q indica q el usuario está logeado...
+        this.behaviorSubject.next(true);
+      }     
       // return...
       return result;
     } catch (error) {
@@ -157,7 +160,7 @@ export class SeguridadService {
       };
       // verifica la opcion a ingresar al sistema...
       if(!redSocial) {
-        result = await this.verificaLoginIntermo(credenciales);
+        result = await this.verificaLoginInterno(credenciales);
       }
       else {
         // red social con la que ingresará...
@@ -180,25 +183,40 @@ export class SeguridadService {
   }
 
   public async logout() {
-    // limpiando el token...
-    await this.storage.remove(STORAGE.TOKEN.KEY);
-    await this.storage.remove(STORAGE.MENU.KEY);
-    // bandera de autenticacion false..
-    this.behaviorSubject.next(false);
-    // retorna a la pagina de login...
-    this.router.navigate(['/login']);
+    try {
+      const usuario: any = this.getUsuarioToken();
+      // limpiando el token...
+      await this.storage.remove(STORAGE.TOKEN.KEY);
+      await this.storage.remove(STORAGE.MENU.KEY);
+      // verificando si se ha logeado con red social...
+      if(usuario.codigo_perfil === 3) {
+        this.socialAuthService.authState.subscribe(async (user) => {
+          if(!user) {
+            await this.socialAuthService.signOut();
+          }
+          else {
+            this.user = user;
+            this.loggedIn = (user != null);
+          }
+        });
+      }
+      // bandera de autenticacion false..
+      this.behaviorSubject.next(false);
+      // retorna a la pagina de login...
+      this.router.navigate(['/login']);      
+    } catch (error) {
+      throw error;
+    }
   }
 
   public async retornaMenuUsuario() {
     try {
       // get menu usuario...
-      const result = await this.httpClient.get<ICatalogo>(`${this.URL_SERVER.HOST}${this.SEGURIDAD_CONTROLLERS.COMUN}${this.SEGURIDAD_CONTROLLERS.CRUD.MENU}`, {
+      return await this.httpClient.get<ICatalogo>(`${this.URL_SERVER.HOST}${this.SEGURIDAD_CONTROLLERS.COMUN}${this.SEGURIDAD_CONTROLLERS.CRUD.MENU}`, {
         params: {
           codigo: this.usuarioToken.perfil_menu
         }
       }).toPromise();
-      // return...
-      return result;
     } catch (error) {
       throw error;
     }

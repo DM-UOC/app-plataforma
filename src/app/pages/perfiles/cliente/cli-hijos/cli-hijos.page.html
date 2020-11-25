@@ -1,7 +1,15 @@
 <ion-header>
+
   <ion-toolbar>
-    <ion-title>Crear Usuarios</ion-title>
-  </ion-toolbar>
+
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+
+    <ion-title>Crear registro</ion-title>
+
+  </ion-toolbar>  
+
 </ion-header>
 
 <ion-content>
@@ -14,7 +22,7 @@
 
         <div class="img-wrapper">
 
-          <ion-img src="assets/profile_image.png"></ion-img>
+          <ion-img [src]="nuevoUsuario?.imagen_url || 'assets/profile_image.png'"></ion-img>
           <input
             type="file"
             #fileInput
@@ -33,6 +41,8 @@
 
       <ion-card-content>
 
+        <ion-input formControlName="representante_id" value="{{representante._id}}"></ion-input>
+        
         <ion-item lines="full">
           <ion-label position="floating">Nombres:</ion-label>
           <ion-input formControlName="nombre"></ion-input>
@@ -52,13 +62,12 @@
         </div>
     
         <ion-item lines="full">
-          <ion-label position="floating">Correo electrónico</ion-label>
-          <ion-input type="email" formControlName="correo"></ion-input>
+          <ion-label position="floating">Fecha nacimiento:</ion-label>
+          <ion-datetime displayFormat="YYYY-MM-DD" placeholder="Fecha de nacimiento" formControlName="fecha_nacimiento"></ion-datetime>
         </ion-item>
-    
-        <div *ngIf="(correo.dirty || apellido.touched) && apellido.errors" class="errors">
-          <span *ngIf="correo.errors?.required">Ingrese el correo electrónico</span>
-          <span *ngIf="correo.errors?.email">Correo electrónico es incorrecto</span>
+        
+        <div *ngIf="(fechaNacimiento.dirty || fechaNacimiento.touched) && fechaNacimiento.errors" class="errors">
+          <span *ngIf="fechaNacimiento.errors?.required">Ingrese la fecha de nacimiento</span>
         </div>
 
         <ion-button type="submit" color="danger" expand="block" 

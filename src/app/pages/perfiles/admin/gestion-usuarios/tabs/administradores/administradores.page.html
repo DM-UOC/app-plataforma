@@ -16,7 +16,7 @@
         <ion-item *ngFor="let usuario of usuarios">
           <!-- ./assets/profile_image.png -->
           <ion-avatar slot="start">
-            <img src="{{ usuario.imagen_url }}">
+            <img [src]="!usuario.usuario_imagen.data? 'assets/profile_image.png': usuario?.imagen_url">
           </ion-avatar>
 
           <ion-label>

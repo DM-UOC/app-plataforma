@@ -3,7 +3,7 @@
     <ion-card>
 
         <ion-card-header>
-            <ion-card-title>Perfil Administradores</ion-card-title>
+            <ion-card-title>Perfil Profesores</ion-card-title>
         </ion-card-header>
 
         <ion-card-content>
@@ -16,20 +16,20 @@
             <ion-item *ngFor="let usuario of usuarios">
                 
                 <ion-avatar slot="start">
-                <img src="./assets/profile_image.png">
+                    <img [src]="!usuario.usuario_imagen.data? 'assets/profile_image.png': usuario?.imagen_url">
                 </ion-avatar>
 
                 <ion-label>
-                <h2>{{ usuario.nombre }}</h2>
-                <h3>Perfil: {{ usuario.perfiles[0].descripcion }}</h3>
-                <p>{{ usuario.usuario }}</p>
+                    <h2>{{ usuario.nombre }}</h2>
+                    <h3>Perfil: {{ usuario.perfiles[0].descripcion }}</h3>
+                    <p>{{ usuario.usuario }}</p>
                 </ion-label>
 
                 <ion-button (click)="actualizar();">
-                <ion-icon name="create"></ion-icon>
+                    <ion-icon name="create"></ion-icon>
                 </ion-button>          
                 <ion-button (click)="eliminar();">
-                <ion-icon name="trash"></ion-icon>
+                    <ion-icon name="trash"></ion-icon>
                 </ion-button>
 
             </ion-item>

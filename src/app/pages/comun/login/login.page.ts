@@ -86,13 +86,23 @@ export class LoginPage implements OnInit {
   }
 
   public async loginRedSocial(redsocial: string) {
+    const loading = await this.loadingController.create();
+    await loading.present();
     try {
       // login por red social...
       let result = await this.seguridadService.login(null, true, redsocial);
-      console.log(result);
+      // verifica si el usuario existe...
+      if(result) {
+        // reenviamos a la pagina principal...
+        this.router.navigate(['/principal']);
+      }
+      // cerramos el loadingcontrol...
+      await loading.dismiss();      
     } 
     catch (error) {
-      await this.errorLogin(error.error);
+      // cerramos el loadingcontrol...
+      await loading.dismiss();
+      await this.errorLogin(error.message);
     }
   }
 

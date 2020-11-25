@@ -25,7 +25,21 @@ const routes: Routes = [
     path: 'gestion-usuarios',
     loadChildren: () => import('./pages/perfiles/admin/gestion-usuarios/gestion-usuarios.module').then( m => m.GestionUsuariosPageModule),
     canActivate: [AuthenticacionGuard]
-  }
+  },
+  {
+    path: 'gestion-curricular',
+    loadChildren: () => import('./pages/perfiles/admin/gestion-curricular/gestion-curricular.module').then( m => m.GestionCurricularPageModule),
+    canActivate: [AuthenticacionGuard]
+  },
+  {
+    path: 'gestion-hijos',
+    loadChildren: () => import('./pages/perfiles/cliente/gestion-hijos/gestion-hijos.module').then( m => m.GestionHijosPageModule),
+    canActivate: [AuthenticacionGuard]
+  },
+  {
+    path: 'cli-hijos',
+    loadChildren: () => import('./pages/perfiles/cliente/cli-hijos/cli-hijos.module').then( m => m.CliHijosPageModule)
+  },
 ];
 
 @NgModule({

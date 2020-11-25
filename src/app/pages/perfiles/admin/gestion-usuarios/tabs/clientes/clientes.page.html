@@ -1,0 +1,43 @@
+<ion-content>
+
+  <ion-card>
+
+    <ion-card-header>
+        <ion-card-title>Perfil Representantes</ion-card-title>
+    </ion-card-header>
+
+    <ion-card-content>
+
+        <ion-list>
+        <ion-list-header>
+            Lista de Usuarios
+        </ion-list-header>
+
+        <ion-item *ngFor="let usuario of usuarios">
+            
+            <ion-avatar slot="start">
+                <img [src]="usuario.validaciones[0].es_red_social? usuario?.imagen_url: 'assets/profile_image.png'">
+            </ion-avatar>
+
+            <ion-label>
+                <h2>{{ usuario.nombre }}</h2>
+                <h3>Perfil: {{ usuario.perfiles[0].descripcion }}</h3>
+                <p>{{ usuario.usuario }}</p>
+            </ion-label>
+
+            <ion-button (click)="actualizar();">
+                <ion-icon name="create"></ion-icon>
+            </ion-button>          
+            <ion-button (click)="eliminar();">
+                <ion-icon name="trash"></ion-icon>
+            </ion-button>
+
+        </ion-item>
+        
+        </ion-list>
+
+    </ion-card-content>
+    
+  </ion-card>
+
+</ion-content>

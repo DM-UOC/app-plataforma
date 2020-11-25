@@ -52,7 +52,14 @@ export const PERFILES_CONTROLLER = {
   CRUD: {
     CREAR: '/crear',
     ACTUALIZAR: '/actualizar/:id',
-    ELIMINAR: '/eliminar/:id'
+    ELIMINAR: '/eliminar/:id',
+    CLIENTES: {
+      EXISTE_REPRESENTANTE: '/representante',
+      HIJOS: {
+        CREAR: '/hijo',
+        LISTAR: '/hijos'
+      }
+    }
   }
 };
 

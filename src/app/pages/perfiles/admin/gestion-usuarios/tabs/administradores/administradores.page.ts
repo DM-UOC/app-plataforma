@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { PerfilesService } from 'src/app/services/perfiles/perfiles.service';
-import { UsuariosPage } from '../../../usuarios/usuarios.page';
+import { UsuariosPage } from '../../usuarios/usuarios.page';
 
 @Component({
   selector: 'app-administradores',
@@ -18,24 +18,35 @@ export class AdministradoresPage implements OnInit {
   ) { }
 
   async ngOnInit() {
+    await this.verificaCambioUsuarios();
     await this.retornaUsuarios();
   }
 
   public async retornaUsuarios() {
-    this.usuarios = await this.perfilesService.retornaAdministradores();    
+    this.usuarios = await this.perfilesService.retornaUsuarios();
   }
 
+  private async verificaCambioUsuarios() {
+    // verificando emite...
+    this.perfilesService.creoUsuario.subscribe(async (result: boolean) => {
+      if(result) {
+        await this.retornaUsuarios()
+      }
+    });    
+  }
+  
   public async registraUsuario() {
+    // abriendo el modal...
     const modal = await this.modalController.create({
       component: UsuariosPage,
       componentProps: {
-        tipoUsuario: 1
+        tipoPerfil: 1
       }
     });
     await modal.present();
   }
 
-  public async actulizar() {}
+  public async actualizar() {}
 
   public async eliminar() {}
 

@@ -37,7 +37,6 @@ export class MenuComponent implements OnInit {
       if(result) {
         // actualizando el menu...
         this.pages = await this.menuService.getPages();
-        console.log(this.pages);
       }
     });
   }

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { MenuController } from '@ionic/angular';
 import { ICatalogo } from 'src/app/interfaces/catalogo.interface';
+import { ClientesService } from 'src/app/services/perfiles/clientes/clientes.service';
 import { MenuService } from 'src/app/services/seguridades/menu.service';
 import { SeguridadService } from 'src/app/services/seguridades/seguridad.service';
 
@@ -13,12 +14,13 @@ import { SeguridadService } from 'src/app/services/seguridades/seguridad.service
 export class PrincipalPage implements OnInit {
   
   private catalgo: ICatalogo;
+  private representante: any;
 
   constructor(
     private menuService: MenuService,
     private seguridadService: SeguridadService,
     private menuController: MenuController,
-    private router: Router
+    private clientesService: ClientesService
   ) { 
   }
 
@@ -39,10 +41,25 @@ export class PrincipalPage implements OnInit {
     this.enviaEmisionCambioMenu();
   }
 
+  private async verificaExisteRepresentante() {
+    try {
+      const usuario = this.seguridadService.getUsuarioToken();
+      // verificando si existe el usuario tipo cliente en la coleccion representantes...
+      if(usuario.codigo_perfil === 3) {
+        // verificando el usuario tipo cliente...
+        this.representante = await this.clientesService.verificaExisteRepresentante(usuario.usuario);
+        this.clientesService.setRepresentante(this.representante);
+      }
+    } catch (error) {
+      throw error;
+    }
+  }
+
   async ngOnInit() {
     try {
       // menu usuario...
       this.setMenuUsuario();
+      await this.verificaExisteRepresentante();
     } catch (error) {
       throw error;
     }

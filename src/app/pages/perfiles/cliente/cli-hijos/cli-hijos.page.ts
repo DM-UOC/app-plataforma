@@ -1,21 +1,23 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Camera, CameraResultType, CameraSource } from '@capacitor/core';
-import { ActionSheetController, Platform } from '@ionic/angular';
-import { IFormatoArchivo } from 'src/app/interfaces/formato.archivo.interface';
-import { IUsuario } from 'src/app/interfaces/usuario.interface';
-import { PerfilesService } from 'src/app/services/perfiles/perfiles.service';
+import { ActionSheetController, ModalController, Platform } from '@ionic/angular';
 import { FileUploader } from 'ng2-file-upload';
+import { IUsuario } from 'src/app/interfaces/login.interface';
+import { ClientesService } from 'src/app/services/perfiles/clientes/clientes.service';
+import { PerfilesService } from 'src/app/services/perfiles/perfiles.service';
 
 @Component({
-  selector: 'app-usuarios',
-  templateUrl: './usuarios.page.html',
-  styleUrls: ['./usuarios.page.scss'],
+  selector: 'app-cli-hijos',
+  templateUrl: './cli-hijos.page.html',
+  styleUrls: ['./cli-hijos.page.scss'],
 })
-export class UsuariosPage implements OnInit {
+export class CliHijosPage implements OnInit {
 
+  @Input() tipoPerfil: number;
+  @Input() representante: any;
   @ViewChild('fileInput', { static: false }) fileInput: ElementRef;
-
+  
   public fileUploader: FileUploader;
   public formUsuario: FormGroup;
   public usuarios: IUsuario = [] as IUsuario;
@@ -23,23 +25,27 @@ export class UsuariosPage implements OnInit {
   
   constructor(
     private formBuilder: FormBuilder,
-    private perfilesService: PerfilesService,
+    private clientesService: ClientesService,
     private platform: Platform,
-    private actionSheetController: ActionSheetController
-  ) {     
+    private actionSheetController: ActionSheetController,
+    private modalController: ModalController
+  ) { }
+
+  ngOnInit() {
+    this.inicioFormulario();
+    this.clientesService.setRepresentante(this.representante);
   }
 
-  async ngOnInit() {
+  private inicioFormulario() {
     // seteo de formulario...
     this.formUsuario = this.formBuilder.group({
+      representante_id: [this.representante._id, null],
       nombre: ['', [Validators.required, Validators.maxLength(30)]],
       apellido: ['', [Validators.required, Validators.maxLength(30)]],
-      correo: ['', [Validators.required, Validators.email]]
+      fecha_nacimiento: ['', [Validators.required]]
     });    
-    // retornando usuarios...
-    await this.retornaUsuarios();
   }
-
+  
   get nombre() {
     return this.formUsuario.get('nombre');
   }
@@ -48,17 +54,30 @@ export class UsuariosPage implements OnInit {
     return this.formUsuario.get('apellido');
   }
 
-  get correo() {
-    return this.formUsuario.get('correo');
+  get fechaNacimiento() {
+    return this.formUsuario.get('fecha_nacimiento');
+  }
+  
+  private async emiteCambioUsuario() {
+    // emito el cambio...
+    this.clientesService.actualizaListado = true;
+    this.clientesService.creoUsuario.emit(this.clientesService.actualizaListado); 
   }
 
-  public async retornaUsuarios() {
+  private cerrarModal() {
+    this.modalController.dismiss({
+      representante: this.representante
+    });
   }
 
   public async crear($event) {
     try {
-      const result = await this.perfilesService.creaAdministrador(this.formUsuario.value, this.fileInput.nativeElement.files[0]);
-      return result;
+      // creando el usuario...
+      this.nuevoUsuario = await this.clientesService.crearHijo(this.formUsuario.value, this.fileInput.nativeElement.files[0]);
+      // emite el refresco de usuarios...
+      await this.emiteCambioUsuario();
+      // cerramos el modal...
+      this.cerrarModal();
     } catch (error) {
       throw error;
     }
@@ -143,4 +162,5 @@ export class UsuariosPage implements OnInit {
   public async seleccionaArchivo() {
     await this.retornaOpciones();
   }
+    
 }

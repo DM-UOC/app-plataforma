@@ -1,0 +1,84 @@
+<ion-header>
+
+  <ion-toolbar>
+
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+
+    <ion-title>Crear Usuarios</ion-title>
+
+  </ion-toolbar>  
+
+</ion-header>
+
+<ion-content>
+
+  <form (ngSubmit)="crear($event);" [formGroup]="formUsuario" *ngIf="formUsuario">
+
+    <ion-card>
+
+      <ion-card-header>
+
+        <div class="img-wrapper">
+
+          <ion-img [src]="nuevoUsuario?.imagen_url || 'assets/profile_image.png'"></ion-img>
+          <input
+            type="file"
+            #fileInput
+            (change)="cargaImagenNavegador($event)"
+            hidden="true"
+            accept="image/*"
+          />
+          <ion-button color="light" (click)="seleccionaArchivo();">
+            <ion-icon slot="icon-only" name="camera-outline" color="medium">
+            </ion-icon>
+          </ion-button>
+
+        </div>
+
+      </ion-card-header>
+
+      <ion-card-content>
+
+        <ion-item lines="full">
+          <ion-label position="floating">Nombres:</ion-label>
+          <ion-input formControlName="nombre"></ion-input>
+        </ion-item>
+        
+        <div *ngIf="(nombre.dirty || nombre.touched) && nombre.errors" class="errors">
+          <span *ngIf="nombre.errors?.required">Ingrese el(los) nombre(s)</span>
+        </div>
+
+        <ion-item lines="full">
+          <ion-label position="floating">Apellidos:</ion-label>
+          <ion-input formControlName="apellido"></ion-input>
+        </ion-item>
+    
+        <div *ngIf="(apellido.dirty || apellido.touched) && apellido.errors" class="errors">
+          <span *ngIf="apellido.errors?.required">Ingrese el(los) apellido(s)</span>
+        </div>
+    
+        <ion-item lines="full">
+          <ion-label position="floating">Correo electrónico</ion-label>
+          <ion-input type="email" formControlName="correo"></ion-input>
+        </ion-item>
+    
+        <div *ngIf="(correo.dirty || apellido.touched) && apellido.errors" class="errors">
+          <span *ngIf="correo.errors?.required">Ingrese el correo electrónico</span>
+          <span *ngIf="correo.errors?.email">Correo electrónico es incorrecto</span>
+        </div>
+
+        <ion-button type="submit" color="danger" expand="block" 
+        [disabled]="!formUsuario.valid">
+          <ion-icon slot="start" name="add-circle-outline"></ion-icon>
+          Crear
+        </ion-button>
+
+      </ion-card-content>
+    
+    </ion-card>
+
+  </form>
+
+</ion-content>

@@ -11,7 +11,7 @@ export class MenuService {
   /**
   * variables que verifican si hay cambios en el contador d preguntas contestadas
   */
-  actualizaMenu = false;
+  public actualizaMenu = false;
   @Output() cambioMenu: EventEmitter<boolean> = new EventEmitter();
 
   constructor(

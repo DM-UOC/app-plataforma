@@ -1,0 +1,48 @@
+<ion-content>
+
+    <ion-card-header>
+        <ion-card-title>Perfil Administradores</ion-card-title>
+      </ion-card-header>
+  
+      <ion-card-content>
+  
+        <ion-list>
+          <ion-list-header>
+            Lista de Usuarios
+          </ion-list-header>
+  
+          <ion-item *ngFor="let usuario of usuarios">
+            <!-- ./assets/profile_image.png -->
+            <ion-avatar slot="start">
+              <img [src]="!usuario.usuario_imagen.data? 'assets/profile_image.png': usuario?.imagen_url">
+            </ion-avatar>
+  
+            <ion-label>
+              <h2>{{ usuario.nombre }}</h2>
+              <h3>Perfil: {{ usuario.perfiles[0].descripcion }}</h3>
+              <p>{{ usuario.usuario }}</p>
+            </ion-label>
+  
+            <ion-button (click)="actualizar();">
+              <ion-icon name="create"></ion-icon>
+            </ion-button>          
+            <ion-button (click)="eliminar();">
+              <ion-icon name="trash"></ion-icon>
+            </ion-button>
+  
+          </ion-item>
+        
+        </ion-list>
+  
+      </ion-card-content>
+    
+    </ion-card>
+  
+    <!-- fab placed to the top and end and on the top edge of the content overlapping header -->
+    <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+      <ion-fab-button (click)="registraUsuario();">
+        <ion-icon name="person"></ion-icon>
+      </ion-fab-button>
+    </ion-fab>
+    
+</ion-content>
