@@ -72,7 +72,6 @@ export class UsuariosPage implements OnInit {
     } catch (error) {
       throw error;
     }
-    $event.preventDefault();
   }
   
   private async retornaOpciones() {

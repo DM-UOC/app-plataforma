@@ -4,17 +4,17 @@ import { FormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
-import { AdmMateriasPageRoutingModule } from './adm-materias-routing.module';
+import { TabLectivosPageRoutingModule } from './tab-lectivos-routing.module';
 
-import { AdmMateriasPage } from './adm-materias.page';
+import { TabLectivosPage } from './tab-lectivos.page';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    AdmMateriasPageRoutingModule
+    TabLectivosPageRoutingModule
   ],
-  declarations: [AdmMateriasPage]
+  declarations: [TabLectivosPage]
 })
-export class AdmMateriasPageModule {}
+export class TabLectivosPageModule {}

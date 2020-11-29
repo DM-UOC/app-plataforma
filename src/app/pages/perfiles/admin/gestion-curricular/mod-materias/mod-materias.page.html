@@ -1,0 +1,55 @@
+<ion-header>
+
+  <ion-toolbar>
+
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>    
+    <ion-title>Gestion Materias</ion-title>
+
+  </ion-toolbar>
+
+</ion-header>
+
+<ion-content>
+
+  <form (ngSubmit)="crear($event);" [formGroup]="formMateria" *ngIf="formMateria">
+
+    <ion-card>
+
+      <ion-card-content>
+
+        <ion-item lines="full">
+          <ion-label position="floating">Descripción:</ion-label>
+          <ion-input formControlName="descripcion" placeholder="descripción..."></ion-input>
+        </ion-item>
+        
+        <div *ngIf="(descripcion.dirty || descripcion.touched) && descripcion.errors" class="errors">
+          <span *ngIf="descripcion.errors?.required">Ingrese la descripción de la materia</span>
+          <span *ngIf="descripcion.errors?.minlength">Ingrese 5 caracteres como mínimo</span>
+          <span *ngIf="descripcion.errors?.maxlength">Ingrese 30 caracteres como máximo</span>
+        </div>
+
+        <ion-item lines="full">
+          <ion-label position="floating">Observación:</ion-label>
+          <ion-textarea formControlName="observacion" placeholder="observación..."></ion-textarea>
+        </ion-item>
+        
+        <div *ngIf="(observacion.dirty || observacion.touched) && observacion.errors" class="errors">
+          <span *ngIf="observacion.errors?.minlength">Ingrese 10 caracteres como mínimo</span>
+          <span *ngIf="observacion.errors?.maxlength">Ingrese 200 caracteres como máximo</span>
+        </div>
+
+        <ion-button type="submit" color="danger" expand="block" 
+        [disabled]="!formMateria.valid">
+          <ion-icon slot="start" name="add-circle-outline"></ion-icon>
+          Crear
+        </ion-button>
+
+      </ion-card-content>
+    
+    </ion-card>
+
+  </form>
+  
+</ion-content>

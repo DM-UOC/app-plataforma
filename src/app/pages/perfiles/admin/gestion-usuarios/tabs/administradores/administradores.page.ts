@@ -13,7 +13,7 @@ export class AdministradoresPage implements OnInit {
   public usuarios: any = [];
 
   constructor(
-    private perfilesService: PerfilesService,
+    public perfilesService: PerfilesService,
     private modalController: ModalController
   ) { }
 

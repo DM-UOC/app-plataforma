@@ -9,8 +9,12 @@ const routes: Routes = [
     component: GestionCurricularPage,
     children: [
       {
-        path: 'adm-materias',
-        loadChildren: () => import('./tabs/adm-materias/adm-materias.module').then( m => m.AdmMateriasPageModule)
+        path: 'tab-lectivos',
+        loadChildren: () => import('./tabs/tab-lectivos/tab-lectivos.module').then( m => m.TabLectivosPageModule)
+      },
+      {
+        path: 'tab-materias',
+        loadChildren: () => import('./tabs/tab-materias/tab-materias.module').then( m => m.TabMateriasPageModule)
       },
       {
         path: 'adm-materias-profesores',

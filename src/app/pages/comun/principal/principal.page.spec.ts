@@ -10,7 +10,10 @@ describe('PrincipalPage', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ PrincipalPage ],
-      imports: [IonicModule.forRoot()]
+      imports: [
+        IonicModule.forRoot(),
+        Storage
+      ]
     }).compileComponents();
 
     fixture = TestBed.createComponent(PrincipalPage);

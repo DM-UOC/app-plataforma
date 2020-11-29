@@ -1,4 +1,5 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { FormBuilder } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 
 import { CliHijosPage } from './cli-hijos.page';
@@ -10,7 +11,9 @@ describe('CliHijosPage', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ CliHijosPage ],
-      imports: [IonicModule.forRoot()]
+      imports: [
+        FormBuilder,
+        IonicModule.forRoot()]
     }).compileComponents();
 
     fixture = TestBed.createComponent(CliHijosPage);
