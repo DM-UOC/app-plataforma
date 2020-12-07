@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ModalController } from '@ionic/angular';
 import { IMateria } from 'src/app/interfaces/materia.interface';
 import { MateriasService } from 'src/app/services/materias/materias.service';
 
@@ -15,7 +16,8 @@ export class ModMateriasPage implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
-    private materiasService: MateriasService
+    private materiasService: MateriasService,
+    private modalController: ModalController
   ) { }
 
   async ngOnInit() {
@@ -49,7 +51,9 @@ export class ModMateriasPage implements OnInit {
       // creando el usuario...
       this.nuevaMateria = await this.materiasService.creaMateria(this.formMateria.value);
       // emite el refresco de usuarios...
-      await this.emiteCambio(); 
+      await this.emiteCambio();
+      // cierra el modal...
+      await this.modalController.dismiss();      
     } catch (error) {
       throw error;
     }    

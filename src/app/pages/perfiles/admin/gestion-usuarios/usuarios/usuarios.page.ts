@@ -14,6 +14,7 @@ import { FileUploader } from 'ng2-file-upload';
 })
 export class UsuariosPage implements OnInit {
 
+  @Input() usuario: IUsuario;
   @Input() tipoPerfil: number;
   @ViewChild('fileInput', { static: false }) fileInput: ElementRef;
 
@@ -21,7 +22,8 @@ export class UsuariosPage implements OnInit {
   public formUsuario: FormGroup;
   public usuarios: IUsuario = [] as IUsuario;
   public nuevoUsuario: IUsuario;
-  
+  private imagenSeleccionada: File;
+
   constructor(
     private formBuilder: FormBuilder,
     private perfilesService: PerfilesService,
@@ -34,6 +36,21 @@ export class UsuariosPage implements OnInit {
   async ngOnInit() {
     // inicia formulario...
     this.iniciaFormulario();
+    // verifiaca si es una actualizacion de informacion...
+    this.verificaActualizaDatos();
+  }
+
+  private verificaActualizaDatos() {
+    try {
+      // verifica si el objeto esta definido...
+      if(this.usuario !== undefined) {
+        this.formUsuario.controls['nombre'].setValue(this.usuario.nombre);
+        this.formUsuario.controls['apellido'].setValue(this.usuario.apellido);
+        this.formUsuario.controls['correo'].setValue(this.usuario.correo);
+      }
+    } catch (error) {
+      throw error;
+    }
   }
 
   private iniciaFormulario() {
@@ -65,10 +82,19 @@ export class UsuariosPage implements OnInit {
 
   public async crear($event) {
     try {
-      // creando el usuario...
-      this.nuevoUsuario = await this.perfilesService.creaUsuario(this.formUsuario.value, this.fileInput.nativeElement.files[0], this.tipoPerfil);
+      // verificando la opcion a ejecutar...
+      if(!this.usuario) {
+        // creando el usuario...
+        this.nuevoUsuario = await this.perfilesService.creaUsuario(this.formUsuario.value, this.imagenSeleccionada);
+      }
+      else {
+        // actualiza el usuario...
+        this.nuevoUsuario = await this.perfilesService.actualizaUsuario(this.formUsuario.value, this.usuario, this.imagenSeleccionada);
+      }
       // emite el refresco de usuarios...
       await this.emiteCambioUsuario(); 
+      // cierra el modal...
+      await this.modalController.dismiss();
     } catch (error) {
       throw error;
     }
@@ -126,7 +152,7 @@ export class UsuariosPage implements OnInit {
   cargaImagenNavegador(eventTarget: EventTarget) {
     const eventObj: MSInputMethodContext = event as unknown as MSInputMethodContext;
     const target: HTMLInputElement = eventObj.target as HTMLInputElement;
-    const file: File = target.files[0];
+    this.imagenSeleccionada = target.files[0];
   }
 
   private b64toBlob(b64Data, contentType = '', sliceSize = 512) {

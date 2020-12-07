@@ -3,7 +3,7 @@ ion-card-header {
   
     .img-wrapper {
         width: 290px;
-        height: 150px;
+        height: 230px;
         position: relative;
         margin: 0 auto;
       
@@ -11,7 +11,7 @@ ion-card-header {
             display: block;
             border-radius: 50%;
             position: absolute;
-            bottom: calc(-1*(80px + 4px));
+            bottom: calc(-1*(40px + 4px));
             background-color: #fff;
         }
   

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
+import { IMateria } from 'src/app/interfaces/materia.interface';
 import { MateriasService } from 'src/app/services/materias/materias.service';
 import { ModMateriasPage } from '../../mod-materias/mod-materias.page';
 
@@ -10,7 +11,7 @@ import { ModMateriasPage } from '../../mod-materias/mod-materias.page';
 })
 export class TabMateriasPage implements OnInit {
 
-  public materias: any = [];
+  public materias: IMateria [] = [];
 
   constructor(
     private modalController: ModalController,

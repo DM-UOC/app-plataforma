@@ -38,8 +38,14 @@ const routes: Routes = [
   },
   {
     path: 'cli-hijos',
-    loadChildren: () => import('./pages/perfiles/cliente/cli-hijos/cli-hijos.module').then( m => m.CliHijosPageModule)
+    loadChildren: () => import('./pages/perfiles/cliente/cli-hijos/cli-hijos.module').then( m => m.CliHijosPageModule),
+    canActivate: [AuthenticacionGuard]
   },
+  {
+    path: 'parciales-detalle',
+    loadChildren: () => import('./pages/perfiles/admin/gestion-curricular/parciales-detalle/parciales-detalle.module').then( m => m.ParcialesDetallePageModule),
+    canActivate: [AuthenticacionGuard]
+  }  
 ];
 
 @NgModule({

@@ -1,40 +1,68 @@
 <ion-content>
 
-  <form (ngSubmit)="inicioSesion()" [formGroup]="formGroupCredenciales" *ngIf="formGroupCredenciales">
-
-    <div class="input-group">
-
-      <ion-item>
-        <ion-input type="email" placeHolder="Escriba el correo..." formControlName="usuario"></ion-input>
-      </ion-item>
-      
-      <div *ngIf="(usuario.dirty || usuario.touched) && usuario.errors" class="errors">
-        <span *ngIf="usuario.errors?.required">Ingrese el correo electrónico</span>
-        <span *ngIf="usuario.errors?.email">Correo electrónico es incorrecto</span>
-      </div>
-      
-      <ion-item>
-        <ion-input type="password" placeHolder="Escriba su clave..." formControlName="clave"></ion-input>
-      </ion-item>
+  <ion-card>
   
-      <div *ngIf="(clave.dirty || clave.touched) && clave.errors" class="errors">
-        <span *ngIf="clave.errors?.required">Ingrese la clave</span>
-        <span *ngIf="clave.errors?.minlength">La clave necesita almenos 6 caracteres</span>
-      </div>
+    <img src="../../../../assets/kids_zone.jpeg" />
+  
+    <ion-card-header>
+ 
+      <ion-card-title>
+ 
+        <ion-text color="secondary">
+          <div class="ion-text-center">
+            Kids Zone
+          </div>
+        </ion-text>
+ 
+      </ion-card-title>
+ 
+    </ion-card-header>
+  
+    <ion-card-content>
+
+      <form (ngSubmit)="inicioSesion()" [formGroup]="formGroupCredenciales" *ngIf="formGroupCredenciales">
+
+        <div class="input-group">
+    
+          <ion-item>
+            <ion-input type="email" placeHolder="usuario / correo..." formControlName="usuario"></ion-input>
+          </ion-item>
+          
+          <div *ngIf="(usuario.dirty || usuario.touched) && usuario.errors" class="errors">
+            <span *ngIf="usuario.errors?.required">Ingrese el correo electrónico</span>
+            <span *ngIf="usuario.errors?.email">Correo electrónico es incorrecto</span>
+          </div>
+          
+          <ion-item>
+            <ion-input type="password" placeHolder="clave..." formControlName="clave"></ion-input>
+          </ion-item>
       
-    </div>
+          <div *ngIf="(clave.dirty || clave.touched) && clave.errors" class="errors">
+            <span *ngIf="clave.errors?.required">Ingrese la clave</span>
+            <span *ngIf="clave.errors?.minlength">La clave necesita almenos 6 caracteres</span>
+          </div>
+          
+        </div>
+    
+        <ion-button type="submit" expand="block" color="secondary" [disabled]="!formGroupCredenciales.valid">Iniciar</ion-button>
+        <ion-button type="button" expand="block" color="secondary" fill="clear">
+          <ion-label>
+            <h6>¿Nuevo? ¡Regístrate!</h6>
+          </ion-label>
+        </ion-button>
+    
+        <ion-button type="button" expand="block" (click)="loginRedSocial('g')" color="danger">
+          <ion-icon name="logo-google" slot="start"></ion-icon>
+          Registrarse con Google
+        </ion-button>
+        <ion-button type="button" expand="block" (click)="loginRedSocial('f')" color="tertiary">
+          <ion-icon name="logo-facebook" slot="start"></ion-icon>
+          Registrarse con Facebook      
+        </ion-button>
+      </form>
 
-    <ion-button type="submit" expand="block" [disabled]="!formGroupCredenciales.valid">Iniciar</ion-button>
-    <ion-button type="button" expand="block" color="light" fill="clear">¿Usuario nuevo? ¡Registrarse como usuario!</ion-button>
-
-    <ion-button type="button" expand="block" (click)="loginRedSocial('g')" color="danger">
-      <ion-icon name="logo-google" slot="start"></ion-icon>
-      Registrarse con Google
-    </ion-button>
-    <ion-button type="button" expand="block" (click)="loginRedSocial('f')" color="tertiary">
-      <ion-icon name="logo-facebook" slot="start"></ion-icon>
-      Registrarse con Facebook      
-    </ion-button>
-  </form>
+    </ion-card-content>
+  
+  </ion-card>
   
 </ion-content>

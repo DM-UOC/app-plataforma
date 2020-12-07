@@ -1,0 +1,56 @@
+<ion-header>
+
+  <ion-toolbar>
+
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/gestion-curricular"></ion-back-button>
+      <ion-title>Detalle parciales</ion-title>
+    </ion-buttons>
+    
+  </ion-toolbar>      
+
+</ion-header>
+
+<ion-content>
+
+  <ion-card>
+
+    <ion-card-header>
+        
+      <ion-card-title>
+          Parcilaes del Lectivo: {{lectivo.descripcion}}
+        </ion-card-title>
+
+    </ion-card-header>
+
+    <ion-card-content>
+
+      <ion-list>
+
+        <ion-item *ngFor="let parcial of lectivo.parciales">
+    
+          <ion-label>
+            
+            <h2>{{ parcial?.descripcion }}</h2>
+            <h3>{{ parcial?.fecha_inicio | date: 'yyyy-MM-dd' }} - {{ parcial?.fecha_final | date: 'yyyy-MM-dd' }}</h3>
+            <p>{{ parcial?.descripcion }}</p>
+            <p>{{ parcial?.puntaje_objetivo }}</p>
+    
+          </ion-label>
+          
+          <ion-button (click)="actualizar(parcial);">
+            <ion-icon name="create"></ion-icon>
+          </ion-button>          
+          <ion-button (click)="eliminar(parcial);">
+            <ion-icon name="trash"></ion-icon>
+          </ion-button>
+
+        </ion-item>
+    
+      </ion-list>
+
+    </ion-card-content>
+  
+  </ion-card>
+
+</ion-content>

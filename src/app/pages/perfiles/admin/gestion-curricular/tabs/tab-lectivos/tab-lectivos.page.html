@@ -1,9 +1,57 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>tab-lectivos</ion-title>
-  </ion-toolbar>
-</ion-header>
-
 <ion-content>
+
+  <ion-card>
+
+    <ion-card-header>
+        <ion-card-title>Periodos lectivos</ion-card-title>
+    </ion-card-header>
+
+    <ion-card-content>
+
+      <ion-list>
+
+        <ion-list-header>
+          Lista periodos lectivos
+        </ion-list-header>
+
+        <ion-item *ngFor="let lectivo of lectivos">
+
+          <ion-label>
+            <h2>{{ lectivo.descripcion }}</h2>
+            <h3>{{ lectivo.fecha_inicio | date: 'yyyy-MM-dd' }} - {{ lectivo.fecha_final | date: 'yyyy-MM-dd' }}</h3>
+            <p>{{ lectivo.descripcion }}</p>
+            <p>{{ lectivo.puntaje_objetivo }}</p>
+            <h3>
+                Total de Parciales:
+                <ion-button color="success" (click)="parcialesDetalle(lectivo);">
+                  <ion-badge color="success">{{lectivo.parciales.length}}</ion-badge>
+                </ion-button> 
+            </h3>
+          </ion-label>
+
+          <ion-button (click)="agregaParcial(lectivo);">
+            <ion-icon name="add-circle"></ion-icon>
+          </ion-button>
+          <ion-button (click)="actualizar(lectivo);">
+            <ion-icon name="create"></ion-icon>
+          </ion-button>          
+          <ion-button (click)="eliminar(lectivo);">
+            <ion-icon name="trash"></ion-icon>
+          </ion-button>
+
+        </ion-item>
+      
+      </ion-list>
+
+    </ion-card-content>
+  
+  </ion-card>
+
+  <!-- fab placed to the top and end and on the top edge of the content overlapping header -->
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button (click)="registraLectivo();">
+      <ion-icon name="add-circle"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
 
 </ion-content>

@@ -1,4 +1,4 @@
-import { IAuditoria } from './auditoria.interface';
+import { IAuditoria } from './comuns/auditoria.interface';
 import { IMenu } from './menu.interface';
 
 export interface ICatalogo {

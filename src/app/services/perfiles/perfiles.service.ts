@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { EventEmitter, Injectable, Output } from '@angular/core';
+import { buffer } from '@tensorflow/tfjs-core';
 import { IUsuario } from 'src/app/interfaces/usuario.interface';
 import { CREDENCIALES_SERVIDOR, PERFILES_CONTROLLER } from 'src/environments/environment';
 
@@ -50,15 +51,22 @@ export class PerfilesService {
   }
  
   private setArchivoLocal(usuario: IUsuario, file: File) {
-    // set formulario...
-    const ext = file.name.split('.').pop();
-    const formData = new FormData();
-    formData.append('file', file, `myimage.${ext}`);
-    formData.append('name', file.name);
-    // adjuntamos l resto de datos...
-    this.setDataUsuario(usuario, formData); 
-    // return...
-    return formData;   
+    try {
+      const formData = new FormData();
+      // verificando si actualizo el archivo...
+      if(file !== undefined) {
+        // set formulario...
+        const ext = file.name.split('.').pop();
+        formData.append('file', file, file.name);
+        formData.append('name', file.name);
+      }
+      // adjuntamos l resto de datos...
+      this.setDataUsuario(usuario, formData); 
+      // return...
+      return formData;      
+    } catch (error) {
+      throw error;
+    }   
   }
 
   private retornaUrlProceso(tipoPerfil: number): string {
@@ -88,6 +96,35 @@ export class PerfilesService {
       // return...
       return await this.httpClient.post(`${this.URL_SERVER.HOST}${urlProceso}`, 
         formData).toPromise();
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  private async actualizaDatosUsuario(usuarioActualiza: IUsuario, usuarioOriginal: IUsuario, file: any) {
+
+    return await this.setArchivoLocal(usuarioActualiza, file);
+  }
+
+  public async actualizaUsuario(usuarioActualiza: IUsuario, usuarioOriginal: IUsuario, file: File, tipoPerfil: number = 1) {
+    try {
+      // verificando la opcion desde dònde lee el archivo...
+      const formData = await this.actualizaDatosUsuario(usuarioActualiza, usuarioOriginal, file);
+      // retornando la url de proceso segun perfil...
+      const urlProceso = this.retornaUrlProceso(tipoPerfil);
+      // return...
+      return await this.httpClient.put(`${this.URL_SERVER.HOST}${urlProceso}/${usuarioOriginal._id}`, formData).toPromise();
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  public async eliminaUsuario(usuarioID: string, tipoPerfil: number = 1) {
+    try {
+      // retornando la url de proceso segun perfil...
+      const urlProceso = this.retornaUrlProceso(tipoPerfil);
+      // return...      
+      return await this.httpClient.delete(`${this.URL_SERVER.HOST}${urlProceso}/${usuarioID}`).toPromise()
     } catch (error) {
       throw error;
     }

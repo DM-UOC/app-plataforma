@@ -70,6 +70,15 @@ export const MATERIAS_CONTROLLER = {
   }
 };
 
+export const LECTIVOS_CONTROLLER = {
+  COMUN: '/lectivos',
+  CRUD: {
+    PARCIALES: {
+      COMUN: '/parciales'
+    }
+  }
+};
+
 export const STRING_CONSTANTES = {
   PERFILES: {
     ADMINISTRADOR: 'TPS_ADMIN',

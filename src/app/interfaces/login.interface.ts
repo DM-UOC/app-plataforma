@@ -24,6 +24,7 @@ export interface IUsuarioToken {
 
 export interface IUsuario {
 
+    readonly _id?: string;
     nombre?: string;
     apellido?: string;
     nombre_completo?: string;

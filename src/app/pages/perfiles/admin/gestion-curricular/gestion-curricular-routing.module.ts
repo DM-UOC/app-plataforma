@@ -19,8 +19,12 @@ const routes: Routes = [
       {
         path: 'adm-materias-profesores',
         loadChildren: () => import('./tabs/adm-materias-profesores/adm-materias-profesores.module').then( m => m.AdmMateriasProfesoresPageModule)
-      }
+      }     
     ]
+  },
+  {
+    path: 'parciales-detalle',
+    loadChildren: () => import('./parciales-detalle/parciales-detalle.module').then( m => m.ParcialesDetallePageModule)
   }
 ];
 

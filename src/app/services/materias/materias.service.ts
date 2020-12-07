@@ -30,7 +30,7 @@ export class MateriasService {
 
   public async retornaMaterias() {
     // return...
-    return await this.httpClient.get(`${this.URL_SERVER.HOST}${this.MATERIAS_CONTROLLERS.COMUN}`).toPromise();
+    return await this.httpClient.get<IMateria []>(`${this.URL_SERVER.HOST}${this.MATERIAS_CONTROLLERS.COMUN}`).toPromise();
   }
 
 

@@ -1,0 +1,73 @@
+<ion-header>
+  
+  <ion-toolbar>
+
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>    
+    <ion-title>Gestión periodos lectivos</ion-title>
+
+  </ion-toolbar>
+
+</ion-header>
+
+<ion-content>
+
+  <form (ngSubmit)="crear($event);" [formGroup]="formLectivo" *ngIf="formLectivo">
+
+    <ion-card>
+
+      <ion-card-content>
+
+        <ion-item lines="full">
+          <ion-label position="floating">Fecha inicial:</ion-label>
+          <ion-datetime displayFormat="YYYY-MM-DD" placeholder="Fecha de inicio lectivo" formControlName="fecha_inicio"></ion-datetime>
+        </ion-item>
+        
+        <div *ngIf="(fechaInicio.dirty || fechaInicio.touched) && fechaInicio.errors" class="errors">
+          <span *ngIf="fechaInicio.errors?.required">Ingrese fecha inicial del periodo lectivo</span>
+        </div>
+
+        <ion-item lines="full">
+          <ion-label position="floating">Fecha final:</ion-label>
+          <ion-datetime displayFormat="YYYY-MM-DD" placeholder="Fecha final lectivo" formControlName="fecha_final"></ion-datetime>
+        </ion-item>
+        
+        <div *ngIf="(fechaFinal.dirty || fechaFinal.touched) && fechaFinal.errors" class="errors">
+          <span *ngIf="fechaFinal.errors?.required">Ingrese fecha final del periodo lectivo</span>
+        </div>
+
+        <ion-item lines="full">
+          <ion-label position="floating">Descripción:</ion-label>
+          <ion-input formControlName="descripcion" placeholder="descripción..."></ion-input>
+        </ion-item>
+        
+        <div *ngIf="(descripcion.dirty || descripcion.touched) && descripcion.errors" class="errors">
+          <span *ngIf="descripcion.errors?.required">Ingrese la descripción del periodo lectivo</span>
+          <span *ngIf="descripcion.errors?.minlength">Ingrese 5 caracteres como mínimo</span>
+          <span *ngIf="descripcion.errors?.maxlength">Ingrese 100 caracteres como máximo</span>
+        </div>
+
+        <ion-item lines="full">
+          <ion-label position="floating">Puntaje objetivo del periodo lectivo:</ion-label>
+          <ion-input type="number" formControlName="puntaje_objetivo" placeholder="puntaje objetivo del periodo lectivo..."></ion-input>
+        </ion-item>
+        
+        <div *ngIf="(puntajeObjetivo.dirty || puntajeObjetivo.touched) && puntajeObjetivo.errors" class="errors">
+          <span *ngIf="puntajeObjetivo.errors?.required">Ingrese el puntaje objetivo</span>
+          <span *ngIf="puntajeObjetivo.errors?.max">Ingrese como máximo 20 como máximo valor</span>
+        </div>
+
+        <ion-button type="submit" color="danger" expand="block" 
+        [disabled]="!formLectivo.valid">
+          <ion-icon slot="start" name="add-circle-outline"></ion-icon>
+          Crear
+        </ion-button>
+
+      </ion-card-content>
+    
+    </ion-card>
+
+  </form>
+
+</ion-content>
