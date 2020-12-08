@@ -84,7 +84,8 @@ export class SeguridadService {
   private async verificaLoginInterno(credenciales: ILogin) {
     try {
       // return data api login..
-      const result: any = await this.httpClient.get(`${this.URL_SERVER.HOST}${this.SEGURIDAD_CONTROLLERS.COMUN}${this.SEGURIDAD_CONTROLLERS.CRUD.LOGIN}`, {
+      const result: any = await this.httpClient
+        .get(`${this.URL_SERVER.HOST}${this.SEGURIDAD_CONTROLLERS.COMUN}${this.SEGURIDAD_CONTROLLERS.CRUD.LOGIN}`, {
         params: {
           usuario: credenciales.usuario,
           clave: credenciales.clave
