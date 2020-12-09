@@ -43,7 +43,7 @@ Ejecución de código dentro del IDE Android Studio
 
 ```bash
 # Comando para ejecutar el código dentro del IDE Android Studio
-$npx cap run android
+$npx cap open android
 ```
 
 Este proceso hará que se abra el IDE de Android, se coloque el código dentro del IDE, el cual posteriormente se ejecutará dentro del IDE Android Studio

@@ -30,7 +30,7 @@ export class LoginPage implements OnInit {
     // seteo de formulario...
     this.formGroupCredenciales = this.formBuilder.group({
       usuario: ['', [Validators.required, Validators.email]],
-      clave: ['', [Validators.required, Validators.minLength(6)]]
+      clave: ['', [Validators.required, Validators.minLength(5)]]
     });
 
   }
