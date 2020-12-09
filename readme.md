@@ -1,3 +1,10 @@
+## IDE Principal
+
+Todo el desarrollo se ha realizado mediante el uso de Visual Studio Code
+Esta herramienta permite el desarrollo de caracter nativo mediante el uso del superset TypeScripc
+
+[Visual Studio Code](https://ionicframework.com/docs/components) VSC.
+
 ## Uso del aplicativo
 
 [Ionic](https://ionicframework.com/docs/components) Ionic framework TypeScript.
@@ -8,7 +15,10 @@ Para el uso del aplicativo debe seguir las siguientes pasos:
 
 Las siguientes indicaciones están propuestas sólo para un ambiente de prueba o testing
 
-Se coloca en la carpeta raíz del aplicativo, a continuación ejecutar los siguientes comandos
+## 1) Copiar carpeta
+
+Descomprimir la carpeta denominda app-plataforma en la ubicación que desee.
+Moverse a la raiz de la carpeta y ejecutar el siguiente comando:
 
 ```bash
 # instalación de librerías node_modules
@@ -19,7 +29,8 @@ $ npm i
 # Compilación de código. Generará carpeta www
 $ ionic build
 ```
-# Android Studio
+
+# 2) Android Studio
 
 Se deberá descargar el IDE desde la página oficial [Android_Studio](https://developer.android.com/studio/)
 
@@ -39,6 +50,7 @@ Luego de instalar Android se procede a trabajar con Capacitor:
 # Comando que agrega todas las librerías para trabajar con Android Studio
 $npx cap add android
 ```
+
 Ejecución de código dentro del IDE Android Studio
 
 ```bash
@@ -60,42 +72,30 @@ Una vez que se ha verificado los VD se procede a dar play para que abra el emula
 
 ![alt text](./src/assets/android_studio_emulador.jpg)
 
-## Running the app
+## 3) SDK de Android (En el caso que no tenga instalado el SDK)
 
-```bash
-# development
-$ npm run start
+Para que el IDE Android Studio funcione correctamente, este debe configurarse correctamente la ruta donde se encuentre el SDK (Software Development Kit)
 
-# watch mode
-$ npm run start:dev
+1. Verificar si tiene instalado el SDK
 
-# production mode
-$ npm run start:prod
-```
+![alt text](./src/assets/sdk_android_settings.jpg)
 
-## Test
+Si no se dispone del SDK, se deberá dar clic en la opción "Edit" marcada con color azul - celeste
 
-```bash
-# unit tests
-$ npm run test
+![alt text](./src/assets/sdk_android_ubicacion_aviso.jpg)
 
-# e2e tests
-$ npm run test:e2e
+Dar la unicación dónde quiere que se guarde el SDK
 
-# test coverage
-$ npm run test:cov
-```
+Una vez finalizada la instalación, proceda a escoger los emuladores con los que se vaya a hacer pruebas para el sistema
 
-## Support
+![alt text](./src/assets/sdk_android_ventana_sdk.jpg)
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+De igual manera, este proceso puede tomar su tiempo de instalación
 
-## Stay in touch
+Cierre el IDE y vuelva a abrirlo.
 
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+## Repositorio
 
-## License
+Todo el código fuente se encuetra en:
 
-  Nest is [MIT licensed](LICENSE).
+[GitHub - Cliente Plataforma](https://github.com/DM-UOC/app-plataforma/tree/desarrollo) Repositorio para Cliente - Front End del sistema de plataforma de educación
