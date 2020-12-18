@@ -19,6 +19,7 @@ export class ParcialesDetallePage implements OnInit {
     private router: Router,
     private modalController: ModalController
   ) {
+    // recogiendo parámetros...
     this.activatedRoute.queryParams.subscribe(params => {
       if (this.router.getCurrentNavigation().extras.state) {
         // parametro lectivo...

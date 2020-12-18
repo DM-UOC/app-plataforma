@@ -45,7 +45,17 @@ const routes: Routes = [
     path: 'parciales-detalle',
     loadChildren: () => import('./pages/perfiles/admin/gestion-curricular/parciales-detalle/parciales-detalle.module').then( m => m.ParcialesDetallePageModule),
     canActivate: [AuthenticacionGuard]
-  }  
+  },
+  {
+    path: 'profesor-materias-detalle',
+    loadChildren: () => import('./pages/perfiles/admin/gestion-curricular/profesor-materias-detalle/profesor-materias-detalle.module').then( m => m.ProfesorMateriasDetallePageModule),
+    canActivate: [AuthenticacionGuard]
+  },
+  {
+    path: 'profesor-estudios-detalle',
+    loadChildren: () => import('./pages/perfiles/admin/gestion-curricular/profesor-estudios-detalle/profesor-estudios-detalle.module').then( m => m.ProfesorEstudiosDetallePageModule),
+    canActivate: [AuthenticacionGuard]
+  }    
 ];
 
 @NgModule({

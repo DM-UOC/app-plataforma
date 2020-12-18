@@ -11,7 +11,7 @@ Esta herramienta permite el desarrollo de caracter nativo mediante el uso del su
 
 Para el uso del aplicativo debe seguir las siguientes pasos:
 
-## Uso del Aplicativo
+## Inicio del Aplicativo
 
 Las siguientes indicaciones están propuestas sólo para un ambiente de prueba o testing
 

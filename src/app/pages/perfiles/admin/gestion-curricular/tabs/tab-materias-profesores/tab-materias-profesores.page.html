@@ -1,0 +1,57 @@
+<ion-content>
+
+  <ion-card>
+
+    <ion-card-header>
+        <ion-card-title>Perfil Profesores</ion-card-title>
+    </ion-card-header>
+
+    <ion-card-content>
+
+      <ion-list>
+
+        <ion-item *ngFor="let profesor of profesores">
+          
+          <ion-avatar slot="start">
+              <img [src]="!profesor.profesores[0].usuario_imagen.data? 'assets/profile_image.png': profesor?.profesores[0].imagen_url">
+          </ion-avatar>
+
+          <ion-label>
+              <h2>{{ profesor.profesores[0].nombre_completo }}</h2>
+              <ion-text color="primary">
+                <h2>Información general</h2>
+              </ion-text>
+              <h3># Materias: 
+                <ion-button
+                tooltip="Detalle de materias" placement="top" 
+                [color]="profesor.estudios.length === 0? 'warning': 'success'" 
+                (click)="materiasDetalle(profesor);">
+                  <ion-badge [color]="profesor.estudios.length === 0? 'warning': 'success'">{{ profesor.materias.length }}</ion-badge>
+                </ion-button>                  
+              </h3>
+              <h3># Estudios:
+                <ion-button
+                tooltip="Detalle de estudios" placement="top" 
+                [color]="profesor.estudios.length === 0? 'warning': 'success'"
+                (click)="estudiosDetalle(profesor);">
+                  <ion-badge [color]="profesor.estudios.length === 0? 'warning': 'success'">{{ profesor.estudios.length }}</ion-badge>
+                </ion-button>
+              </h3>
+          </ion-label>
+
+          <ion-button tooltip="Agregar materia" placement="top" (click)="registraMateria(profesor);">
+            <ion-icon name="bag-add-sharp"></ion-icon>
+          </ion-button>
+          <ion-button tooltip="Agregar estudios" placement="top" (click)="estudiosDetalle(profesor);">
+            <ion-icon name="extension-puzzle-sharp"></ion-icon>
+          </ion-button>
+
+        </ion-item>
+      
+      </ion-list>
+
+    </ion-card-content>
+    
+  </ion-card>
+
+</ion-content>

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ModalController } from '@ionic/angular';
 import { IMateria } from 'src/app/interfaces/materia.interface';
@@ -11,6 +11,7 @@ import { MateriasService } from 'src/app/services/materias/materias.service';
 })
 export class ModMateriasPage implements OnInit {
 
+  @Input() materia: IMateria;
   public formMateria: FormGroup;
   public nuevaMateria: IMateria;
 
@@ -22,6 +23,20 @@ export class ModMateriasPage implements OnInit {
 
   async ngOnInit() {
     this.iniciaFormulario();
+    // verifiaca si es una actualizacion de informacion...
+    this.verificaActualizaDatos();
+  }
+
+  private verificaActualizaDatos() {
+    try {
+      // verifica si el objeto esta definido...
+      if(this.materia !== undefined) {
+        this.formMateria.controls['descripcion'].setValue(this.materia.descripcion);
+        this.formMateria.controls['observacion'].setValue(this.materia.observacion);
+      }
+    } catch (error) {
+      throw error;
+    }
   }
 
   private iniciaFormulario() {
@@ -48,8 +63,18 @@ export class ModMateriasPage implements OnInit {
 
   public async crear($event) {
     try {
-      // creando el usuario...
-      this.nuevaMateria = await this.materiasService.creaMateria(this.formMateria.value);
+      // verificando la opcion a ejecutar...
+      if(!this.materia) {
+        // creando el usuario...
+        this.nuevaMateria = await this.materiasService.creaMateria(this.formMateria.value);
+      }
+      else {
+        // actualiza la materia...
+        this.materiasService.actualizaMateria(this.formMateria.value, this.materia)
+        .subscribe(materia => {
+          this.nuevaMateria = materia;
+        });
+      }
       // emite el refresco de usuarios...
       await this.emiteCambio();
       // cierra el modal...

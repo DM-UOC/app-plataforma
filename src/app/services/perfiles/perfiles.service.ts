@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { EventEmitter, Injectable, Output } from '@angular/core';
 import { buffer } from '@tensorflow/tfjs-core';
+import { IProfesor } from 'src/app/interfaces/profesores/profesor.interface';
 import { IUsuario } from 'src/app/interfaces/usuario.interface';
 import { CREDENCIALES_SERVIDOR, PERFILES_CONTROLLER } from 'src/environments/environment';
 
@@ -25,7 +26,10 @@ export class PerfilesService {
       CLIENTES: `${PERFILES_CONTROLLER.COMUN.CLIENTES}`
     },
     CRUD: {
-      CREAR: `${PERFILES_CONTROLLER.CRUD.CREAR}`
+      CREAR: `${PERFILES_CONTROLLER.CRUD.CREAR}`,
+      PROFESORES: {
+        LISTA: `${PERFILES_CONTROLLER.CRUD.PROFESORES.LISTA}`,
+      }
     }
   };
 
@@ -37,7 +41,7 @@ export class PerfilesService {
     // retornando la url de proceso segun perfil...
     const urlProceso = this.retornaUrlProceso(tipoPerfil);
     // return...
-    return await this.httpClient.get(`${this.URL_SERVER.HOST}${urlProceso}`).toPromise();
+    return await this.httpClient.get<IUsuario []>(`${this.URL_SERVER.HOST}${urlProceso}`).toPromise();
   }
 
   private setDataUsuario(usuarioNuevo: IUsuario, formData: FormData) {
@@ -128,6 +132,14 @@ export class PerfilesService {
     } catch (error) {
       throw error;
     }
+  }
+
+  public retornaListaProfesores(tipoPerfil: number = 1) {
+    // retornando la url de proceso segun perfil...
+    const urlProceso = this.retornaUrlProceso(tipoPerfil);
+    // return...
+    return this.httpClient
+    .get<IProfesor []>(`${this.URL_SERVER.HOST}${urlProceso}${this.PERFILES_CONTROLLERS.CRUD.PROFESORES.LISTA}`);
   }
 
 }

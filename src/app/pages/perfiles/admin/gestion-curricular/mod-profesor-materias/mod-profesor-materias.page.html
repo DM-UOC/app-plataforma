@@ -1,0 +1,28 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Profesor: {{ profesor.profesores[0].nombre_completo }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-card>
+
+    <ion-card-header>
+
+    </ion-card-header>
+    
+    <ion-card-content>
+
+      <ion-list *ngIf="materias?.length > 0">
+        <ion-item *ngFor="let materia of materias">
+          {{ materia?.descripcion }}
+          <ion-toggle slot="start" (ionChange)="agregarMateriaProfesor(materia)" color="primary"></ion-toggle>
+        </ion-item>
+      </ion-list>
+
+    </ion-card-content>
+  
+  </ion-card>
+
+</ion-content>

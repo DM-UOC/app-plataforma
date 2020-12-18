@@ -11,7 +11,7 @@ import { UsuariosPage } from '../../usuarios/usuarios.page';
 })
 export class ProfesoresPage implements OnInit {
 
-  public usuarios: any = [];
+  public usuarios: IUsuario[] = [];
   
   constructor(
     private perfilesService: PerfilesService,
@@ -21,7 +21,7 @@ export class ProfesoresPage implements OnInit {
 
   async ngOnInit() {
     await this.verificaCambioUsuarios();
-    await this.retornaUsuarios()
+    await this.retornaUsuarios();
   }
 
   private async retornaUsuarios() {

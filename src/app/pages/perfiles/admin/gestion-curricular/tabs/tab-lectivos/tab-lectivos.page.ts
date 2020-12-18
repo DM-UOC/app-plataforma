@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NavigationExtras, Router } from '@angular/router';
-import { ModalController } from '@ionic/angular';
+import { AlertController, ModalController } from '@ionic/angular';
 import { ILectivo } from 'src/app/interfaces/lectivos/lectivo.interface';
 import { LectivosService } from 'src/app/services/lectivos/lectivos.service';
 import { ModLectivosPage } from '../../mod-lectivos/mod-lectivos.page';
@@ -18,6 +18,7 @@ export class TabLectivosPage implements OnInit {
   constructor(
     private modalController: ModalController,
     private lectivosService: LectivosService,
+    private alertController: AlertController,
     private router: Router
   ) { }
 
@@ -39,12 +40,12 @@ export class TabLectivosPage implements OnInit {
     });    
   }
 
-  public async registraLectivo() {
+  public async registraLectivo(lectivo: ILectivo) {
     // abriendo el modal...
     const modal = await this.modalController.create({
       component: ModLectivosPage,
       componentProps: {
-        tipoPerfil: 1
+        lectivo
       }
     });
     await modal.present();
@@ -64,15 +65,43 @@ export class TabLectivosPage implements OnInit {
   
   public async actualizar(lectivo: ILectivo) {
     try {
-      
+      await this.registraLectivo(lectivo);
     } catch (error) {
       throw error;
     }
   }
 
+  private async emiteCambioLectivo() {
+    // emito el cambio...
+    this.lectivosService.actualizaListado = true;
+    this.lectivosService.creoLectivo.emit(this.lectivosService.actualizaListado); 
+  }
+
   public async eliminar(lectivo: ILectivo) {
     try {
-      
+      const alert = await this.alertController.create({
+        cssClass: 'alert',
+        message: `Seguro de eliminar: ${lectivo.descripcion}?`,
+        buttons: [
+          {
+            text: 'Cancelar',
+            role: 'cancel',
+            handler: blah => {
+            },
+          },
+          {
+            text: 'Eliminar',
+            handler: async () => {
+              // presentamos el modal...
+              this.lectivosService.eliminarLectivo(lectivo._id);
+              // emite el refresco de usuarios...
+              await this.emiteCambioLectivo();
+            },
+          },
+        ],
+      });
+      // presentando la alerta...
+      await alert.present();      
     } catch (error) {
       throw error;
     }

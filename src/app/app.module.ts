@@ -15,6 +15,12 @@ import { Storage, IonicStorageModule } from '@ionic/storage';
 import { JwtModule, JWT_OPTIONS } from '@auth0/angular-jwt';
 import { CREDENCIALES_SERVIDOR, STORAGE } from 'src/environments/environment';
 import { SocialLoginModule, SocialAuthServiceConfig, FacebookLoginProvider, GoogleLoginProvider } from 'angularx-social-login';
+import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
+
+const config: SocketIoConfig = { 
+  url: `${CREDENCIALES_SERVIDOR.SERVER}:${CREDENCIALES_SERVIDOR.PUERTO}`, 
+  options: {} 
+};
 
 export function jwtOptionsFactory(storage) {
   return {
@@ -44,6 +50,7 @@ export function jwtOptionsFactory(storage) {
         deps: [Storage],
       }
     }),
+    SocketIoModule.forRoot(config),
     SocialLoginModule
   ],
   providers: [

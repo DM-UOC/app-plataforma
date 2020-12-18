@@ -43,6 +43,17 @@ export class LectivosService {
     }
   }
 
+  public async eliminarLectivo(lectivoId: string) {
+    try {
+      return await this.httpClient
+      .delete(`${this.URL_SERVER.HOST}${this.LECTIVOS_CONTROLLER.COMUN}/${lectivoId}`).subscribe(resultado => {
+        return resultado;
+      });
+    } catch (error) {
+      throw error;
+    }
+  }
+
   public async creaParcial(lectivo: ILectivo) {
     try {
       return await this.httpClient

@@ -16,8 +16,8 @@ export const STORAGE = {
 }
 
 export const CREDENCIALES_SERVIDOR = {
-  SERVER: 'http://localhost',
-  PUERTO: 3009
+  SERVER: 'http://127.0.0.1',
+  PUERTO: 3025
 };
 
 export const SEGURIDAD_CONTROLLER = {
@@ -53,6 +53,11 @@ export const PERFILES_CONTROLLER = {
     CREAR: '/crear',
     ACTUALIZAR: '/actualizar/:id',
     ELIMINAR: '/eliminar/:id',
+    PROFESORES: {
+      LISTA: '/lista',
+      MATERIAS: '/materias',
+      AGREGAR: '/agregar'
+    },
     CLIENTES: {
       EXISTE_REPRESENTANTE: '/representante',
       HIJOS: {

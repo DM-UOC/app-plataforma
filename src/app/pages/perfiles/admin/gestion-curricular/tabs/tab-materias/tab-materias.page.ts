@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ModalController } from '@ionic/angular';
+import { AlertController, ModalController } from '@ionic/angular';
 import { IMateria } from 'src/app/interfaces/materia.interface';
 import { MateriasService } from 'src/app/services/materias/materias.service';
 import { ModMateriasPage } from '../../mod-materias/mod-materias.page';
@@ -15,6 +15,7 @@ export class TabMateriasPage implements OnInit {
 
   constructor(
     private modalController: ModalController,
+    private alertController: AlertController,
     private materiasService: MateriasService
   ) { }
 
@@ -23,8 +24,12 @@ export class TabMateriasPage implements OnInit {
     await this.retornaMaterias();    
   }
 
-  public async retornaMaterias() {
-    this.materias = await this.materiasService.retornaMaterias();
+  public retornaMaterias() {
+    // retonando observable...
+    this.materiasService.retornaMaterias().subscribe(materias => {
+      // guarda en la variable...
+      this.materias = materias;
+    });
   }
 
   private async verificaCambioMaterias() {
@@ -36,15 +41,59 @@ export class TabMateriasPage implements OnInit {
     });    
   }
 
-  public async registraMateria() {
+  public async registraMateria(materia: IMateria) {
     // abriendo el modal...
     const modal = await this.modalController.create({
       component: ModMateriasPage,
       componentProps: {
-        tipoPerfil: 1
+        materia
       }
     });
     await modal.present();
+  }
+
+  public async actualizar(materia: IMateria) {
+    try {
+      await this.registraMateria(materia);
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  private async emiteCambioMateria() {
+    // emito el cambio...
+    this.materiasService.actualizaListado = true;
+    this.materiasService.creoMateria.emit(this.materiasService.actualizaListado); 
+  }
+
+  public async eliminar(materia: IMateria) {
+    try {
+      const alert = await this.alertController.create({
+        cssClass: 'alert',
+        message: `Seguro de eliminar: ${materia.descripcion}?`,
+        buttons: [
+          {
+            text: 'Cancelar',
+            role: 'cancel',
+            handler: blah => {
+            },
+          },
+          {
+            text: 'Eliminar',
+            handler: async () => {
+              // presentamos el modal...
+              this.materiasService.eliminaMateria(materia._id);
+              // emite el refresco de usuarios...
+              await this.emiteCambioMateria();
+            },
+          },
+        ],
+      });
+      // presentando la alerta...
+      await alert.present();      
+    } catch (error) {
+      throw error;
+    }
   }
 
 }

@@ -28,18 +28,48 @@ export class MateriasService {
     private httpClient: HttpClient
   ) { }
 
-  public async retornaMaterias() {
+  public retornaMaterias() {
     // return...
-    return await this.httpClient.get<IMateria []>(`${this.URL_SERVER.HOST}${this.MATERIAS_CONTROLLERS.COMUN}`).toPromise();
+    return this.httpClient
+      .get<IMateria []>(`${this.URL_SERVER.HOST}${this.MATERIAS_CONTROLLERS.COMUN}`);
   }
 
 
   public async creaMateria(materia: IMateria) {
     try {
-      return await this.httpClient.post(`${this.URL_SERVER.HOST}${this.MATERIAS_CONTROLLERS.COMUN}`, materia).toPromise();
+      return await this.httpClient.post<IMateria>(`${this.URL_SERVER.HOST}${this.MATERIAS_CONTROLLERS.COMUN}`, materia).toPromise();
     } catch (error) {
       throw error;
     }
   }
   
+  private actualizaDatosUsuario(materiaActualiza: IMateria, materiaOriginal: IMateria) {
+    try {
+      const formData = new FormData();
+
+      return formData;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  public actualizaMateria(materiaActualiza: IMateria, materiaOriginal: IMateria) {
+    try {
+      // verificando la opcion desde dònde lee el archivo...
+      const formData = this.actualizaDatosUsuario(materiaActualiza, materiaOriginal);
+      // retornando los resultados...
+      return this.httpClient.put(`${this.URL_SERVER.HOST}${this.MATERIAS_CONTROLLERS.COMUN}/${materiaOriginal._id}`, materiaActualiza);
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  public async eliminaMateria(materiaId: string) {
+    try {
+      return await this.httpClient.delete(`${this.URL_SERVER.HOST}${this.MATERIAS_CONTROLLERS.COMUN}/${materiaId}`).toPromise();
+    } catch (error) {
+      throw error;
+    }
+  }
+
 }

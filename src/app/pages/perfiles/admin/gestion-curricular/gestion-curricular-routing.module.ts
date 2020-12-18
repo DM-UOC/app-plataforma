@@ -17,14 +17,14 @@ const routes: Routes = [
         loadChildren: () => import('./tabs/tab-materias/tab-materias.module').then( m => m.TabMateriasPageModule)
       },
       {
-        path: 'adm-materias-profesores',
-        loadChildren: () => import('./tabs/adm-materias-profesores/adm-materias-profesores.module').then( m => m.AdmMateriasProfesoresPageModule)
+        path: 'tab-materias-profesores',
+        loadChildren: () => import('./tabs/tab-materias-profesores/tab-materias-profesores.module').then( m => m.TabMateriasProfesoresPageModule)
       }     
     ]
   },
   {
-    path: 'parciales-detalle',
-    loadChildren: () => import('./parciales-detalle/parciales-detalle.module').then( m => m.ParcialesDetallePageModule)
+    path: 'mod-profesor-materias',
+    loadChildren: () => import('./mod-profesor-materias/mod-profesor-materias.module').then( m => m.ModProfesorMateriasPageModule)
   }
 ];
 
