@@ -22,6 +22,7 @@ export class ModMateriasPage implements OnInit {
   ) { }
 
   async ngOnInit() {
+    // inicia formulario...
     this.iniciaFormulario();
     // verifiaca si es una actualizacion de informacion...
     this.verificaActualizaDatos();

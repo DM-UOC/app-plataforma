@@ -42,21 +42,9 @@ export class MateriasService {
       throw error;
     }
   }
-  
-  private actualizaDatosUsuario(materiaActualiza: IMateria, materiaOriginal: IMateria) {
-    try {
-      const formData = new FormData();
-
-      return formData;
-    } catch (error) {
-      throw error;
-    }
-  }
 
   public actualizaMateria(materiaActualiza: IMateria, materiaOriginal: IMateria) {
     try {
-      // verificando la opcion desde dònde lee el archivo...
-      const formData = this.actualizaDatosUsuario(materiaActualiza, materiaOriginal);
       // retornando los resultados...
       return this.httpClient.put(`${this.URL_SERVER.HOST}${this.MATERIAS_CONTROLLERS.COMUN}/${materiaOriginal._id}`, materiaActualiza);
     } catch (error) {

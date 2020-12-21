@@ -4,9 +4,9 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
-import { CliHijosPageRoutingModule } from './cli-hijos-routing.module';
+import { ModHijosPageRoutingModule } from './mod-hijos-routing.module';
 
-import { CliHijosPage } from './cli-hijos.page';
+import { ModHijosPage } from './mod-hijos.page';
 
 @NgModule({
   imports: [
@@ -14,8 +14,8 @@ import { CliHijosPage } from './cli-hijos.page';
     FormsModule,
     IonicModule,
     ReactiveFormsModule,
-    CliHijosPageRoutingModule
+    ModHijosPageRoutingModule
   ],
-  declarations: [CliHijosPage]
+  declarations: [ModHijosPage]
 })
-export class CliHijosPageModule {}
+export class ModHijosPageModule {}

@@ -6,9 +6,9 @@
       <ion-back-button></ion-back-button>
     </ion-buttons>
 
-    <ion-title>Crear registro</ion-title>
+    <ion-title>Datos de sus hijos</ion-title>
 
-  </ion-toolbar>  
+  </ion-toolbar> 
 
 </ion-header>
 
@@ -19,30 +19,32 @@
     <ion-card>
 
       <ion-card-header>
+        
+        <ion-avatar class="img-wrapper">
 
-        <div class="img-wrapper">
-
-          <ion-img [src]="nuevoUsuario?.imagen_url || 'assets/profile_image.png'"></ion-img>
+          <ion-img [src]="hijo?.foto_url || 'assets/profile_image.png'"></ion-img>
           <input
             type="file"
             #fileInput
-            (change)="cargaImagenNavegador($event)"
+            (change)="cargaImagen($event)"
             hidden="true"
+            capture
             accept="image/*"
           />
           <ion-button color="light" (click)="seleccionaArchivo();">
             <ion-icon slot="icon-only" name="camera-outline" color="medium">
             </ion-icon>
           </ion-button>
-
-        </div>
+        
+        </ion-avatar>
 
       </ion-card-header>
 
       <ion-card-content>
 
-        <ion-input formControlName="representante_id" value="{{representante._id}}"></ion-input>
-        
+        <ion-input formControlName="representante_id" value="{{representante._id}}" [hidden]="ocultaId"></ion-input>
+        <ion-input formControlName="_id" value="{{hijo._id}}" [hidden]="ocultaId"></ion-input>
+
         <ion-item lines="full">
           <ion-label position="floating">Nombres:</ion-label>
           <ion-input formControlName="nombre"></ion-input>
@@ -70,10 +72,11 @@
           <span *ngIf="fechaNacimiento.errors?.required">Ingrese la fecha de nacimiento</span>
         </div>
 
-        <ion-button type="submit" color="danger" expand="block" 
+        <ion-button type="submit" [color]="hijo === undefinied? 'danger': 'primary'" expand="block" 
         [disabled]="!formUsuario.valid">
           <ion-icon slot="start" name="add-circle-outline"></ion-icon>
-          Crear
+          <label *ngIf="hijo === undefined">Crear</label>
+          <label *ngIf="hijo !== undefined">Actualizar</label>
         </ion-button>
 
       </ion-card-content>

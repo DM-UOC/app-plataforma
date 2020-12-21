@@ -37,11 +37,6 @@ const routes: Routes = [
     canActivate: [AuthenticacionGuard]
   },
   {
-    path: 'cli-hijos',
-    loadChildren: () => import('./pages/perfiles/cliente/cli-hijos/cli-hijos.module').then( m => m.CliHijosPageModule),
-    canActivate: [AuthenticacionGuard]
-  },
-  {
     path: 'parciales-detalle',
     loadChildren: () => import('./pages/perfiles/admin/gestion-curricular/parciales-detalle/parciales-detalle.module').then( m => m.ParcialesDetallePageModule),
     canActivate: [AuthenticacionGuard]
@@ -55,7 +50,11 @@ const routes: Routes = [
     path: 'profesor-estudios-detalle',
     loadChildren: () => import('./pages/perfiles/admin/gestion-curricular/profesor-estudios-detalle/profesor-estudios-detalle.module').then( m => m.ProfesorEstudiosDetallePageModule),
     canActivate: [AuthenticacionGuard]
-  }    
+  },
+  {
+    path: 'sesion-virtual',
+    loadChildren: () => import('./pages/perfiles/profesor/gestion-sesiones/sesion-virtual/sesion-virtual.module').then( m => m.SesionVirtualPageModule)
+  },
 ];
 
 @NgModule({

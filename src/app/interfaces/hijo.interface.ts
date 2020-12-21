@@ -1,5 +1,6 @@
 export interface IHijo {
 
+    readonly _id?: string;
     representante_id?: string;
     nombre?: string;
     apellido?: string;

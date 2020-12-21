@@ -1,22 +1,19 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { FormBuilder } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 
-import { CliHijosPage } from './cli-hijos.page';
+import { ModHijosPage } from './mod-hijos.page';
 
-describe('CliHijosPage', () => {
-  let component: CliHijosPage;
-  let fixture: ComponentFixture<CliHijosPage>;
+describe('ModHijosPage', () => {
+  let component: ModHijosPage;
+  let fixture: ComponentFixture<ModHijosPage>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ CliHijosPage ],
-      imports: [
-        FormBuilder,
-        IonicModule.forRoot()]
+      declarations: [ ModHijosPage ],
+      imports: [IonicModule.forRoot()]
     }).compileComponents();
 
-    fixture = TestBed.createComponent(CliHijosPage);
+    fixture = TestBed.createComponent(ModHijosPage);
     component = fixture.componentInstance;
     fixture.detectChanges();
   }));

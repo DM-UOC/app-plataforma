@@ -7,6 +7,10 @@ const routes: Routes = [
   {
     path: '',
     component: GestionHijosPage
+  },
+  {
+    path: 'mod-hijos',
+    loadChildren: () => import('../mod-hijos/mod-hijos.module').then( m => m.ModHijosPageModule)
   }
 ];
 

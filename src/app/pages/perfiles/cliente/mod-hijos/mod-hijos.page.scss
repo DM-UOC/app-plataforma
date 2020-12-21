@@ -2,8 +2,8 @@ ion-card-header {
     margin: 0 auto;
   
     .img-wrapper {
-        width: 290px;
-        height: 230px;
+        width: 190px;
+        height: 180px;
         position: relative;
         margin: 0 auto;
       
@@ -11,7 +11,7 @@ ion-card-header {
             display: block;
             border-radius: 50%;
             position: absolute;
-            bottom: calc(-1*(40px + 4px));
+            bottom: calc(-1*(0px + 0px));
             background-color: #fff;
         }
   
@@ -25,12 +25,12 @@ ion-card-header {
             --padding-top: 0;
       
             --border-radius: 50%;
-            height: 30px;
-            width: 30px;
+            height: 35px;
+            width: 40px;
       
             position: absolute;
             right: 0px;
-            bottom: -18px
+            bottom: 10px
         }
     }
 }

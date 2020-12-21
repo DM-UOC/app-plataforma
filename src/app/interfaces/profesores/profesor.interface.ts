@@ -22,9 +22,10 @@ interface IEstudios {
 
 export interface IProfesor {
 
+    readonly _id?: string;
     usuario_id?: string;
     materias?: IMaterias[];
     estudios?: IEstudios[];
-    profesores: IUsuario[];
+    profesores?: IUsuario[];
     
 }

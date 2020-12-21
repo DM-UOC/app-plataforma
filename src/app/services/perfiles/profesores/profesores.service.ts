@@ -31,7 +31,7 @@ export class ProfesoresService {
   public retornaMateriasProfesores(usuario_id: string) {
     try {
       return this.httpClient
-      .get<IProfesor []>(`${this.URL_SERVER.HOST}${this.PERFILES_CONTROLLERS.COMUN.PROFESORES}${this.PERFILES_CONTROLLERS.CRUD.PROFESORES.MATERIAS}`, {
+      .get<IProfesor>(`${this.URL_SERVER.HOST}${this.PERFILES_CONTROLLERS.COMUN.PROFESORES}${this.PERFILES_CONTROLLERS.CRUD.PROFESORES.MATERIAS}`, {
         params: {
           usuario_id
         }
@@ -44,7 +44,7 @@ export class ProfesoresService {
   registraMateria(usuario_id: string, materia: IMateria) {
     try {
       return this.httpClient
-      .post<IProfesor []>(`${this.URL_SERVER.HOST}${this.PERFILES_CONTROLLERS.COMUN.PROFESORES}${this.PERFILES_CONTROLLERS.CRUD.PROFESORES.AGREGAR}`, {
+      .post<IProfesor>(`${this.URL_SERVER.HOST}${this.PERFILES_CONTROLLERS.COMUN.PROFESORES}${this.PERFILES_CONTROLLERS.CRUD.PROFESORES.AGREGAR}`, {
         usuario_id,
         materia
       });

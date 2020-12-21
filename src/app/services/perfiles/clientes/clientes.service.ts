@@ -29,8 +29,8 @@ export class ClientesService {
       CREAR: `${PERFILES_CONTROLLER.CRUD.CREAR}`,
       EXISTE_REPRESENTANTE: `${PERFILES_CONTROLLER.CRUD.CLIENTES.EXISTE_REPRESENTANTE}`,
       HIJOS: {
-        LISTAR: `${PERFILES_CONTROLLER.CRUD.CLIENTES.HIJOS.LISTAR}`, 
-        CREAR: `${PERFILES_CONTROLLER.CRUD.CLIENTES.HIJOS.CREAR}`
+        LISTAR: `${PERFILES_CONTROLLER.CRUD.CLIENTES.HIJOS.LISTAR}`,
+        COMUN: `${PERFILES_CONTROLLER.CRUD.CLIENTES.HIJOS.COMUN}`
       }
     }
   };
@@ -65,24 +65,31 @@ export class ClientesService {
     }
   }
 
-  private setDataUsuario(usuarioNuevo: IHijo, formData: FormData) {
-    const { nombre, apellido, fecha_nacimiento, representante_id } = usuarioNuevo;
+  private setDataUsuario(usuario: IHijo, hijoOriginal: IHijo, formData: FormData) {
+    const { representante_id, nombre, apellido, fecha_nacimiento } = usuario;
     // set data...
+    // verifica si es una actualización...
+    if(hijoOriginal !== null) {
+      formData.append('_id', hijoOriginal._id);
+    }
     formData.append('representante_id', representante_id);
     formData.append('nombre', nombre);
     formData.append('apellido', apellido);
-    formData.append('fecha_nacimiento', moment(fecha_nacimiento).utc().toString());
+    formData.append('fecha_nacimiento', moment(fecha_nacimiento).format('YYYY-MM-DD'));
     formData.append('nombre_completo', `${nombre} ${apellido}`);
   }
 
-  private setArchivoLocal(usuario: IHijo, file: File) {
+  private setArchivoLocal(usuario: IHijo, hijoOriginal: IHijo, file: File) {
     // set formulario...
-    const ext = file.name.split('.').pop();
     const formData = new FormData();
-    formData.append('file', file, `myimage.${ext}`);
-    formData.append('name', file.name);
+    // verificando si actualizo el archivo...
+    if(file !== undefined) {
+      // set formulario...
+      formData.append('file', file, file.name);
+      formData.append('name', file.name);
+    }
     // adjuntamos l resto de datos...
-    this.setDataUsuario(usuario, formData); 
+    this.setDataUsuario(usuario, hijoOriginal, formData);
     // return...
     return formData;   
   }
@@ -90,14 +97,41 @@ export class ClientesService {
   public async crearHijo(hijo: IHijo, file: File) {
     try {
       // verificando la opcion desde dònde lee el archivo...
-      const formData: FormData = this.setArchivoLocal(hijo, file);
+      const formData: FormData = this.setArchivoLocal(hijo, null, file);
       // return...
       return await this
         .httpClient
         .post(
-          `${this.URL_SERVER.HOST}${this.PERFILES_CONTROLLERS.COMUN.CLIENTES}${this.PERFILES_CONTROLLERS.CRUD.HIJOS.CREAR}`, 
+          `${this.URL_SERVER.HOST}${this.PERFILES_CONTROLLERS.COMUN.CLIENTES}${this.PERFILES_CONTROLLERS.CRUD.HIJOS.COMUN}`, 
           formData)
         .toPromise();
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  private actualizaDatosHijo(hijoActualiza: IHijo, hijoOriginal: IHijo, file: any) {
+    // seteo del datos...
+    return this.setArchivoLocal(hijoActualiza, hijoOriginal, file);
+  }
+
+  public actualizaHijo(hijoActualiza: IHijo, hijoOriginal: IHijo, file: File) {
+    try {
+      // verificando la opcion desde dònde lee el archivo...
+      const formData = this.actualizaDatosHijo(hijoActualiza, hijoOriginal, file);
+      // retornando los resultados...
+      return this
+        .httpClient.put(`${this.URL_SERVER.HOST}${this.PERFILES_CONTROLLERS.COMUN.CLIENTES}${this.PERFILES_CONTROLLERS.CRUD.HIJOS.COMUN}`, formData);
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  public async eliminaHijo(hijoID: string) {
+    try {
+      // return...      
+      return await this.httpClient
+      .delete(`${this.URL_SERVER.HOST}${this.PERFILES_CONTROLLERS.COMUN.CLIENTES}${this.PERFILES_CONTROLLERS.CRUD.HIJOS.COMUN}/${hijoID}`).toPromise()      
     } catch (error) {
       throw error;
     }

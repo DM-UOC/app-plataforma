@@ -1,12 +1,12 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { CliHijosPage } from './cli-hijos.page';
+import { SesionVirtualPage } from './sesion-virtual.page';
 
 const routes: Routes = [
   {
     path: '',
-    component: CliHijosPage
+    component: SesionVirtualPage
   }
 ];
 
@@ -14,4 +14,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class CliHijosPageRoutingModule {}
+export class SesionVirtualPageRoutingModule {}

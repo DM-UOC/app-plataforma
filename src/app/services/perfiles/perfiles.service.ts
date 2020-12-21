@@ -60,7 +60,6 @@ export class PerfilesService {
       // verificando si actualizo el archivo...
       if(file !== undefined) {
         // set formulario...
-        const ext = file.name.split('.').pop();
         formData.append('file', file, file.name);
         formData.append('name', file.name);
       }
@@ -105,15 +104,15 @@ export class PerfilesService {
     }
   }
 
-  private async actualizaDatosUsuario(usuarioActualiza: IUsuario, usuarioOriginal: IUsuario, file: any) {
-
-    return await this.setArchivoLocal(usuarioActualiza, file);
+  private actualizaDatosUsuario(usuarioActualiza: IUsuario, file: any) {
+    // seteo del datos...
+    return this.setArchivoLocal(usuarioActualiza, file);
   }
 
   public async actualizaUsuario(usuarioActualiza: IUsuario, usuarioOriginal: IUsuario, file: File, tipoPerfil: number = 1) {
     try {
       // verificando la opcion desde dònde lee el archivo...
-      const formData = await this.actualizaDatosUsuario(usuarioActualiza, usuarioOriginal, file);
+      const formData = this.actualizaDatosUsuario(usuarioActualiza, file);
       // retornando la url de proceso segun perfil...
       const urlProceso = this.retornaUrlProceso(tipoPerfil);
       // return...

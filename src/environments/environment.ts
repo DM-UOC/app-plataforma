@@ -61,8 +61,8 @@ export const PERFILES_CONTROLLER = {
     CLIENTES: {
       EXISTE_REPRESENTANTE: '/representante',
       HIJOS: {
-        CREAR: '/hijo',
-        LISTAR: '/hijos'
+        LISTAR: '/hijos',
+        COMUN: '/hijo'
       }
     }
   }

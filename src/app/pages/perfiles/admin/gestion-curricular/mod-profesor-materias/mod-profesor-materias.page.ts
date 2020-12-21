@@ -12,8 +12,7 @@ import { ProfesoresService } from 'src/app/services/perfiles/profesores/profesor
 export class ModProfesorMateriasPage implements OnInit {
 
   @Input() profesor: IProfesor;
-  materias: any[] = []
-  
+
   constructor(
     private materiasService: MateriasService,
     private profesoresService: ProfesoresService
@@ -34,7 +33,7 @@ export class ModProfesorMateriasPage implements OnInit {
       .subscribe({
         next: (materias) => {
           // almacena las materias...
-          this.materias = materias
+          this.profesor.materias = materias.materias
         },
         error: (error) => {
           // imprime el erro....
@@ -50,8 +49,8 @@ export class ModProfesorMateriasPage implements OnInit {
     try {
       // registra la materia y presenta la lista actualizada...
       this.profesoresService.registraMateria(this.profesor.usuario_id, materia)
-      .subscribe(materias => {
-        this.materias = materias;
+      .subscribe(profesor => {
+        this.profesor.materias = profesor.materias;
       });
     } catch (error) {
       throw error;
