@@ -1,0 +1,83 @@
+<ion-header>
+  
+  <ion-toolbar>
+
+    <ion-buttons slot="start">
+
+      <ion-button color="dark" (click)="cerrarModal();">
+          <ion-icon name="arrow-back"></ion-icon>
+      </ion-button>
+
+    </ion-buttons>    
+
+    <ion-title>Registrar Sesión Virtual</ion-title>
+
+  </ion-toolbar>
+
+</ion-header>
+
+<ion-content>
+
+  <form (ngSubmit)="crear($event);" [formGroup]="formSesion" *ngIf="formSesion">
+
+    <ion-card>
+
+      <ion-card-header>
+        Crear nueva sesión - Clase virtual
+      </ion-card-header>
+
+      <ion-card-content>
+
+        <ion-item lines="full">
+          <ion-label position="floating">Descripción:</ion-label>
+          <ion-input formControlName="descripcion"></ion-input>
+        </ion-item>
+        
+        <div *ngIf="(descripcion.dirty || descripcion.touched) && descripcion.errors" class="errors">
+          <span *ngIf="descripcion.errors?.required">Ingrese una descripción</span>
+        </div>
+
+        <ion-item lines="full">
+          <ion-label position="floating">Observación:</ion-label>
+          <ion-input formControlName="observacion"></ion-input>
+        </ion-item>
+    
+        <ion-item lines="full">
+          <ion-label position="floating">Fecha hora inicio:</ion-label>
+          <ion-datetime displayFormat="YYYY-MM-DD HH:mm" 
+          placeholder="Fecha y hora de inicio" 
+          formControlName="fecha_hora_inicio"></ion-datetime>
+        </ion-item>
+        
+        <div *ngIf="(fechaHoraInicio.dirty || fechaHoraInicio.touched) && fechaHoraInicio.errors" class="errors">
+          <span *ngIf="fechaHoraInicio.errors?.required">Ingrese la fecha y hora de inicio</span>
+        </div>
+
+        <ion-item lines="full">
+          <ion-label position="floating">Fecha hora final:</ion-label>
+          <ion-datetime displayFormat="YYYY-MM-DD HH:mm" 
+          placeholder="Fecha y hora final" 
+          formControlName="fecha_hora_final"></ion-datetime>
+        </ion-item>
+        
+        <div *ngIf="(fechaHoraFinal.dirty || fechaHoraFinal.touched) && fechaHoraFinal.errors" class="errors">
+          <span *ngIf="fechaHoraFinal.errors?.required">Ingrese la fecha y hora final</span>
+        </div>
+        <div *ngIf="formSesion.hasError('fechaInicioFinalIncorrectas')" class="errors">
+          <span>La fecha hora final no puede ser menor a la fecha y hora inicial</span>
+        </div>
+
+        <ion-button type="submit" [color]="sesion === undefinied? 'danger': 'primary'" expand="block" 
+        [disabled]="!formSesion.valid">
+          <ion-icon slot="start" name="add-circle-outline"></ion-icon>
+          <label *ngIf="sesion === undefined">Crear</label>
+          <label *ngIf="sesion !== undefined">Actualizar</label>
+        </ion-button>
+
+      </ion-card-content>
+    
+    </ion-card>
+
+  </form>
+
+</ion-content>

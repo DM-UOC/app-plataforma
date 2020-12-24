@@ -3,7 +3,7 @@ import { EventEmitter, Injectable, Output } from '@angular/core';
 import { IHijo } from 'src/app/interfaces/hijo.interface';
 import { CREDENCIALES_SERVIDOR, PERFILES_CONTROLLER } from 'src/environments/environment';
 import { SeguridadService } from '../../seguridades/seguridad.service';
-import * as moment from "moment";
+import moment from "moment";
 
 @Injectable({
   providedIn: 'root'

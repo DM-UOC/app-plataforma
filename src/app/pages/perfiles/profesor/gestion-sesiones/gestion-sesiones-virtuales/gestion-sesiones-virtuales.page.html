@@ -1,0 +1,52 @@
+<ion-header>
+  <app-cabecera></app-cabecera>
+</ion-header>
+
+<ion-content>
+
+  <ion-card>
+
+    <ion-card-header>
+      <ion-card-title>Gestión Sesiones</ion-card-title>
+    </ion-card-header>
+
+    <ion-card-content>
+  
+      <ion-list>
+        <ion-list-header>
+          Listado Sesiones - Clases virtuales
+        </ion-list-header>
+
+        <ion-item *ngFor="let sesion of sesiones">
+
+          <ion-label>
+            <h2>Tema: {{ sesion.descripcion }}</h2>
+            <h3>Observcación: {{ sesion.observacion }}</h3>
+            <p>Fecha hora inicio: {{ sesion.fecha_hora_inicio }}</p>
+            <p>Fecha hora final: {{ sesion.fecha_hora_final }}</p>
+            <p>Identificador: {{ sesion.sesion_identificador }}</p>
+          </ion-label>
+
+          <ion-button (click)="actualizar(sesion);">
+            <ion-icon name="create"></ion-icon>
+          </ion-button>          
+          <ion-button (click)="eliminar(sesion);">
+            <ion-icon name="trash"></ion-icon>
+          </ion-button>
+
+        </ion-item>
+      
+      </ion-list>
+
+    </ion-card-content>
+ 
+  </ion-card>
+
+  <!-- fab placed to the top and end and on the top edge of the content overlapping header -->
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button (click)="registrarSesion();" color="secondary">
+      <ion-icon name="add-circle"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+
+</ion-content>

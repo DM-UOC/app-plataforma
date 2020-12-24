@@ -55,6 +55,16 @@ const routes: Routes = [
     path: 'sesion-virtual',
     loadChildren: () => import('./pages/perfiles/profesor/gestion-sesiones/sesion-virtual/sesion-virtual.module').then( m => m.SesionVirtualPageModule)
   },
+  {
+    path: 'gestion-sesiones-virtuales',
+    loadChildren: () => import('./pages/perfiles/profesor/gestion-sesiones/gestion-sesiones-virtuales/gestion-sesiones-virtuales.module').then( m => m.GestionSesionesVirtualesPageModule),
+    canActivate: [AuthenticacionGuard]
+  },
+  {
+    path: 'mod-sesiones',
+    loadChildren: () => import('./pages/perfiles/profesor/mod-sesiones/mod-sesiones.module').then( m => m.ModSesionesPageModule),
+    canActivate: [AuthenticacionGuard]
+  },
 ];
 
 @NgModule({

@@ -16,7 +16,7 @@ export const STORAGE = {
 }
 
 export const CREDENCIALES_SERVIDOR = {
-  SERVER: 'http://127.0.0.1',
+  SERVER: 'http://192.168.100.116',
   PUERTO: 3025
 };
 
@@ -81,6 +81,12 @@ export const LECTIVOS_CONTROLLER = {
     PARCIALES: {
       COMUN: '/parciales'
     }
+  }
+};
+
+export const SESIONES_CONTROLLER = {
+  COMUN: '/sesiones',
+  CRUD: {
   }
 };
 

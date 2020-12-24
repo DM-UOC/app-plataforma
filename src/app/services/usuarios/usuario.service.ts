@@ -25,4 +25,20 @@ export class UsuarioService {
     return this.socket.fromEvent('chat');
   }
 
+  uneSesion( message: object ) {
+    this.socket.emit('uneSesion', message);
+  }
+
+  dejaSesion( message: object ) {
+    this.socket.emit('dejaSesion', message);
+  }
+
+  usuarioConectado() {
+    return this.socket.fromEvent('usuarioConectado');
+  }
+
+  usuarioDesconectado() {
+    return this.socket.fromEvent('usuarioDesconectado');
+  }
+
 }
