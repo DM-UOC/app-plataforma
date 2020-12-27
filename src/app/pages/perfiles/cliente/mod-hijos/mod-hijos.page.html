@@ -43,7 +43,7 @@
       <ion-card-content>
 
         <ion-input formControlName="representante_id" value="{{representante._id}}" [hidden]="ocultaId"></ion-input>
-        <ion-input formControlName="_id" value="{{hijo._id}}" [hidden]="ocultaId"></ion-input>
+        <ion-input formControlName="_id" value="{{hijo?._id}}" [hidden]="ocultaId"></ion-input>
 
         <ion-item lines="full">
           <ion-label position="floating">Nombres:</ion-label>

@@ -25,12 +25,20 @@
             <p>Fecha hora inicio: {{ sesion.fecha_hora_inicio }}</p>
             <p>Fecha hora final: {{ sesion.fecha_hora_final }}</p>
             <p>Identificador: {{ sesion.sesion_identificador }}</p>
+            <p>Representantes:
+              <ion-button color="kids" (click)="despliegaRepresentante(sesion);">
+                <ion-badge color="kids">{{ sesion.representantes.length }}</ion-badge>
+              </ion-button>                  
+            </p>
           </ion-label>
 
-          <ion-button (click)="actualizar(sesion);">
+          <ion-button tooltip="Participantes" (click)="participantes(sesion);" color="kids">
+            <ion-icon name="person-add"></ion-icon>
+          </ion-button>       
+          <ion-button tooltip="Actualizar" (click)="actualizar(sesion);" color="kids">
             <ion-icon name="create"></ion-icon>
           </ion-button>          
-          <ion-button (click)="eliminar(sesion);">
+          <ion-button tooltip="Eliminar" (click)="eliminar(sesion);" color="kids">
             <ion-icon name="trash"></ion-icon>
           </ion-button>
 

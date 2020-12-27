@@ -65,6 +65,14 @@ const routes: Routes = [
     loadChildren: () => import('./pages/perfiles/profesor/mod-sesiones/mod-sesiones.module').then( m => m.ModSesionesPageModule),
     canActivate: [AuthenticacionGuard]
   },
+  {
+    path: 'mod-sesion-participantes',
+    loadChildren: () => import('./pages/perfiles/profesor/mod-sesion-participantes/mod-sesion-participantes.module').then( m => m.ModSesionParticipantesPageModule)
+  },
+  {
+    path: 'mod-listado-participantes-sesion',
+    loadChildren: () => import('./pages/perfiles/profesor/mod-listado-participantes-sesion/mod-listado-participantes-sesion.module').then( m => m.ModListadoParticipantesSesionPageModule)
+  },
 ];
 
 @NgModule({

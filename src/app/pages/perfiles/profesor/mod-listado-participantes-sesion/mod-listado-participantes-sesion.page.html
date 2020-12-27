@@ -1,0 +1,48 @@
+<ion-header>
+
+  <ion-toolbar>
+    <ion-buttons slot="start">
+
+      <ion-button color="dark" (click)="cerrarModal();">
+          <ion-icon name="arrow-back"></ion-icon>
+      </ion-button>
+
+    </ion-buttons>     
+    <ion-title>Participantes Sesion</ion-title>
+
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-card>
+
+    <ion-card-content>
+
+      <ion-list>
+
+        <ion-item *ngFor="let representante of representantes">
+
+          <ion-label>
+          
+            <h2>
+              {{ representante.representantes_sesion.usuario.nombre_completo }}
+            </h2>
+          
+          </ion-label>
+
+          <ion-toggle 
+          slot="end" 
+          (ngModelChange)="retirarRepresentante(representante)" 
+          color="kids"
+          [(ngModel)]="representante.representantes_sesion.auditoria.auditoria.estado"></ion-toggle>
+
+        </ion-item>
+      
+      </ion-list>
+
+     </ion-card-content>
+  
+  </ion-card>
+
+</ion-content>

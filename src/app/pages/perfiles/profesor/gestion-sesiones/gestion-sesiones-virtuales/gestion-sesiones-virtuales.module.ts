@@ -9,6 +9,7 @@ import { GestionSesionesVirtualesPageRoutingModule } from './gestion-sesiones-vi
 import { GestionSesionesVirtualesPage } from './gestion-sesiones-virtuales.page';
 import { ComponentsModule } from 'src/app/components/components.module';
 import { ModSesionesPage } from '../../mod-sesiones/mod-sesiones.page';
+import { TooltipModule } from 'ng2-tooltip-directive';
 
 @NgModule({
   imports: [
@@ -17,6 +18,7 @@ import { ModSesionesPage } from '../../mod-sesiones/mod-sesiones.page';
     ReactiveFormsModule,
     IonicModule,
     ComponentsModule,
+    TooltipModule,
     GestionSesionesVirtualesPageRoutingModule
   ],
   declarations: [GestionSesionesVirtualesPage, ModSesionesPage]

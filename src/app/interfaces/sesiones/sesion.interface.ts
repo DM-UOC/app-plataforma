@@ -7,5 +7,12 @@ export interface ISesion {
     observacion?: string;
     fecha_hora_inicio?: Date;
     fecha_hora_final?: Date;
-
+    representantes: {
+        participante_id: string,
+        nombre_completo: string;
+        hijos: {
+            nombre_completo: string;
+            edad: number;
+        }[];
+    } [];
 }

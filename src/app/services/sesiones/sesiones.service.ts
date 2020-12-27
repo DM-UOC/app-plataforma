@@ -13,6 +13,7 @@ export class SesionesService {
   */
  public actualizaListado = false;
  @Output() creoSesion: EventEmitter<boolean> = new EventEmitter();
+ @Output() creoRepresentante: EventEmitter<boolean> = new EventEmitter();
 
  private URL_SERVER = {
    HOST: `${CREDENCIALES_SERVIDOR.SERVER}:${CREDENCIALES_SERVIDOR.PUERTO}`
@@ -20,6 +21,13 @@ export class SesionesService {
  private SESIONES_CONTROLLER = {
    COMUN: `${SESIONES_CONTROLLER.COMUN}`,
    CRUD: {
+     REPRESENTANTES: {
+       COMUN: `${SESIONES_CONTROLLER.CRUD.REPRESENTANTES.COMUN}`,
+       CRUD: {
+        LISTA: `${SESIONES_CONTROLLER.CRUD.REPRESENTANTES.CRUD.LISTA}`,
+        RETIRAR: `${SESIONES_CONTROLLER.CRUD.REPRESENTANTES.CRUD.RETIRAR}`
+       }
+     }
    }
  };
 
@@ -66,4 +74,54 @@ export class SesionesService {
     }
   }
   
+  retornaRepresentantesSesion(sesion: ISesion) {
+    try {
+      return this.httpClient
+      .get<ISesion>(`${this.URL_SERVER.HOST}${this.SESIONES_CONTROLLER.COMUN}${this.SESIONES_CONTROLLER.CRUD.REPRESENTANTES.COMUN}`, {
+        params: {
+          id: sesion._id
+        }
+      });
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  registraRepresentante(representanteID: string, sesionID: string) {
+    try {
+      return this.httpClient
+        .post<ISesion>(`${this.URL_SERVER.HOST}${this.SESIONES_CONTROLLER.COMUN}${this.SESIONES_CONTROLLER.CRUD.REPRESENTANTES.COMUN}`, {
+          representanteID,
+          sesionID
+        });
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  retornaListaRepresentantesSesion(sesion: ISesion) {
+    try {
+      return this.httpClient
+      .get<any []>(`${this.URL_SERVER.HOST}${this.SESIONES_CONTROLLER.COMUN}${this.SESIONES_CONTROLLER.CRUD.REPRESENTANTES.COMUN}${this.SESIONES_CONTROLLER.CRUD.REPRESENTANTES.CRUD.LISTA}`, {
+        params: {
+          sesionID: sesion._id
+        }
+      });
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  retirarRepresentanteSesion(sesionID: string, representanteID: string) {
+    try {
+      return this.httpClient
+      .post<ISesion>(`${this.URL_SERVER.HOST}${this.SESIONES_CONTROLLER.COMUN}${this.SESIONES_CONTROLLER.CRUD.REPRESENTANTES.COMUN}${this.SESIONES_CONTROLLER.CRUD.REPRESENTANTES.CRUD.RETIRAR}`, {
+        sesionID,
+        representanteID
+      });
+    } catch (error) {
+      throw error;
+    }
+  }
+
 }

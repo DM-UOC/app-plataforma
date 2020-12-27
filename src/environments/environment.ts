@@ -87,6 +87,13 @@ export const LECTIVOS_CONTROLLER = {
 export const SESIONES_CONTROLLER = {
   COMUN: '/sesiones',
   CRUD: {
+    REPRESENTANTES: {
+      COMUN: '/representantes',
+      CRUD: {
+        LISTA: '/lista',
+        RETIRAR: '/retirar'
+      }
+    }
   }
 };
 
