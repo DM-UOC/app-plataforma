@@ -73,6 +73,11 @@ const routes: Routes = [
     path: 'mod-listado-participantes-sesion',
     loadChildren: () => import('./pages/perfiles/profesor/mod-listado-participantes-sesion/mod-listado-participantes-sesion.module').then( m => m.ModListadoParticipantesSesionPageModule)
   },
+  {
+    path: 'sala-virtual',
+    loadChildren: () => import('./pages/perfiles/profesor/gestion-sesiones/sala-virtual/sala-virtual.module').then( m => m.SalaVirtualPageModule),
+    canActivate: [AuthenticacionGuard]
+  },
 ];
 
 @NgModule({

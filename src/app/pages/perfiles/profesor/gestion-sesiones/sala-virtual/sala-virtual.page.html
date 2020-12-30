@@ -1,0 +1,73 @@
+<ion-header>
+  <app-cabecera></app-cabecera>
+</ion-header>
+
+<ion-content>
+  
+  <ion-card>
+    <ion-card-content>
+        Usuarios en lìnea: <strong>{{users}}</strong>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card>
+
+    <ion-card-content>
+
+      <ion-list>
+
+        <ion-item *ngFor="let tokenUsuario of tokenUsuarios;">
+
+          <ion-label>
+            <h2>Usuario: {{ tokenUsuario.token.nombres }}</h2>
+            <h3>Usuario: {{ tokenUsuario.token.perfil_descripcion }}</h3>
+          </ion-label>
+          
+          <ion-button 
+          *ngIf="token.codigo_perfil === 2 && tokenUsuario.token.codigo_perfil === 3" 
+          slot="end" 
+          color="success"
+          (click)="relizarVideoLLamada(tokenUsuario)"
+          >
+            <ion-icon name="call"></ion-icon>
+          </ion-button>
+
+          <ion-icon 
+          color="warning"
+          tooltip="Favor espere la llamada del profesor."
+          *ngIf="token.codigo_perfil === 3 && tokenUsuario.token.codigo_perfil === 2" 
+          slot="end" name="videocam-off"></ion-icon>
+        </ion-item>
+
+      </ion-list>
+    
+    </ion-card-content>
+  
+  </ion-card>
+
+	<ion-list lines="none">
+
+		<ion-item *ngFor="let message of messages">
+      {{message}}
+		</ion-item>
+	
+  </ion-list>
+  
+</ion-content>
+
+<ion-footer>
+
+	<ion-toolbar>
+
+		<textarea spellcheck="true" autoComplete="true" autocorrect="true" rows="1" class="chat-input" [(ngModel)]="message" placeholder="type message..." (keyup.enter)="addChat()">
+		</textarea>
+
+		<ion-buttons slot="primary">
+			<ion-button (click)="addChat()" slot="end" class="send-chat-button">
+				 <ion-icon slot="icon-only" name="send"></ion-icon>
+	    </ion-button>
+		</ion-buttons>
+
+	</ion-toolbar>
+
+</ion-footer>

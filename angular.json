@@ -37,11 +37,14 @@
               },
               {
                 "input": "src/global.scss"
+              },
+              {
+                "input": "./node_modules/font-awesome/css/font-awesome.css"
               }
             ],
             "scripts": [
               "node_modules/moment/dist/moment.js",
-              "node_modules/peerjs/dist/peerjs.min.js"
+              "node_modules/peerjs/dist/peerjs.js"
             ]
           },
           "configurations": {

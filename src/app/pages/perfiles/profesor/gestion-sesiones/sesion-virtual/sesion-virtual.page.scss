@@ -1,8 +1,20 @@
-textarea {
-    width: calc(100% - 20px);
-    margin-left: 10px;
-    background-color: #fff;
-    font-size: 1.2em;
-    resize: none;
-    border: none;
-} 
+.localvideo {
+  object-fit: cover;
+  position: fixed;
+  right: 1rem;
+  bottom: 1rem;
+  min-height: 20%; 
+  height: 20%; 
+  border-radius: 5px;
+  overflow: hidden;
+  z-index: 1;
+}
+  
+.remotevideo {
+  object-fit: cover;
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  min-width: 100%;
+  min-height: 100%;
+}

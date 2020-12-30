@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Plugins } from "@capacitor/core";
 import { AlertController, ModalController } from '@ionic/angular';
+import { IToken } from 'src/app/interfaces/comuns/token.interface';
 import { IUsuarioToken } from 'src/app/interfaces/login.interface';
 import { ISesion } from 'src/app/interfaces/sesiones/sesion.interface';
 import { SeguridadService } from 'src/app/services/seguridades/seguridad.service';
@@ -18,7 +19,7 @@ const { LocalNotifications } = Plugins;
 export class GestionSesionesVirtualesPage implements OnInit {
 
   public sesiones: ISesion [] = [];
-  private usuarioToken: IUsuarioToken;
+  private usuarioToken: IToken;
 
   constructor(
     private modalController: ModalController,

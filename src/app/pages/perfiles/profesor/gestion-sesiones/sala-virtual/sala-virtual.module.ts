@@ -4,9 +4,9 @@ import { FormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
-import { SesionVirtualPageRoutingModule } from './sesion-virtual-routing.module';
+import { SalaVirtualPageRoutingModule } from './sala-virtual-routing.module';
 
-import { SesionVirtualPage } from './sesion-virtual.page';
+import { SalaVirtualPage } from './sala-virtual.page';
 import { ComponentsModule } from 'src/app/components/components.module';
 import { TooltipModule } from 'ng2-tooltip-directive';
 
@@ -17,8 +17,8 @@ import { TooltipModule } from 'ng2-tooltip-directive';
     IonicModule,
     ComponentsModule,
     TooltipModule,
-    SesionVirtualPageRoutingModule
+    SalaVirtualPageRoutingModule
   ],
-  declarations: [SesionVirtualPage]
+  declarations: [SalaVirtualPage]
 })
-export class SesionVirtualPageModule {}
+export class SalaVirtualPageModule {}

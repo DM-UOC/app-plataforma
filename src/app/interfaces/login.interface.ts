@@ -11,14 +11,22 @@ export interface ILogueado {
     
 }
 
+export interface IUsuarioDataSocket {
+    
+    usuario?: string;
+    nombres?: string;
+    codigo_perfil?: number;
+    perfil_id?: number;
+    perfil_descripcion?: string;
+    perfil_menu?: string;
+
+}
+
 export interface IUsuarioToken {
 
-    usuario: string;
-    nombres: string;
-    codigo_perfil: number;
-    perfil_id: number;
-    perfil_descripcion: string;
-    perfil_menu: string;
+    readonly id?: string;
+    busy?: boolean;
+    token?: IUsuarioDataSocket
 
 }
 

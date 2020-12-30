@@ -17,7 +17,7 @@ export const STORAGE = {
 
 export const CREDENCIALES_SERVIDOR = {
   SERVER: 'http://192.168.100.116',
-  PUERTO: 3025
+  PUERTO: 3030
 };
 
 export const SEGURIDAD_CONTROLLER = {

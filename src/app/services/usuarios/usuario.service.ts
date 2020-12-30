@@ -2,22 +2,32 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Socket } from 'ngx-socket-io';
 import { Observable } from 'rxjs';
+import { IToken } from 'src/app/interfaces/comuns/token.interface';
+import { IUsuarioToken } from 'src/app/interfaces/login.interface';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UsuarioService {
 
+  private connected = false;
+
   constructor(
     private httpClient: HttpClient,
     private socket: Socket
   ) { }
 
-  obtenerUsuarios() {
-    return this.socket.fromEvent('usuarios');
+
+  agregarUsuario(token: IToken) {
+    // emite agrega usuario...
+    this.socket.emit('agrega-usuario', token);
   }
 
-  sendChat(message: string){
+  registroUsuario() {
+    return this.socket.fromEvent('registro-usuario');
+  }
+
+  sendChat(message){
     this.socket.emit('chat', message);
   }
 
@@ -25,20 +35,39 @@ export class UsuarioService {
     return this.socket.fromEvent('chat');
   }
 
-  uneSesion( message: object ) {
-    this.socket.emit('uneSesion', message);
+  getUsers(){
+    return this.socket.fromEvent('usuarios');
   }
 
-  dejaSesion( message: object ) {
-    this.socket.emit('dejaSesion', message);
+  desconectar() {
+    this.socket.disconnect();
+  }
+  
+  retornaUsuariosConetados() {
+    return new Observable((observer) => {
+        this.socket.on('client-list', (data) => {
+            observer.next(data);
+        });
+    });
   }
 
-  usuarioConectado() {
-    return this.socket.fromEvent('usuarioConectado');
+  public retornaUsuariosOcupados() {
+    this.socket.emit('get-busy-user');
+    return Observable.create((observer) => {
+        this.socket.on('get-busy-user', (data) => {
+            observer.next(data);
+        });
+    });
   }
 
-  usuarioDesconectado() {
-    return this.socket.fromEvent('usuarioDesconectado');
+  public realizarVideoLlamada(usuarioLlama: IUsuarioToken, usuarioALlamar: IUsuarioToken) {
+    this.socket.emit('video-llamada', {
+        usuarioLlama,
+        usuarioALlamar
+    });
   }
 
+  accionVideoLlamada() {
+    return this.socket.fromEvent('video-llamada');
+  }
 }

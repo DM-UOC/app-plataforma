@@ -1,9 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ToastController } from '@ionic/angular';
-import { UsuarioService } from 'src/app/services/usuarios/usuario.service';
-
-import moment from "moment";
-import Peer from 'peerjs';
+import { AgoraClient, ClientEvent, NgxAgoraService, Stream, StreamEvent } from 'ngx-agora';
+import { SocketsService } from 'src/app/services/sockets/sockets.service';
+import { SeguridadService } from 'src/app/services/seguridades/seguridad.service';
+import { IToken } from 'src/app/interfaces/comuns/token.interface';
+import Peer from "peerjs";
+// declare const Peer: any;
 
 @Component({
   selector: 'app-sesion-virtual',
@@ -12,133 +14,129 @@ import Peer from 'peerjs';
 })
 export class SesionVirtualPage implements OnInit {
 
-  public usuarios: number = 0;
-  public message: string = '';
-  public messages: string[] = [];
-  public peers = [];
-  public usuarioId: string;
+  @ViewChild('videoLocal') videoLocal: ElementRef;
+  @ViewChild('videoRemoto') videoRemoto: ElementRef;
+
+  numeroUsuarios: number;
+  private peerId: string;
+  private datosConexion: {
+    socketId: string;
+    peerId: string;
+  };
+  private peer: any = new Peer(undefined, { host: '/', port: 3001 });
+  private listaPeers: any [] = [];
+  private streamLocal: any;
 
   constructor(
-    private toastController: ToastController,
-    private usuarioService: UsuarioService
-
-  ) { }
-
-  agregarFlujoVideo(video, stream, grid) {
-    video.srcObject = stream
-    video.addEventListener('loadedmetadata', () => {
-      video.play()
-    })
-    grid.append(video);
+    private socketsService: SocketsService,
+  ) {
   }
-
-  conectarNuevoUsuario(usuarioId: string, stream, myPeer, videoGrid) {
-    const that = this;
-    const call = myPeer.call(usuarioId, stream);
-    const video = document.createElement('video');
-
-    call.on('stream', userVideoStream => {
-      that.agregarFlujoVideo(video, userVideoStream, videoGrid);
-    });
-
-    call.on('close', () => {
-      video.remove();
-      alert('cerrando video sesion...');
-      const message = {
-        cuartoId: 1, 
-        usuarioId
-      };
-      // socket deja sesion...
-      that.usuarioService.dejaSesion(message);
-    });
-    
-    this.peers[usuarioId] = call;
-  }
-
-  iniciaVideo() {
-    const that = this;
-
-    const myPeer = new Peer(undefined, {
-      host: '/',
-      port: 3026,
-      secure: false
-    });
-    
-    const videoGrid = document.getElementById('video-grid');
-    const myVideo = document.createElement('video');
-    myVideo.muted = true;
-    // inicio usermedia...
-    navigator.mediaDevices.getUserMedia({
-      video: true,
-      audio: true
-    }).then(stream => {
-      // agrega el video...
-      that.agregarFlujoVideo(myVideo, stream, videoGrid);
-      // peer...
-      myPeer.on('call', call => {
-        call.answer(stream)
-        const video = document.createElement('video');
-        call.on('stream', userVideoStream => {
-          that.agregarFlujoVideo(video, userVideoStream, videoGrid);
-        });
-      });
-
-      // agregando el nuevo usuario al grid de video...
-      this.usuarioService
-      .usuarioConectado()
-      .subscribe((usuarioID: string) => {
-        // agregando el nuevo usuario...
-        that.conectarNuevoUsuario(usuarioID, stream, myPeer, videoGrid);
-      });
-
-    });
-
-    // socket al cerrar sesion...
-    this.usuarioService
-    .usuarioDesconectado()
-    .subscribe((usuarioID: string) => {
-      // desconecta al usuario...
-      if (this.peers[usuarioID]) {
-        this.peers[usuarioID].close();
-      }
-    });
-
-    // se crea el objeto peer enviamos el socket de unnirse a la sesion...
-    myPeer.on('open', id => {
-      that.usuarioId = id;
-      const message = {
-        cuartoId: 1, 
-        usuarioId: id
-      };
-      // enviando el socket al servidor...
-      this.usuarioService.uneSesion(message);
-    });
-   
-  }
-
+  
   ngOnInit() {
-    let nombreUsuario: string = `${moment().utc().format('YYYY-MM-DD HH:mm:ss')}`;
-    // retornamos el numero de usuarios conectados...
-    this.usuarioService
-      .obtenerUsuarios()
-      .subscribe((usuarios: number) => {
-        this.usuarios = usuarios;
-    });
-
-    this.usuarioService
-      .receiveChat()
-      .subscribe((message: string) => {
-      this.messages.push(message);
-    });
-
-    // inicia el video...
-    this.iniciaVideo();
+    // numero de usuarios...
+    this.retornaNumeroUsuarios();
+    // obtiene el peerid del cliente...
+    this.obtienePeerId();
+    // recibe datos conexion...
+    this.retornaDatosConexion();
+  }
+  
+  private retornaNumeroUsuarios() {
+    this.socketsService
+      .retornaNumeroUsuarios()
+      .subscribe((numeroUsuarios: number) => this.numeroUsuarios = numeroUsuarios)
   }
 
-  addChat(){
-    this.messages.push(this.message);
-    this.usuarioService.sendChat(this.message);
-    this.message = '';
+  private obtienePeerId() {
+    const that = this;
+    // abriendo la conexion peer...
+    this.peer.on('open', (id) => {
+      that.peerId = id;
+      // emitiendo el id a los usuarios conectados...
+      that.socketsService.enviaServidorPeerId(this.peerId);
+    });
+    // llamada
+    this.peer.on('call', (llamada) => {
+      navigator
+        .mediaDevices
+        .getUserMedia({
+          video: true,
+          audio: true
+        })
+        .then((stream) => {
+          that.streamLocal = stream;
+          // agregando el video local...
+          that.agreagaVideoLocal(stream);
+          // contestanto llamada...
+          llamada.answer(stream);
+          // stream...
+          llamada.on('stream', (remoteStream) => {
+            // verifica si ya existe la llamada...
+            if(!that.listaPeers.includes(llamada.peer)) {
+              that.agregaVideoRemoto(remoteStream);
+              // agreaga al arreglo de peers...
+              that.listaPeers.push(llamada.peer);
+            }
+          });
+        })
+        .catch((error) => {
+          console.log(`Error al conectar con el dispositivo: ${error}`);
+        })
+    });
+  }
+
+  private retornaDatosConexion() {
+    this.socketsService
+      .emiteDatosConexion()
+      .subscribe((datosConexion: any) => {
+        // obtiene la conexion...
+        this.datosConexion = datosConexion;
+        this.realizarVideoLLamadaCliente();
+      });
+  }
+
+  private realizarVideoLLamadaCliente() {
+    const that = this;
+    // media divices...
+    navigator
+      .mediaDevices
+      .getUserMedia({
+        video: true,
+        audio: true
+      })
+      .then((stream) => {
+        that.streamLocal = stream;
+        // agregando el video local...
+        that.agreagaVideoLocal(stream);
+        // realizando la llamada...
+        let llamada = that.peer.call(that.datosConexion.peerId, stream);
+        // enviando el stream...
+        llamada.on('stream', (remoteStream) => {
+          // verifica si ya existe la llamada...
+          if(!that.listaPeers.includes(llamada.peer)) {
+            that.agregaVideoRemoto(remoteStream);
+            // agreaga al arreglo de peers...
+            that.listaPeers.push(llamada.peer);
+          }
+        });
+      })
+      .catch((error) => {
+        console.log(`Error al conectar con el dispositivo: ${error}`);
+      });
+  }
+
+  private agregaVideoRemoto(stream) {
+    // agregando el stream
+    this.videoRemoto.nativeElement.srcObject = stream;
+    // play...
+    this.videoRemoto.nativeElement.play();
+  }
+
+  private agreagaVideoLocal(stream) {
+    // agregando el stream
+    this.videoLocal.nativeElement.srcObject = stream;
+    // play...
+    this.videoLocal.nativeElement.play();
   }
 
 }

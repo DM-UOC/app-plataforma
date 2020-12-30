@@ -11,6 +11,7 @@ import { CREDENCIALES_SERVIDOR, SEGURIDAD_CONTROLLER, STORAGE } from '../../../e
 import { ILogin, IUsuarioToken } from '../../interfaces/login.interface';
 import { ICatalogo } from '../../interfaces/catalogo.interface';
 import { IUsuario } from 'src/app/interfaces/usuario.interface';
+import { IToken } from 'src/app/interfaces/comuns/token.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -19,7 +20,7 @@ export class SeguridadService {
 
   private user: SocialUser;
   private loggedIn: boolean;
-  public usuarioToken: IUsuarioToken = null;
+  public usuarioToken: IToken = null;
   public usuarioRegistro: IUsuario;
   public behaviorSubject = new BehaviorSubject(false);
 
@@ -53,7 +54,7 @@ export class SeguridadService {
     return this.usuarioToken;
   }
 
-  public setUsuario(usuarioToken: IUsuarioToken) {
+  public setUsuario(usuarioToken: IToken) {
     this.usuarioToken = usuarioToken;
   }
 

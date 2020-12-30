@@ -1,46 +1,18 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>sesion-virtual</ion-title>
-  </ion-toolbar>
-</ion-header>
-
 <ion-content>
 
-  <ion-card>
-    <ion-card-header>
-      Usuarios conectados: {{ usuarios }}
-    </ion-card-header>
+  <video class="remotevideo" controls autoplay #videoRemoto width="100%"></video>
+  <video class="localvideo" controls autoplay muted #videoLocal></video>
 
-    <ion-card-content>
+  <div class="contendor-btn">
+    <ion-button tooltip="Número usuarios: {{ numeroUsuarios }}">
+      <ion-badge color="primary">{{ numeroUsuarios}}</ion-badge>
+    </ion-button>
+    <ion-button color="secondary" tooltip="Detección Facial">
+      <ion-icon name="scan-circle"></ion-icon>
+    </ion-button>
+    <ion-button color="danger" tooltip="Colgar Llamada">
+      <ion-icon name="call-outline"></ion-icon>
+    </ion-button>
+  </div>
 
-      <div id="video-grid"></div>
-      
-    </ion-card-content>
-
-  </ion-card>
-
-  <ion-list lines="none">
-
-		<ion-item *ngFor="let message of messages">
-      {{message}}
-		</ion-item>
-	
-  </ion-list>
 </ion-content>
-
-<ion-footer>
-
-	<ion-toolbar>
-
-		<textarea spellcheck="true" autoComplete="true" autocorrect="true" rows="1" class="chat-input" [(ngModel)]="message" placeholder="type message..." (keyup.enter)="addChat()">
-		</textarea>
-
-		<ion-buttons slot="primary">
-			<ion-button (click)="addChat()" slot="end" class="send-chat-button">
-				 <ion-icon slot="icon-only" name="send"></ion-icon>
-	    </ion-button>
-		</ion-buttons>
-
-	</ion-toolbar>
-
-</ion-footer>
