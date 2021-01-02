@@ -43,8 +43,8 @@
               }
             ],
             "scripts": [
-              "node_modules/moment/dist/moment.js",
-              "node_modules/peerjs/dist/peerjs.js"
+              "node_modules/peerjs/dist/peerjs.js",
+              "node_modules/face-api.js/dist/face-api.js"
             ]
           },
           "configurations": {

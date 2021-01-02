@@ -11,6 +11,11 @@
     "lint": "ng lint",
     "e2e": "ng e2e"
   },
+  "browser": {
+    "fs": false,
+    "os": false,
+    "path": false
+  },
   "private": true,
   "dependencies": {
     "@angular/cdk": "^11.0.3",
@@ -39,6 +44,7 @@
     "@tensorflow/tfjs-core": "^2.4.0",
     "agora-rtc-sdk": "latest",
     "angularx-social-login": "^3.4.1",
+    "face-api.js": "^0.22.2",
     "font-awesome": "^4.7.0",
     "moment": "^2.29.1",
     "ng2-file-upload": "^1.4.0",

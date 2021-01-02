@@ -9,7 +9,7 @@
   overflow: hidden;
   z-index: 1;
 }
-  
+
 .remotevideo {
   object-fit: cover;
   position: fixed;
@@ -17,4 +17,18 @@
   bottom: 0;
   min-width: 100%;
   min-height: 100%;
+}
+
+canvas {
+  position: absolute;
+}
+
+.video {
+  margin: 0;
+  padding: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

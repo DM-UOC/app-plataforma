@@ -6,7 +6,7 @@
   
   <ion-card>
     <ion-card-content>
-        Usuarios en lìnea: <strong>{{users}}</strong>
+        Usuarios en lìnea: <strong>{{ numeroUsuarios }}</strong>
     </ion-card-content>
   </ion-card>
 
@@ -16,18 +16,18 @@
 
       <ion-list>
 
-        <ion-item *ngFor="let tokenUsuario of tokenUsuarios;">
+        <ion-item *ngFor="let clienteVivo of listaClientesVivo;">
 
           <ion-label>
-            <h2>Usuario: {{ tokenUsuario.token.nombres }}</h2>
-            <h3>Usuario: {{ tokenUsuario.token.perfil_descripcion }}</h3>
+            <h2>Usuario: {{ clienteVivo.tokenCliente.nombres }}</h2>
+            <h3>Usuario: {{ clienteVivo.tokenCliente.perfil_descripcion }}</h3>
           </ion-label>
           
           <ion-button 
-          *ngIf="token.codigo_perfil === 2 && tokenUsuario.token.codigo_perfil === 3" 
+          *ngIf="token.codigo_perfil === 2 && clienteVivo.tokenCliente.codigo_perfil === 3" 
           slot="end" 
           color="success"
-          (click)="relizarVideoLLamada(tokenUsuario)"
+          (click)="relizarVideoLLamada(clienteVivo)"
           >
             <ion-icon name="call"></ion-icon>
           </ion-button>
@@ -35,7 +35,7 @@
           <ion-icon 
           color="warning"
           tooltip="Favor espere la llamada del profesor."
-          *ngIf="token.codigo_perfil === 3 && tokenUsuario.token.codigo_perfil === 2" 
+          *ngIf="token.codigo_perfil === 3 && clienteVivo.tokenCliente.codigo_perfil === 2" 
           slot="end" name="videocam-off"></ion-icon>
         </ion-item>
 
