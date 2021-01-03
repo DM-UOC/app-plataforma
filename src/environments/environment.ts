@@ -75,6 +75,22 @@ export const MATERIAS_CONTROLLER = {
   }
 };
 
+export const TAREAS_CONTROLLER = {
+  COMUN: '/tareas',
+  CRUD: {
+
+  }
+};
+
+export const NOTIFICACIONES_CONTROLLER = {
+  COMUN: '/notificaciones',
+  CRUD: {
+    REPRESENTANTE: {
+      COMUN: '/representante'
+    }
+  }
+};
+
 export const LECTIVOS_CONTROLLER = {
   COMUN: '/lectivos',
   CRUD: {

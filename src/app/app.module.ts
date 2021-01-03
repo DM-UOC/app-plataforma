@@ -13,10 +13,11 @@ import { AppRoutingModule } from './app-routing.module';
 import { ComponentsModule } from './components/components.module';
 import { Storage, IonicStorageModule } from '@ionic/storage';
 import { JwtModule, JWT_OPTIONS } from '@auth0/angular-jwt';
+import { IonicRatingComponentModule } from 'ionic-rating-component';
+
 import { CREDENCIALES_SERVIDOR, STORAGE } from 'src/environments/environment';
 import { SocialLoginModule, SocialAuthServiceConfig, FacebookLoginProvider, GoogleLoginProvider } from 'angularx-social-login';
 import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
-import { NgxAgoraModule } from "ngx-agora";
 
 const config: SocketIoConfig = { 
   url: `${CREDENCIALES_SERVIDOR.SERVER}:${CREDENCIALES_SERVIDOR.PUERTO}`, 
@@ -53,7 +54,7 @@ export function jwtOptionsFactory(storage) {
     }),
     SocketIoModule.forRoot(config),
     SocialLoginModule,
-    NgxAgoraModule.forRoot({AppID: "ca69a60a3afd452c82ac7f8c6a4516dc" })
+    IonicRatingComponentModule
   ],
   providers: [
     StatusBar,

@@ -6,9 +6,9 @@ import { IUsuarioToken } from 'src/app/interfaces/login.interface';
 import { ISesion } from 'src/app/interfaces/sesiones/sesion.interface';
 import { SeguridadService } from 'src/app/services/seguridades/seguridad.service';
 import { SesionesService } from 'src/app/services/sesiones/sesiones.service';
-import { ModListadoParticipantesSesionPage } from '../../mod-listado-participantes-sesion/mod-listado-participantes-sesion.page';
-import { ModSesionParticipantesPage } from '../../mod-sesion-participantes/mod-sesion-participantes.page';
-import { ModSesionesPage } from '../../mod-sesiones/mod-sesiones.page';
+import { ModListadoParticipantesSesionPage } from '../mod-listado-participantes-sesion/mod-listado-participantes-sesion.page';
+import { ModSesionParticipantesPage } from '../mod-sesion-participantes/mod-sesion-participantes.page';
+import { ModSesionesPage } from '../mod-sesiones/mod-sesiones.page';
 const { LocalNotifications } = Plugins;
 
 @Component({

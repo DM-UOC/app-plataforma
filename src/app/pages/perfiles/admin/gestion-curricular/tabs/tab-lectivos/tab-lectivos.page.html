@@ -23,19 +23,27 @@
             <p>{{ lectivo.puntaje_objetivo }}</p>
             <h3>
                 Total de Parciales:
-                <ion-button color="success" (click)="parcialesDetalle(lectivo);">
+                <ion-button color="success" 
+                tooltip="Detalle de parciales"
+                (click)="parcialesDetalle(lectivo);">
                   <ion-badge color="success">{{lectivo.parciales.length}}</ion-badge>
                 </ion-button> 
             </h3>
           </ion-label>
 
-          <ion-button (click)="agregaParcial(lectivo);">
+          <ion-button (click)="agregaParcial(lectivo);"
+          tooltip="Agregar parcial {{ lectivo.descripcion }}"
+          color="kids">
             <ion-icon name="add-circle"></ion-icon>
           </ion-button>
-          <ion-button (click)="actualizar(lectivo);">
+          <ion-button (click)="actualizar(lectivo);" 
+          tooltip="Actualizar lectivo {{ lectivo.descripcion }}"
+          color="kids">
             <ion-icon name="create"></ion-icon>
           </ion-button>          
-          <ion-button (click)="eliminar(lectivo);">
+          <ion-button (click)="eliminar(lectivo);" 
+          tooltip="Eliminar lectivo {{ lectivo.descripcion }}"
+          color="kids">
             <ion-icon name="trash"></ion-icon>
           </ion-button>
 
@@ -49,7 +57,9 @@
 
   <!-- fab placed to the top and end and on the top edge of the content overlapping header -->
   <ion-fab vertical="bottom" horizontal="end" slot="fixed">
-    <ion-fab-button (click)="registraLectivo();">
+    <ion-fab-button (click)="registraLectivo();" 
+    tooltip="Agregar lectivo"
+    color="kids">
       <ion-icon name="add-circle"></ion-icon>
     </ion-fab-button>
   </ion-fab>

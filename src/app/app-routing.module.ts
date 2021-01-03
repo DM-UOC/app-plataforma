@@ -53,7 +53,8 @@ const routes: Routes = [
   },
   {
     path: 'sesion-virtual',
-    loadChildren: () => import('./pages/perfiles/profesor/gestion-sesiones/sesion-virtual/sesion-virtual.module').then( m => m.SesionVirtualPageModule)
+    loadChildren: () => import('./pages/perfiles/profesor/gestion-sesiones/sesion-virtual/sesion-virtual.module').then( m => m.SesionVirtualPageModule),
+    canActivate: [AuthenticacionGuard]
   },
   {
     path: 'gestion-sesiones-virtuales',
@@ -62,20 +63,29 @@ const routes: Routes = [
   },
   {
     path: 'mod-sesiones',
-    loadChildren: () => import('./pages/perfiles/profesor/mod-sesiones/mod-sesiones.module').then( m => m.ModSesionesPageModule),
+    loadChildren: () => import('./pages/perfiles/profesor/gestion-sesiones/mod-sesiones/mod-sesiones.module').then( m => m.ModSesionesPageModule),
     canActivate: [AuthenticacionGuard]
   },
   {
     path: 'mod-sesion-participantes',
-    loadChildren: () => import('./pages/perfiles/profesor/mod-sesion-participantes/mod-sesion-participantes.module').then( m => m.ModSesionParticipantesPageModule)
+    loadChildren: () => import('./pages/perfiles/profesor/gestion-sesiones/mod-sesion-participantes/mod-sesion-participantes.module').then( m => m.ModSesionParticipantesPageModule)
   },
   {
     path: 'mod-listado-participantes-sesion',
-    loadChildren: () => import('./pages/perfiles/profesor/mod-listado-participantes-sesion/mod-listado-participantes-sesion.module').then( m => m.ModListadoParticipantesSesionPageModule)
+    loadChildren: () => import('./pages/perfiles/profesor/gestion-sesiones/mod-listado-participantes-sesion/mod-listado-participantes-sesion.module').then( m => m.ModListadoParticipantesSesionPageModule)
   },
   {
     path: 'sala-virtual',
     loadChildren: () => import('./pages/perfiles/profesor/gestion-sesiones/sala-virtual/sala-virtual.module').then( m => m.SalaVirtualPageModule),
+    canActivate: [AuthenticacionGuard]
+  },
+  {
+    path: 'gestion-tareas',
+    loadChildren: () => import('./pages/perfiles/profesor/gestion-tareas/gestion-tareas/gestion-tareas.module').then( m => m.GestionTareasPageModule)
+  },
+  {
+    path: 'mod-gestion-tareas',
+    loadChildren: () => import('./pages/perfiles/profesor/gestion-tareas/mod-gestion-tareas/mod-gestion-tareas.module').then( m => m.ModGestionTareasPageModule),
     canActivate: [AuthenticacionGuard]
   },
 ];

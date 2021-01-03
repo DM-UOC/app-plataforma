@@ -10,6 +10,7 @@ import { TabLectivosPage } from './tab-lectivos.page';
 import { ModLectivosPage } from '../../mod-lectivos/mod-lectivos.page';
 import { ModParcialesPage } from '../../mod-parciales/mod-parciales.page';
 import { ModParcialesDetallePage } from '../../mod-parciales-detalle/mod-parciales-detalle.page';
+import { TooltipModule } from 'ng2-tooltip-directive';
 
 @NgModule({
   imports: [
@@ -17,6 +18,7 @@ import { ModParcialesDetallePage } from '../../mod-parciales-detalle/mod-parcial
     FormsModule,
     ReactiveFormsModule,
     IonicModule,
+    TooltipModule,
     TabLectivosPageRoutingModule
   ],
   declarations: [TabLectivosPage, ModLectivosPage, ModParcialesPage, ModParcialesDetallePage]

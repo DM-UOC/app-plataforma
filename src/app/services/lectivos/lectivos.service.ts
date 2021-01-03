@@ -43,12 +43,19 @@ export class LectivosService {
     }
   }
 
+  public actualizaLectivo(lectivoActualiza: ILectivo, lectivoOriginal: ILectivo) {
+    try {
+      // retornando los resultados...
+      return this.httpClient.put(`${this.URL_SERVER.HOST}${this.LECTIVOS_CONTROLLER.COMUN}/${lectivoOriginal._id}`, lectivoActualiza);
+    } catch (error) {
+      throw error;
+    }
+  }
+
   public async eliminarLectivo(lectivoId: string) {
     try {
       return await this.httpClient
-      .delete(`${this.URL_SERVER.HOST}${this.LECTIVOS_CONTROLLER.COMUN}/${lectivoId}`).subscribe(resultado => {
-        return resultado;
-      });
+      .delete(`${this.URL_SERVER.HOST}${this.LECTIVOS_CONTROLLER.COMUN}/${lectivoId}`);
     } catch (error) {
       throw error;
     }

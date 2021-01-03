@@ -80,8 +80,20 @@ export class ModLectivosPage implements OnInit {
 
   public async crear($event) {
     try {
-      // creando el usuario...
+
+      // verificando la opcion a ejecutar...
+      if(!this.lectivo) {
+      // creando el lectivo...
       this.nuevoLectivo = await this.lectivosService.creaLectivo(this.formLectivo.value);
+      }
+      else {
+        // actualiza la materia...
+        this.lectivosService
+        .actualizaLectivo(this.formLectivo.value, this.lectivo)
+        .subscribe(lectivo => {
+          this.nuevoLectivo = lectivo;
+        });
+      }
       // emite el refresco de usuarios...
       await this.emiteCambio();
       // cierra el modal...

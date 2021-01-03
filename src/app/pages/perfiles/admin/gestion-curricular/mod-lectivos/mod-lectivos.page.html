@@ -58,10 +58,11 @@
           <span *ngIf="puntajeObjetivo.errors?.max">Ingrese como máximo 20 como máximo valor</span>
         </div>
 
-        <ion-button type="submit" color="danger" expand="block" 
+        <ion-button type="submit" [color]="!lectivo? 'danger': 'kids'" expand="block" 
         [disabled]="!formLectivo.valid">
           <ion-icon slot="start" name="add-circle-outline"></ion-icon>
-          Crear
+          <label *ngIf="!lectivo">Crear</label>
+          <label *ngIf="lectivo">Actualizar</label>          
         </ion-button>
 
       </ion-card-content>

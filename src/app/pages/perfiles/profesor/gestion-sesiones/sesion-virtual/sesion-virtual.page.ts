@@ -1,7 +1,6 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Location } from "@angular/common";
 import { ToastController } from '@ionic/angular';
-import { AgoraClient, ClientEvent, NgxAgoraService, Stream, StreamEvent } from 'ngx-agora';
 import { SocketsService } from 'src/app/services/sockets/sockets.service';
 import { SeguridadService } from 'src/app/services/seguridades/seguridad.service';
 import { IToken } from 'src/app/interfaces/comuns/token.interface';

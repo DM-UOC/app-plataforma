@@ -1,0 +1,73 @@
+<ion-header>
+  
+  <ion-toolbar>
+    
+    <ion-buttons slot="start">
+
+      <ion-button color="dark" (click)="cerrarModal();">
+          <ion-icon name="arrow-back"></ion-icon>
+      </ion-button>
+
+    </ion-buttons> 
+
+    <ion-title>Gestión Tareas</ion-title>
+  
+  </ion-toolbar>
+
+</ion-header>
+
+<ion-content>
+
+  <form (ngSubmit)="crear($event);" [formGroup]="formTarea" *ngIf="formTarea">
+
+    <ion-card>
+
+      <ion-card-header>
+        Crear / Actualizar - Tareas
+      </ion-card-header>
+
+      <ion-card-content>
+
+        <ion-item lines="full">
+          <ion-label position="floating">Descripción:</ion-label>
+          <ion-input formControlName="descripcion"></ion-input>
+        </ion-item>
+        
+        <div *ngIf="(descripcion.dirty || descripcion.touched) && descripcion.errors" class="errors">
+          <span *ngIf="descripcion.errors?.required">Ingrese una descripción</span>
+        </div>
+
+        <ion-item lines="full">
+          <ion-label position="floating">Observación:</ion-label>
+          <ion-input formControlName="observacion"></ion-input>
+        </ion-item>
+    
+        <ion-item lines="full">
+          <ion-label position="floating">Fecha Entrega:</ion-label>
+          <ion-datetime displayFormat="YYYY-MM-DD" 
+          placeholder="Fecha de entrega" 
+          formControlName="fecha_entrega"></ion-datetime>
+        </ion-item>
+        
+        <div *ngIf="(fechaEntrega.dirty || fechaEntrega.touched) && fechaEntrega.errors" class="errors">
+          <span *ngIf="fechaEntrega.errors?.required">Ingrese la fecha de entrega</span>
+        </div>
+        
+        <div *ngIf="formTarea.hasError('fechaInicioFinalIncorrectas')" class="errors">
+          <span>La fecha hora final no puede ser menor a la fecha actual</span>
+        </div>
+
+        <ion-button type="submit" [color]="sesion === undefinied? 'danger': 'secondary'" expand="block" 
+        [disabled]="!formTarea.valid">
+          <ion-icon slot="start" name="add-circle-outline"></ion-icon>
+          <label *ngIf="sesion === undefined">Crear</label>
+          <label *ngIf="sesion !== undefined">Actualizar</label>
+        </ion-button>
+
+      </ion-card-content>
+    
+    </ion-card>
+
+  </form>
+
+</ion-content>

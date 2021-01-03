@@ -9,30 +9,31 @@
         <ion-card-content>
 
             <ion-list>
-            <ion-list-header>
-                Lista de Usuarios
-            </ion-list-header>
-
-            <ion-item *ngFor="let usuario of usuarios">
                 
-                <ion-avatar slot="start">
-                    <img [src]="!usuario.usuario_imagen.data? 'assets/profile_image.png': usuario?.imagen_url">
-                </ion-avatar>
+                <ion-list-header>
+                    Lista de Usuarios
+                </ion-list-header>
 
-                <ion-label>
-                    <h2>{{ usuario.nombre }}</h2>
-                    <h3>Perfil: {{ usuario.perfiles[0].descripcion }}</h3>
-                    <p>{{ usuario.usuario }}</p>
-                </ion-label>
+                <ion-item *ngFor="let usuario of usuarios">
+                    
+                    <ion-avatar slot="start">
+                        <img [src]="!usuario.usuario_imagen.data? 'assets/profile_image.png': usuario?.imagen_url">
+                    </ion-avatar>
 
-                <ion-button (click)="actualizar(usuario);">
-                    <ion-icon name="create"></ion-icon>
-                </ion-button>          
-                <ion-button (click)="eliminar(usuario);">
-                    <ion-icon name="trash"></ion-icon>
-                </ion-button>
+                    <ion-label>
+                        <h2>{{ usuario.nombre }}</h2>
+                        <h3>Perfil: {{ usuario.perfiles[0].descripcion }}</h3>
+                        <p>{{ usuario.usuario }}</p>
+                    </ion-label>
 
-            </ion-item>
+                    <ion-button (click)="actualizar(usuario);">
+                        <ion-icon name="create"></ion-icon>
+                    </ion-button>          
+                    <ion-button (click)="eliminar(usuario);">
+                        <ion-icon name="trash"></ion-icon>
+                    </ion-button>
+
+                </ion-item>
             
             </ion-list>
 

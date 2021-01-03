@@ -63,7 +63,7 @@ export class ModSesionesPage implements OnInit {
     });
   }
 
-  verificaFechas(grupo: FormGroup) {
+  private verificaFechas(grupo: FormGroup) {
     try {
       ///TODO: Implement some better validation logic
       let fecha_hora_inicio = grupo.get('fecha_hora_inicio').value;

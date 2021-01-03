@@ -1,10 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Plugins } from "@capacitor/core";
 import { MenuController } from '@ionic/angular';
 import { ICatalogo } from 'src/app/interfaces/catalogo.interface';
+import { INotificacion } from 'src/app/interfaces/notificaciones/notificacion.interface';
+import { NotificacionesService } from 'src/app/services/notificaciones/notificaciones.service';
 import { ClientesService } from 'src/app/services/perfiles/clientes/clientes.service';
 import { MenuService } from 'src/app/services/seguridades/menu.service';
 import { SeguridadService } from 'src/app/services/seguridades/seguridad.service';
+const { LocalNotifications } = Plugins;
 
 @Component({
   selector: 'app-principal',
@@ -15,13 +18,28 @@ export class PrincipalPage implements OnInit {
   
   private catalgo: ICatalogo;
   private representante: any;
+  private notificaciones: INotificacion[] = [];
 
   constructor(
     private menuService: MenuService,
     private seguridadService: SeguridadService,
+    private notificacionesService: NotificacionesService,
     private menuController: MenuController,
     private clientesService: ClientesService
   ) { 
+  }
+
+  async ngOnInit() {
+    try {
+      // prueba de notificaciones...
+      await LocalNotifications.requestPermission();
+      // menu usuario...
+      this.setMenuUsuario();
+      // verifica datpos del representante...
+      await this.verificaExisteRepresentante();
+    } catch (error) {
+      throw error;
+    }
   }
 
   private enviaEmisionCambioMenu() {
@@ -49,20 +67,36 @@ export class PrincipalPage implements OnInit {
         // verificando el usuario tipo cliente...
         this.representante = await this.clientesService.verificaExisteRepresentante(usuario.usuario);
         this.clientesService.setRepresentante(this.representante);
+        // obtenemos las notificaicones del cliente...
+        this.retornaNotificaciones();
       }
     } catch (error) {
       throw error;
     }
   }
 
-  async ngOnInit() {
-    try {
-      // menu usuario...
-      this.setMenuUsuario();
-      await this.verificaExisteRepresentante();
-    } catch (error) {
-      throw error;
-    }
+  private retornaNotificaciones() {
+    // retorna notificaciones...
+    this.notificacionesService
+      .retornaNoticiacionesPorRepresentante(this.representante._id)
+      .subscribe(async (notificaciones) => {
+        // recupera las notificaciones...
+        this.notificaciones = notificaciones;
+        // dispramos las notificaciones...
+        await this.enviarNotificacion();
+
+      });
+  }
+
+  private async enviarNotificacion() {
+    // recuperando las notificaciones...
+    const notifications: any = this.notificaciones.map(notificaion => {
+      return notificaion.cuerpo_notificacion;
+    });
+    // enviando las notificaciones...
+    await LocalNotifications.schedule({
+      notifications
+    });
   }
 
   toggleMenu() {
