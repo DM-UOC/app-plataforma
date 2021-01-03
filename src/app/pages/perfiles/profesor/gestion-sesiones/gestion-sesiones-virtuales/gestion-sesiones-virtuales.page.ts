@@ -38,25 +38,10 @@ export class GestionSesionesVirtualesPage implements OnInit {
     this.verificaCambioSesion();
     // retorna las sesiones...
     this.retornaSesionesProfesor();
-    // enviar notificacion prueba...
-    await this.enviarNotificacion();
+
   }
 
-  private async enviarNotificacion() {
-    await LocalNotifications.schedule({
-      notifications: [
-        {
-          title: 'Tìtulo de notificación',
-          body: 'Prueba de notificacion',
-          id: 1,
-          extra: {
-            data: 'Datos extras...'
-          },
-          iconColor: "#0000FF"
-        }
-      ]
-    });
-  }
+
 
   private verificaCambioSesion() {
     // verificando emite...
