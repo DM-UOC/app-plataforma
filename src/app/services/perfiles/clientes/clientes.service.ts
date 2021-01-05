@@ -150,4 +150,9 @@ export class ClientesService {
     }
   }
 
+  retornaRepresentantesHijos(estado: boolean = true) {
+    return this.httpClient
+    .get<any []>(`${this.URL_SERVER.HOST}${this.PERFILES_CONTROLLERS.COMUN.CLIENTES}${this.PERFILES_CONTROLLERS.CRUD.HIJOS.LISTAR}/${estado}`);
+  }
+
 }

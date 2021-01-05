@@ -7,6 +7,7 @@ import { IonicModule } from '@ionic/angular';
 import { TabCrearTareaPageRoutingModule } from './tab-crear-tarea-routing.module';
 
 import { TabCrearTareaPage } from './tab-crear-tarea.page';
+import { TooltipModule } from 'ng2-tooltip-directive';
 
 @NgModule({
   imports: [
@@ -14,6 +15,7 @@ import { TabCrearTareaPage } from './tab-crear-tarea.page';
     FormsModule,
     ReactiveFormsModule,
     IonicModule,
+    TooltipModule,
     TabCrearTareaPageRoutingModule
   ],
   declarations: [TabCrearTareaPage]

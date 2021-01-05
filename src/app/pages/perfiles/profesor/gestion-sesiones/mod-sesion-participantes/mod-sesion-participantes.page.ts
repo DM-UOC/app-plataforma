@@ -27,25 +27,7 @@ export class ModSesionParticipantesPage implements OnInit {
     this.retornaParticipantesSesion();
     this.verificaCambioRepresentantes();
     // prueba de notificaciones...
-    await LocalNotifications.requestPermission();    
-    // enviar notificacion prueba...
-    await this.enviarNotificacion();
-  }
-
-  private async enviarNotificacion() {
-    await LocalNotifications.schedule({
-      notifications: [
-        {
-          title: 'Tìtulo de notificación',
-          body: 'Prueba de notificacion',
-          id: 1,
-          extra: {
-            data: 'Datos extras...'
-          },
-          iconColor: "#0000FF"
-        }
-      ]
-    });
+    await LocalNotifications.requestPermission();
   }
 
   private retornaParticipantesSesion() {

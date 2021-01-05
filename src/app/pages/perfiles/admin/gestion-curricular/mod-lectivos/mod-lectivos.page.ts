@@ -103,4 +103,8 @@ export class ModLectivosPage implements OnInit {
     }    
   }
 
+  async cerrarModal() {
+    await this.modalController.dismiss();
+  }
+  
 }

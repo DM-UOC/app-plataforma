@@ -20,12 +20,26 @@
                     <h2>{{ tarea.descripcion }}</h2>
                     <h3>{{ tarea.observacion }}</h3>
                     <h3>{{ tarea.fecha_entrega | date: 'dd/MM/yyyy' }}</h3>
+                    <p>Representantes:
+                        <ion-button color="kids" (click)="despliegaRepresentante(tarea);">
+                            <ion-badge color="kids">
+                                <div *ngIf="!tarea.representantes; then thenBlock else elseBlock"></div>
+                                <ng-template #thenBlock>0</ng-template>
+                                <ng-template #elseBlock>{{ tarea?.representantes?.length }}</ng-template>
+                            </ion-badge>
+                        </ion-button>                  
+                    </p>                    
                 </ion-label>
 
-                <ion-button (click)="actualizar(usuario);">
+                <ion-button tooltip="Representantes" (click)="agregaRepresentanteTarea(tarea);" color="kids">
+                    <ion-icon name="person-add"></ion-icon>
+                </ion-button> 
+                <ion-button (click)="actualizar(usuario);"
+                color="kids">
                     <ion-icon name="create"></ion-icon>
                 </ion-button>          
-                <ion-button (click)="eliminar(usuario);">
+                <ion-button (click)="eliminar(usuario);"
+                color="kids">
                     <ion-icon name="trash"></ion-icon>
                 </ion-button>
 
@@ -39,7 +53,7 @@
 
     <!-- fab placed to the top and end and on the top edge of the content overlapping header -->
     <ion-fab vertical="bottom" horizontal="end" slot="fixed">
-        <ion-fab-button (click)="registraTarea();" color="kids">
+        <ion-fab-button (click)="registraTarea();" color="secondary">
             <ion-icon name="add"></ion-icon>
         </ion-fab-button>
     </ion-fab>

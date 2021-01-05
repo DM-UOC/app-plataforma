@@ -5,6 +5,8 @@ import { ITarea } from 'src/app/interfaces/tareas/tarea.interface';
 import { SeguridadService } from 'src/app/services/seguridades/seguridad.service';
 import { TareasService } from 'src/app/services/tareas/tareas.service';
 import { ModGestionTareasPage } from '../../mod-gestion-tareas/mod-gestion-tareas.page';
+import { ModListadoParticipantesTareaPage } from '../../mod-listado-participantes-tarea/mod-listado-participantes-tarea.page';
+import { ModParticipantesTareaPage } from '../../mod-participantes-tarea/mod-participantes-tarea.page';
 
 @Component({
   selector: 'app-tab-crear-tarea',
@@ -64,6 +66,36 @@ export class TabCrearTareaPage implements OnInit {
         this.retornaTareas();
       }
     });    
+  }
+
+  async despliegaRepresentante(tarea: ITarea) {
+    try {
+      // abriendo el modal...
+      const modal = await this.modalController.create({
+        component: ModListadoParticipantesTareaPage,
+        componentProps: {
+          tarea
+        }
+      });
+      // presentando modal...
+      await modal.present();
+      // recibiendo datos desde el modal...
+      const { data } = await modal.onDidDismiss();
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  async agregaRepresentanteTarea(tarea: ITarea) {
+    // abriendo el modal...
+    const modal = await this.modalController.create({
+      component: ModParticipantesTareaPage,
+      componentProps: {
+        tarea
+      }
+    });
+    // presentando modal...
+    await modal.present();
   }
 
 }

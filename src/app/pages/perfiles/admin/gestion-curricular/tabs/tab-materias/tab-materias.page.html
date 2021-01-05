@@ -21,10 +21,12 @@
               <h3>{{ materia.observacion }}</h3>
             </ion-label>
   
-            <ion-button (click)="actualizar(materia);">
+            <ion-button (click)="actualizar(materia);"
+            color="kids">
               <ion-icon name="create"></ion-icon>
             </ion-button>          
-            <ion-button (click)="eliminar(materia);">
+            <ion-button (click)="eliminar(materia);"
+            color="kids">
               <ion-icon name="trash"></ion-icon>
             </ion-button>
   
@@ -38,7 +40,8 @@
   
     <!-- fab placed to the top and end and on the top edge of the content overlapping header -->
     <ion-fab vertical="bottom" horizontal="end" slot="fixed">
-      <ion-fab-button (click)="registraMateria();">
+      <ion-fab-button (click)="registraMateria();"
+      color="secondary">
         <ion-icon name="add-circle"></ion-icon>
       </ion-fab-button>
     </ion-fab>

@@ -88,6 +88,14 @@ const routes: Routes = [
     loadChildren: () => import('./pages/perfiles/profesor/gestion-tareas/mod-gestion-tareas/mod-gestion-tareas.module').then( m => m.ModGestionTareasPageModule),
     canActivate: [AuthenticacionGuard]
   },
+  {
+    path: 'mod-participantes-tarea',
+    loadChildren: () => import('./pages/perfiles/profesor/gestion-tareas/mod-participantes-tarea/mod-participantes-tarea.module').then( m => m.ModParticipantesTareaPageModule)
+  },
+  {
+    path: 'mod-listado-participantes-tarea',
+    loadChildren: () => import('./pages/perfiles/profesor/gestion-tareas/mod-listado-participantes-tarea/mod-listado-participantes-tarea.module').then( m => m.ModListadoParticipantesTareaPageModule)
+  },
 ];
 
 @NgModule({

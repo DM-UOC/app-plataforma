@@ -75,15 +75,7 @@ export class SalaVirtualPage implements OnInit {
     });
   }
 
-  ionViewDidLeave() {
-    this.desconectarSocket();
-  }
-
   private conectarSocket() {
-    this.socketsService.conectar();
-  }
-
-  private desconectarSocket() {
     this.socketsService.conectar();
   }
 

@@ -113,6 +113,19 @@ export const SESIONES_CONTROLLER = {
   }
 };
 
+export const LECTIVOS_TAREAS_CONTROLLER = {
+  COMUN: '/lectivostareas',
+  CRUD: {
+    REPRESENTANTES: {
+      COMUN: '/representantes',
+      CRUD: {
+        LISTA: '/lista',
+        RETIRAR: '/retirar'
+      }
+    }
+  }
+};
+
 export const STRING_CONSTANTES = {
   PERFILES: {
     ADMINISTRADOR: 'TPS_ADMIN',

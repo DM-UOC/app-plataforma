@@ -60,15 +60,15 @@ export class GestionSesionesVirtualesPage implements OnInit {
   }
 
   async participantes(sesion: ISesion) {
-      // abriendo el modal...
-      const modal = await this.modalController.create({
-        component: ModSesionParticipantesPage,
-        componentProps: {
-          sesion
-        }
-      });
-      // presentando modal...
-      await modal.present();
+    // abriendo el modal...
+    const modal = await this.modalController.create({
+      component: ModSesionParticipantesPage,
+      componentProps: {
+        sesion
+      }
+    });
+    // presentando modal...
+    await modal.present();
   }
 
   async registrarSesion(sesion: ISesion) {

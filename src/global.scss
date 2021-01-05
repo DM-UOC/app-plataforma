@@ -36,3 +36,17 @@
     padding-bottom: 5px;
 
 }
+
+/*
+Ion tab buttons...
+*/
+ion-tab-button {
+    --ripple-color: var(--ion-color-medium);
+    --color: var(--ion-color-kids);
+    --color-selected: var(--ion-color-medium);
+  }
+  
+  ion-tab-button.tab-selected {
+    --background: var(--ion-color-kids) !important;
+    --color-selected: var(--ion-color-light);
+  }

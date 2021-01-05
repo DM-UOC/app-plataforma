@@ -24,25 +24,29 @@
               <h3># Materias: 
                 <ion-button
                 tooltip="Detalle de materias" placement="top" 
-                [color]="profesor.estudios.length === 0? 'warning': 'success'" 
+                [color]="profesor.estudios.length === 0? 'kids': 'secondary'" 
                 (click)="materiasDetalle(profesor);">
-                  <ion-badge [color]="profesor.estudios.length === 0? 'warning': 'success'">{{ profesor.materias.length }}</ion-badge>
+                  <ion-badge [color]="profesor.estudios.length === 0? 'kids': 'secondary'">{{ profesor.materias.length }}</ion-badge>
                 </ion-button>                  
               </h3>
               <h3># Estudios:
                 <ion-button
                 tooltip="Detalle de estudios" placement="top" 
-                [color]="profesor.estudios.length === 0? 'warning': 'success'"
+                [color]="profesor.estudios.length === 0? 'kids': 'secondary'"
                 (click)="estudiosDetalle(profesor);">
-                  <ion-badge [color]="profesor.estudios.length === 0? 'warning': 'success'">{{ profesor.estudios.length }}</ion-badge>
+                  <ion-badge [color]="profesor.estudios.length === 0? 'kids': 'secondary'">{{ profesor.estudios.length }}</ion-badge>
                 </ion-button>
               </h3>
           </ion-label>
 
-          <ion-button tooltip="Agregar materia" placement="top" (click)="registraMateria(profesor);">
+          <ion-button tooltip="Agregar materia" placement="top" 
+          (click)="registraMateria(profesor);"
+          color="kids">
             <ion-icon name="bag-add-sharp"></ion-icon>
           </ion-button>
-          <ion-button tooltip="Agregar estudios" placement="top" (click)="estudiosDetalle(profesor);">
+          <ion-button tooltip="Agregar estudios" placement="top" 
+          (click)="estudiosDetalle(profesor);"
+          color="kids">
             <ion-icon name="extension-puzzle-sharp"></ion-icon>
           </ion-button>
 

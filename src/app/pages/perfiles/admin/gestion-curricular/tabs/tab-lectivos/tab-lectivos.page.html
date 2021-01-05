@@ -23,10 +23,10 @@
             <p>{{ lectivo.puntaje_objetivo }}</p>
             <h3>
                 Total de Parciales:
-                <ion-button color="success" 
+                <ion-button [color]="lectivo.parciales.length > 0? 'kids': 'secondary'"
                 tooltip="Detalle de parciales"
                 (click)="parcialesDetalle(lectivo);">
-                  <ion-badge color="success">{{lectivo.parciales.length}}</ion-badge>
+                  <ion-badge [color]="lectivo.parciales.length > 0? 'kids': 'secondary'">{{lectivo.parciales.length}}</ion-badge>
                 </ion-button> 
             </h3>
           </ion-label>
@@ -59,7 +59,7 @@
   <ion-fab vertical="bottom" horizontal="end" slot="fixed">
     <ion-fab-button (click)="registraLectivo();" 
     tooltip="Agregar lectivo"
-    color="kids">
+    color="secondary">
       <ion-icon name="add-circle"></ion-icon>
     </ion-fab-button>
   </ion-fab>

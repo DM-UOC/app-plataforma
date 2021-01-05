@@ -33,8 +33,12 @@ export class SesionVirtualPage implements OnInit {
   private streamRemoto: any;
   private listaPeers: any [] = [];
   private modelosCargados: boolean = false;
+  private intervalo: number = 100;
+  private temporizador: any = null;
+  private peer: any;
+  private peerCon: any;
 
-  constructor(
+  constructor(  
     private socketsService: SocketsService,
     private activatedRoute: ActivatedRoute,
     private router: Router,
@@ -53,6 +57,7 @@ export class SesionVirtualPage implements OnInit {
     this.peerIdOriginal = this.activatedRoute.snapshot.paramMap.get('peerIdOriginal');
     // creamos una instancia del objeto con su peerId Original...
     const peer = new Peer(this.peerIdOriginal);
+    this.peer = peer;
     // reconvertimos el string a JSON...
     this.tokenCliente = JSON.parse(this.tokenCliente);
     // tokenCliente...
@@ -68,16 +73,28 @@ export class SesionVirtualPage implements OnInit {
     }    
   }
 
+  private verificaIntervalo(): boolean {
+    // verifica el temporizador...
+    if(this.temporizador !== null) {
+      return true;
+    }
+    // return..
+    return false;
+  }
+
   private async realizaVideoLlamada(peer: any) {
     try {
       const that = this;
-      
       this.peerIdCliente = this.activatedRoute.snapshot.paramMap.get('peerIdCliente');
       const conn = peer.connect(this.peerIdCliente);
+      this.peerCon = conn;
+      // establecio conexión...
+      peer.on('connection', function(connection){
+        that.peerCon = connection;
+      });
       // open...
       conn.on('open', (id) => {
-        console.log('+++++++++++++++++++ 0000000000');
-        console.log(id);
+        console.log('abriò la conexión');
       });
       // stream...
       this.streamLocal = await this.iniciaVideoLocal();
@@ -105,7 +122,7 @@ export class SesionVirtualPage implements OnInit {
     // stream...
     this.streamLocal = await this.iniciaVideoLocal();
     // agregando el video local...
-    that.agreagaVideoLocal();         
+    that.agreagaVideoLocal();
     // llamada
     peer.on('call', (call) => {
       // contestando la llamada..
@@ -157,49 +174,84 @@ export class SesionVirtualPage implements OnInit {
 
   async initPrediction() {    
     try {
-      // bandera para cargar una sola vez los modelos...
-      if(!this.modelosCargados) {
-        // cargando modelos...
-        await this.cargaModelos();
-        // cambiando la bandera a true...
-        this.modelosCargados = true;
-      }
-
       // recogiendo el video remoto...
-      const video: HTMLVideoElement = this.videoRemoto.nativeElement;
+      const video: HTMLVideoElement = this.videoRemoto.nativeElement;      
       // canvas...
       const canvas = document.getElementById('canvas') as HTMLCanvasElement;
-
+      const context = canvas.getContext('2d');
+      let predictions = [];
+      let resizePredictions;
       // dimensiones...          
       const displaySize = {
         width: video.width,
         height: video.height
       };
+      
+      // verifica el termporizador...
+      if(!this.verificaIntervalo()) {
+        // bandera para cargar una sola vez los modelos...
+        if(!this.modelosCargados) {
+          // cargando modelos...
+          await this.cargaModelos();
+          // cambiando la bandera a true...
+          this.modelosCargados = true;
+        }
 
-      faceapi.matchDimensions(canvas, displaySize);
+        faceapi.matchDimensions(canvas, displaySize);
 
-      setInterval(async () => {
-            
-        const predictions = await faceapi.detectAllFaces(video, 
-        new faceapi.TinyFaceDetectorOptions())
-        .withFaceLandmarks()
-        .withFaceExpressions();
+        this.temporizador = setInterval(async () => {
+              
+          predictions = await faceapi.detectAllFaces(video, 
+          new faceapi.TinyFaceDetectorOptions())
+          .withFaceLandmarks()
+          .withFaceExpressions();
+
+          resizePredictions = faceapi.resizeResults(predictions, displaySize);
         
-        console.log(predictions);
-
-        const resizePredictions = faceapi.resizeResults(predictions, displaySize);
+          context.clearRect(0, 0, canvas.width, canvas.height);
+        
+          faceapi.draw.drawDetections(canvas, resizePredictions);
+        
+          faceapi.draw.drawFaceLandmarks(canvas, resizePredictions);
       
-        canvas.getContext('2d').clearRect(0, 0, canvas.width, canvas.height);
-      
+          faceapi.draw.drawFaceExpressions(canvas, resizePredictions);
+        }, this.intervalo);  
+      }
+      else {
+        resizePredictions = faceapi.resizeResults(predictions, displaySize);
+        // limpiando el canvas...
+        context.clearRect(0, 0, canvas.width, canvas.height);
         faceapi.draw.drawDetections(canvas, resizePredictions);
-      
-        faceapi.draw.drawFaceLandmarks(canvas, resizePredictions);
-    
-        faceapi.draw.drawFaceExpressions(canvas, resizePredictions);
-      }, 100);      
+        // limpiando el temporizador...
+        clearInterval(this.temporizador);
+        this.temporizador = null;
+      }
     } catch (error) {
       throw error;
     }
   }
 
+  colgarLlamada() {
+    try {
+      // tokenCliente...
+      const { codigo_perfil } = this.tokenCliente;
+      // si es el profesor... realiza la llamada
+      if(codigo_perfil === 2) {
+        // establecio conexión...
+        this.peerIdCliente = this.activatedRoute.snapshot.paramMap.get('peerIdCliente');
+        this.peer
+          .connect(this.peerIdCliente)
+          .close();
+      }
+      else {
+        // rol profesor...
+        // destruye la instancia de peer...
+        this.peerCon.close();
+      }  
+      // navegamos a la pàgina de sesion virtual..
+      this.router.navigate(['/sala-virtual']);
+    } catch (error) {
+      throw error;
+    }
+  }
 }

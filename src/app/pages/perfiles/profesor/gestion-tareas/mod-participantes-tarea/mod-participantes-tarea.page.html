@@ -1,0 +1,71 @@
+<ion-header>
+  
+  <ion-toolbar>
+    
+    <ion-buttons slot="start">
+
+      <ion-button color="dark" (click)="cerrarModal();">
+          <ion-icon name="arrow-back"></ion-icon>
+      </ion-button>
+
+    </ion-buttons>
+        
+    <ion-title>Representantes Tareas</ion-title>
+
+  </ion-toolbar>
+
+</ion-header>
+
+<ion-content>
+
+  <ion-card>
+
+    <ion-card-content>
+
+      <div *ngIf="representantes.length > 0; else sin_datos">
+
+        <ion-list>
+
+          <ion-item *ngFor="let representante of representantes">
+  
+            <ion-avatar slot="start">
+              <ion-img [src]="representante.datos.imagen_url"></ion-img>
+            </ion-avatar>
+  
+            <ion-label>
+              <h2>Representante: {{ representante.datos.nombre_completo }}</h2>
+              <h3># hijos:
+                <ion-button color="kids" (click)="despliegaHijos(representante);">
+                  <ion-badge color="kids">{{ representante.hijos.length }}</ion-badge>
+                </ion-button>                
+              </h3>
+              <ion-list [hidden]="muestraHijos">
+                <ion-item *ngFor="let hijo of representante.hijos">
+                  <ion-label>
+                    <h5>{{hijo.nombre_completo}}</h5>
+                  </ion-label>
+                </ion-item>
+              </ion-list>
+            </ion-label>
+  
+            <ion-toggle slot="end" (ionChange)="agregarRepresentante(representante)" color="kids"></ion-toggle>
+          
+          </ion-item>
+          
+        </ion-list>
+
+      </div>
+
+      <ng-template #sin_datos>
+        <ion-item>
+          <ion-label>
+            <h2>Los representantes ya se encuentran asociados...</h2>
+          </ion-label>
+        </ion-item>
+      </ng-template>
+
+    </ion-card-content>
+  
+  </ion-card>
+  
+</ion-content>

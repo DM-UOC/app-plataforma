@@ -1,16 +1,19 @@
 <ion-header>
 
   <ion-toolbar>
+
     <ion-buttons slot="start">
 
       <ion-button color="dark" (click)="cerrarModal();">
           <ion-icon name="arrow-back"></ion-icon>
       </ion-button>
 
-    </ion-buttons>     
-    <ion-title>Participantes Sesion</ion-title>
+    </ion-buttons>
 
+    <ion-title>Listado Representantes</ion-title>
+  
   </ion-toolbar>
+
 </ion-header>
 
 <ion-content>
@@ -24,13 +27,13 @@
         <ion-item *ngFor="let representante of representantes">
 
           <ion-avatar slot="start">
-            <ion-img [src]="representante.representantes_sesion.usuario.imagen_url"></ion-img>
+            <ion-img [src]="representante.representantes_tareas.usuario.imagen_url"></ion-img>
           </ion-avatar>
 
           <ion-label>
           
             <h2>
-              {{ representante.representantes_sesion.usuario.nombre_completo }}
+              {{ representante.representantes_tareas.usuario.nombre_completo }}
             </h2>
           
           </ion-label>
@@ -39,7 +42,7 @@
           slot="end" 
           (ngModelChange)="retirarRepresentante(representante)" 
           color="kids"
-          [(ngModel)]="representante.representantes_sesion.auditoria.auditoria.estado"></ion-toggle>
+          [(ngModel)]="representante.representantes_tareas.auditoria.estado"></ion-toggle>
 
         </ion-item>
       

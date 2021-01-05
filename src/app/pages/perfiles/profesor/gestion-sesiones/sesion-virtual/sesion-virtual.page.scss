@@ -12,23 +12,17 @@
 
 .remotevideo {
   object-fit: cover;
-  position: fixed;
+  position: absolute;
   right: 0;
   bottom: 0;
-  min-width: 100%;
-  min-height: 100%;
+  min-width: 100% !important;
+  min-height: 100% !important;
 }
 
 canvas {
   position: absolute;
-}
-
-.video {
-  margin: 0;
-  padding: 0;
-  width: 100vw;
-  height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  right: 0;
+  bottom: 0;  
+  min-width: 100% !important;
+  min-height: 100% !important;
 }

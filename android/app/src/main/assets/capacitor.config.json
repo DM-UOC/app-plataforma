@@ -17,5 +17,9 @@
     }
   },
   "cordova": {},
-  "linuxAndroidStudioPath": "/home/spieluhr/Programas/android-studio/bin/studio.sh"
+  "linuxAndroidStudioPath": "/home/spieluhr/Programas/android-studio/bin/studio.sh",
+  "server": {
+    "url": "http://192.168.100.116:8100",
+    "cleartext": true
+  }
 }
