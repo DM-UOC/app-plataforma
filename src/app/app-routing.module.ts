@@ -96,6 +96,10 @@ const routes: Routes = [
     path: 'mod-listado-participantes-tarea',
     loadChildren: () => import('./pages/perfiles/profesor/gestion-tareas/mod-listado-participantes-tarea/mod-listado-participantes-tarea.module').then( m => m.ModListadoParticipantesTareaPageModule)
   },
+  {
+    path: 'gestion-tareas-representante',
+    loadChildren: () => import('./pages/perfiles/cliente/gestion-tareas/gestion-tareas-representante/gestion-tareas-representante.module').then( m => m.GestionTareasRepresentantePageModule)
+  },
 ];
 
 @NgModule({

@@ -22,7 +22,10 @@ export class SesionesService {
    COMUN: `${SESIONES_CONTROLLER.COMUN}`,
    CRUD: {
      REPRESENTANTES: {
-       COMUN: `${SESIONES_CONTROLLER.CRUD.REPRESENTANTES.COMUN}`,
+       COMUN: {
+         REPRESENTANTES: `${SESIONES_CONTROLLER.CRUD.REPRESENTANTES.COMUN.REPRESENTANTES}`,
+         REPRESENTANTE: `${SESIONES_CONTROLLER.CRUD.REPRESENTANTES.COMUN.REPRESENTANTE}`
+       },
        CRUD: {
         LISTA: `${SESIONES_CONTROLLER.CRUD.REPRESENTANTES.CRUD.LISTA}`,
         RETIRAR: `${SESIONES_CONTROLLER.CRUD.REPRESENTANTES.CRUD.RETIRAR}`
@@ -77,7 +80,7 @@ export class SesionesService {
   retornaRepresentantesSesion(sesion: ISesion) {
     try {
       return this.httpClient
-      .get<ISesion>(`${this.URL_SERVER.HOST}${this.SESIONES_CONTROLLER.COMUN}${this.SESIONES_CONTROLLER.CRUD.REPRESENTANTES.COMUN}`, {
+      .get<ISesion>(`${this.URL_SERVER.HOST}${this.SESIONES_CONTROLLER.COMUN}${this.SESIONES_CONTROLLER.CRUD.REPRESENTANTES.COMUN.REPRESENTANTES}`, {
         params: {
           id: sesion._id
         }
@@ -90,7 +93,7 @@ export class SesionesService {
   registraRepresentante(representanteID: string, sesionID: string) {
     try {
       return this.httpClient
-        .post<ISesion>(`${this.URL_SERVER.HOST}${this.SESIONES_CONTROLLER.COMUN}${this.SESIONES_CONTROLLER.CRUD.REPRESENTANTES.COMUN}`, {
+        .post<ISesion>(`${this.URL_SERVER.HOST}${this.SESIONES_CONTROLLER.COMUN}${this.SESIONES_CONTROLLER.CRUD.REPRESENTANTES.COMUN.REPRESENTANTES}`, {
           representanteID,
           sesionID
         });
@@ -102,7 +105,7 @@ export class SesionesService {
   retornaListaRepresentantesSesion(sesion: ISesion) {
     try {
       return this.httpClient
-      .get<any []>(`${this.URL_SERVER.HOST}${this.SESIONES_CONTROLLER.COMUN}${this.SESIONES_CONTROLLER.CRUD.REPRESENTANTES.COMUN}${this.SESIONES_CONTROLLER.CRUD.REPRESENTANTES.CRUD.LISTA}`, {
+      .get<any []>(`${this.URL_SERVER.HOST}${this.SESIONES_CONTROLLER.COMUN}${this.SESIONES_CONTROLLER.CRUD.REPRESENTANTES.COMUN.REPRESENTANTES}${this.SESIONES_CONTROLLER.CRUD.REPRESENTANTES.CRUD.LISTA}`, {
         params: {
           sesionID: sesion._id
         }
@@ -115,13 +118,21 @@ export class SesionesService {
   retirarRepresentanteSesion(sesionID: string, representanteID: string) {
     try {
       return this.httpClient
-      .post<ISesion>(`${this.URL_SERVER.HOST}${this.SESIONES_CONTROLLER.COMUN}${this.SESIONES_CONTROLLER.CRUD.REPRESENTANTES.COMUN}${this.SESIONES_CONTROLLER.CRUD.REPRESENTANTES.CRUD.RETIRAR}`, {
+      .post<ISesion>(`${this.URL_SERVER.HOST}${this.SESIONES_CONTROLLER.COMUN}${this.SESIONES_CONTROLLER.CRUD.REPRESENTANTES.COMUN.REPRESENTANTES}${this.SESIONES_CONTROLLER.CRUD.REPRESENTANTES.CRUD.RETIRAR}`, {
         sesionID,
         representanteID
       });
     } catch (error) {
       throw error;
     }
+  }
+
+  retornaSesionesRepresentantePorId(usuario: string) {
+    return this.httpClient.get<ISesion []>(`${this.URL_SERVER.HOST}${this.SESIONES_CONTROLLER.COMUN}${this.SESIONES_CONTROLLER.CRUD.REPRESENTANTES.COMUN.REPRESENTANTE}`, {
+      params: {
+        usuario
+      }
+    });
   }
 
 }

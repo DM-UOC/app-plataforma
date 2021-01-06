@@ -26,6 +26,12 @@ export class LectivosTareasService {
           LISTA: `${LECTIVOS_TAREAS_CONTROLLER.CRUD.REPRESENTANTES.CRUD.LISTA}`,
           RETIRAR: `${LECTIVOS_TAREAS_CONTROLLER.CRUD.REPRESENTANTES.CRUD.RETIRAR}`
         }
+      },
+      REPRESENTANTE: {
+        COMUN: `${LECTIVOS_TAREAS_CONTROLLER.CRUD.REPRESENTANTE.COMUN}`,
+        CRUD: {
+          LISTA: `${LECTIVOS_TAREAS_CONTROLLER.CRUD.REPRESENTANTE.CRUD.LISTA}`,
+        }
       }
     }
   };
@@ -82,6 +88,12 @@ export class LectivosTareasService {
     } catch (error) {
       throw error;
     }
+  }
+
+  retornaTareasRepresentantePorId(usuario: string) {
+    return this
+    .httpClient
+    .get<any []>(`${this.URL_SERVER.HOST}${this.LECTIVOS_TAREAS_CONTROLLER.COMUN}${this.LECTIVOS_TAREAS_CONTROLLER.CRUD.REPRESENTANTE.COMUN}${this.LECTIVOS_TAREAS_CONTROLLER.CRUD.REPRESENTANTE.CRUD.LISTA}/${usuario}`);
   }
 
 }

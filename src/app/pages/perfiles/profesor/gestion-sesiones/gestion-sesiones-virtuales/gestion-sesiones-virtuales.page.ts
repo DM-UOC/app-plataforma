@@ -41,8 +41,6 @@ export class GestionSesionesVirtualesPage implements OnInit {
 
   }
 
-
-
   private verificaCambioSesion() {
     // verificando emite...
     this.sesionesService.creoSesion.subscribe(async (result: boolean) => {
@@ -51,7 +49,7 @@ export class GestionSesionesVirtualesPage implements OnInit {
         // actualiza el listado...
         this.retornaSesionesProfesor();
       }
-    });    
+    }); 
   }
 
   private retornaSesionesProfesor() {

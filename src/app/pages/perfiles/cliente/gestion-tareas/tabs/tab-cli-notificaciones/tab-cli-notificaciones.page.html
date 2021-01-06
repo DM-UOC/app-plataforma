@@ -1,0 +1,32 @@
+<ion-content>
+
+  <ion-card>
+
+    <ion-card-header>
+      <ion-card-title>Notificaciones</ion-card-title>
+    </ion-card-header>
+
+    <ion-card-content>
+
+      <ion-list>
+        <ion-list-header>
+          Lista notificaciones
+        </ion-list-header>
+
+        <ion-item *ngFor="let notificacion of notificaciones">
+
+          <ion-label>
+            <h2>Tipo: {{ notificacion.catalogo.descripcion }}</h2>
+            <h3>Descripcion: {{ notificacion.descripcion }}</h3>
+            <p>Profesor: {{ notificacion.profesor.nombres }}</p>
+          </ion-label>
+
+        </ion-item>
+      
+      </ion-list>
+
+    </ion-card-content>
+  
+  </ion-card>
+
+</ion-content>

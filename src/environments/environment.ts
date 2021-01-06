@@ -86,7 +86,10 @@ export const NOTIFICACIONES_CONTROLLER = {
   COMUN: '/notificaciones',
   CRUD: {
     REPRESENTANTE: {
-      COMUN: '/representante'
+      COMUN: '/representante',
+      CRUD: {
+        LISTA: '/lista'
+      }
     }
   }
 };
@@ -104,7 +107,10 @@ export const SESIONES_CONTROLLER = {
   COMUN: '/sesiones',
   CRUD: {
     REPRESENTANTES: {
-      COMUN: '/representantes',
+      COMUN: {
+        REPRESENTANTES: '/representantes',
+        REPRESENTANTE: '/representante'
+      },
       CRUD: {
         LISTA: '/lista',
         RETIRAR: '/retirar'
@@ -122,6 +128,12 @@ export const LECTIVOS_TAREAS_CONTROLLER = {
         LISTA: '/lista',
         RETIRAR: '/retirar'
       }
+    },
+    REPRESENTANTE: {
+      COMUN: '/representante',
+      CRUD: {
+        LISTA: '/lista',
+      }      
     }
   }
 };

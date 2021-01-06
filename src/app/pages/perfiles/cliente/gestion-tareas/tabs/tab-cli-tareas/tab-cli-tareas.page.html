@@ -1,0 +1,41 @@
+<ion-content>
+
+  <ion-card>
+
+    <ion-card-header>
+      <ion-card-title>Tareas</ion-card-title>
+    </ion-card-header>
+
+    <ion-card-content>
+
+      <ion-list>
+        <ion-list-header>
+          Lista tareas
+        </ion-list-header>
+
+        <ion-item *ngFor="let tarea of tareas">
+
+          <ion-label>
+            <h2>Tema: {{ tarea.tarea.descripcion }}</h2>
+            <h3>
+              Calificacion: {{ tarea.calificacion }}
+            </h3>
+            <p>Fecha entrega: {{ tarea.tarea.fecha_entrega | date: 'yyyy-MM-dd HH:mm' }}</p>
+            <p>Observación: {{ tarea.tarea.observacion }}</p>
+            <p>Profesor: {{ tarea.tarea.profesor.nombres }}</p>
+          </ion-label>
+
+          <ion-button slot="end" color="kids" 
+          tooltip="Entregar Tarea"
+          (click)="entregarTarea(tarea);">
+            <ion-icon name="send"></ion-icon>
+          </ion-button>
+        </ion-item>
+      
+      </ion-list>
+
+    </ion-card-content>
+  
+  </ion-card>
+
+</ion-content>

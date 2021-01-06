@@ -22,7 +22,10 @@ export class NotificacionesService {
     COMUN: `${NOTIFICACIONES_CONTROLLER.COMUN}`,
     CRUD: {
       REPRESENTANTE: {
-        COMUN: `${NOTIFICACIONES_CONTROLLER.CRUD.REPRESENTANTE.COMUN}`
+        COMUN: `${NOTIFICACIONES_CONTROLLER.CRUD.REPRESENTANTE.COMUN}`,
+        CRUD: {
+          LISTA: `${NOTIFICACIONES_CONTROLLER.CRUD.REPRESENTANTE.CRUD.LISTA}`
+        }
       }
     }
   };
@@ -37,6 +40,12 @@ export class NotificacionesService {
     // return...
     return this.httpClient
       .get<INotificacion []>(`${this.URL_SERVER.HOST}${this.NOTIFICACIONES_CONTROLLERS.COMUN}${this.NOTIFICACIONES_CONTROLLERS.CRUD.REPRESENTANTE.COMUN}/${id}`);
+  }
+
+  retornaNotificacionesRepresentantePorId(usuario: string) {
+    return this
+    .httpClient
+    .get<INotificacion []>(`${this.URL_SERVER.HOST}${this.NOTIFICACIONES_CONTROLLERS.COMUN}${this.NOTIFICACIONES_CONTROLLERS.CRUD.REPRESENTANTE.COMUN}${this.NOTIFICACIONES_CONTROLLERS.CRUD.REPRESENTANTE.CRUD.LISTA}/${usuario}`);
   }
 
 }
