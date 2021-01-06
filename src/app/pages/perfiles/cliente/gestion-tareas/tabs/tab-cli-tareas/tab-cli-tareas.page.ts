@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { ModalController } from '@ionic/angular';
 import { IToken } from 'src/app/interfaces/comuns/token.interface';
 import { LectivosTareasService } from 'src/app/services/lectivos/lectivos.tareas.service';
 import { SeguridadService } from 'src/app/services/seguridades/seguridad.service';
+import { ModEntregaTareasPage } from '../../mod-entrega-tareas/mod-entrega-tareas.page';
 
 @Component({
   selector: 'app-tab-cli-tareas',
@@ -15,7 +17,8 @@ export class TabCliTareasPage implements OnInit {
 
   constructor(
     private lectivosTareasService: LectivosTareasService,
-    private seguridadService: SeguridadService
+    private seguridadService: SeguridadService,
+    private modalController: ModalController
   ) { }
 
   ngOnInit() {
@@ -31,7 +34,15 @@ export class TabCliTareasPage implements OnInit {
       .subscribe(tareas => this.tareas = tareas);
   }
 
-  entregarTarea(tarea){
-    console.log(tarea);
+  async entregarTarea(tarea){
+    // abriendo el modal...
+    const modal = await this.modalController.create({
+      component: ModEntregaTareasPage,
+      componentProps: {
+        tarea
+      }
+    });
+    await modal.present();
   }
+  
 }

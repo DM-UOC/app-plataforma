@@ -23,6 +23,22 @@
             <p>Fecha entrega: {{ tarea.tarea.fecha_entrega | date: 'yyyy-MM-dd HH:mm' }}</p>
             <p>Observación: {{ tarea.tarea.observacion }}</p>
             <p>Profesor: {{ tarea.tarea.profesor.nombres }}</p>
+            <p>
+              <ionic-rating-component 
+              #rating
+              activeIcon = "star"
+              defaultIcon = "star-outline"
+              activeColor = "#c770c4" 
+              defaultColor = "#3dc2ff"
+              readonly="false"
+              maxRating="5"
+              rating="{{ tarea.calificacion }}"
+              fontSize="30px"
+              readonly="true"
+              (ratingChanged)="onRatingChange($event)"
+              >
+              </ionic-rating-component>
+            </p>
           </ion-label>
 
           <ion-button slot="end" color="kids" 

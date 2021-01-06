@@ -1,5 +1,19 @@
 <ion-header>
-  <app-cabecera></app-cabecera>
+
+  <ion-toolbar>
+
+    <ion-buttons slot="start">
+
+      <ion-button color="dark" (click)="cerrarModal();">
+          <ion-icon name="arrow-back"></ion-icon>
+      </ion-button>
+
+    </ion-buttons>
+
+    <ion-title>Entregar Tarea</ion-title>
+  
+  </ion-toolbar>
+
 </ion-header>
 
 <ion-content>
@@ -17,7 +31,7 @@
           Listado
         </ion-list-header>
 
-        <ion-item *ngFor="let hijo of hijos">
+        <ion-item *ngFor="let hijo of hijos; let i = index;">
           <!-- ./assets/profile_image.png -->
           <ion-avatar slot="start">
             <img [src]="!hijo.foto.data? 'assets/profile_image.png': hijo?.foto_url">
@@ -28,12 +42,9 @@
             <p>Edad: {{ hijo.edad }}</p>
           </ion-label>
 
-          <ion-button (click)="actualizar(hijo);" color="kids">
+          <ion-button (click)="entregar(hijo);" color="kids">
             <ion-icon name="create"></ion-icon>
           </ion-button>          
-          <ion-button (click)="eliminar(hijo);" color="kids">
-            <ion-icon name="trash"></ion-icon>
-          </ion-button>
 
         </ion-item>
       
@@ -42,12 +53,5 @@
     </ion-card-content>
   
   </ion-card>
-
-<!-- fab placed to the top and end and on the top edge of the content overlapping header -->
-<ion-fab vertical="bottom" horizontal="end" slot="fixed">
-  <ion-fab-button (click)="registraHijo();" color="secondary">
-    <ion-icon name="person"></ion-icon>
-  </ion-fab-button>
-</ion-fab>
 
 </ion-content>

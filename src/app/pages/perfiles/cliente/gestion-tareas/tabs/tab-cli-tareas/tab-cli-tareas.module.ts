@@ -7,12 +7,16 @@ import { IonicModule } from '@ionic/angular';
 import { TabCliTareasPageRoutingModule } from './tab-cli-tareas-routing.module';
 
 import { TabCliTareasPage } from './tab-cli-tareas.page';
+import { TooltipModule } from 'ng2-tooltip-directive';
+import { IonicRatingComponentModule } from 'ionic-rating-component';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
+    TooltipModule,
+    IonicRatingComponentModule,
     TabCliTareasPageRoutingModule
   ],
   declarations: [TabCliTareasPage]

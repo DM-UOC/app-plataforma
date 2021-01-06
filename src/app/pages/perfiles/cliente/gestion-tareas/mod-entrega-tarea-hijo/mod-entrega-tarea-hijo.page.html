@@ -1,0 +1,37 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>mod-entrega-tarea-hijo</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <h3>Carga de archivo</h3>
+  <div
+    ng2FileDrop 
+    multiupload
+    [uploader]="fileUploader"
+    id="dropZone_{{i}}">
+      <p>Clic para seleccionar archivos</p>
+      <ion-icon name="cloud-upload" style="zoom:1.0"></ion-icon>
+      <p>Arrastre y suelte los archivos aquí</p>
+    <input
+      ng2FileSelect
+      multiple
+      [uploader]="fileUploader"
+      type="file"
+      accept=".jpg, .jpeg, .png, .mp4"
+    />
+  </div>
+  <ion-label color="secondary">
+    Número de archivos que se subirán:
+    <ion-badge color="secondary">{{ fileUploader?.queue?.length }}</ion-badge>
+  </ion-label>
+  <h4>Archivos a subir</h4>
+  <div *ngFor="let item of fileUploader.queue">
+    <h5>{{ item?.file?.name}}</h5>
+    <h5>{{ item?.file?.size/1024/1024 | number:'.2' }} MB</h5>
+  </div>
+
+  
+</ion-content>

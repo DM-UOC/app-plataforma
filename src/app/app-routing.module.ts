@@ -100,6 +100,14 @@ const routes: Routes = [
     path: 'gestion-tareas-representante',
     loadChildren: () => import('./pages/perfiles/cliente/gestion-tareas/gestion-tareas-representante/gestion-tareas-representante.module').then( m => m.GestionTareasRepresentantePageModule)
   },
+  {
+    path: 'mod-entrega-tareas',
+    loadChildren: () => import('./pages/perfiles/cliente/gestion-tareas/mod-entrega-tareas/mod-entrega-tareas.module').then( m => m.ModEntregaTareasPageModule)
+  },
+  {
+    path: 'mod-entrega-tarea-hijo',
+    loadChildren: () => import('./pages/perfiles/cliente/gestion-tareas/mod-entrega-tarea-hijo/mod-entrega-tarea-hijo.module').then( m => m.ModEntregaTareaHijoPageModule)
+  },
 ];
 
 @NgModule({
